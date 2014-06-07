@@ -14,8 +14,8 @@
         <xsl:for-each select="Features/Feature">
            <xsl:variable name="EditorType" select="./@EditorType" />
            <xsl:variable name="FeatureName" select="./@Name" />
-          <xsl:variable name="DependsOn" select="./@DependsOn" />
-          <xsl:variable name="FeatureId" select="./@PropertyId" />
+           <xsl:variable name="DependsOn" select="./@DependsOn" />
+           <xsl:variable name="FeatureId" select="./@PropertyId" />
             <tr >
               <td>
                   <strong> <xsl:value-of select="./@Name"/>                       
@@ -35,7 +35,7 @@
                       </xsl:when>
                                             
                       <xsl:when test="$EditorType='TextArea'">
-                        <textarea rows="8"  columns="60">
+                        <textarea rows="8"  columns="160">
                           <xsl:attribute name="name">
                               <xsl:value-of select="./@PropertyId"/>
                           </xsl:attribute>

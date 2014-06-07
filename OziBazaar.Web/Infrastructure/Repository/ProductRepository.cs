@@ -182,9 +182,51 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         }
 
-        public void UpdateProduct(ProductModel product)
+        public void UpdateAdvertisement(AdvertisementModel advertisementModel)
         {
-            throw new NotImplementedException();
+            if (advertisementModel.Features == null || advertisementModel.Features.Count() == 0)
+                throw new ArgumentNullException();
+
+            var ad =( from adv in dbContext.Advertisements
+                                            .Include("Product")
+                                            .Include("Product.ProductProperties")
+                      where adv.AdvertisementID == advertisementModel.Id
+                      select adv).Single();
+ 
+            var properties = dbContext.ProductProperties.Where(pp => pp.ProductID == ad.ProductID);
+            var product = dbContext.Products.Single(p => p.ProductID == ad.ProductID);
+            dbContext.ProductProperties.RemoveRange(properties);
+
+            ad.StartDate = advertisementModel.StartDate;
+            ad.EndDate = advertisementModel.EndDate;
+            ad.OwnerID = 1;
+            ad.Price = "1000";
+            ad.Title = advertisementModel.Title;
+            ad.IsActive = true;
+            
+            product.Description = advertisementModel.Title ;
+            foreach (ProductFeature productFeature in advertisementModel.Features)
+            {
+                product.ProductProperties.Add(new ProductProperty()
+                {
+                    ProductGroupPropertyID = Int32.Parse(productFeature.Key),
+                    Value = productFeature.Value
+                });
+            }
+            dbContext.SaveChanges();
+        }
+
+        public AdvertisementModel GetAdvertisementById(int advertisementId)
+        {
+            var query = from ad in dbContext.Advertisements
+                        where ad.AdvertisementID == advertisementId
+                        select new AdvertisementModel() { 
+                                                            Id=advertisementId,
+                                                            Title=ad.Title,
+                                                            StartDate=ad.StartDate,
+                                                            EndDate=ad.EndDate
+                                                        };
+            return query.Single();
         }
     }
 }

@@ -110,9 +110,16 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         public void AddAdvertisement(AdvertisementModel product)
         {
+            throw new NotImplementedException();
         }
-        public void UpdateProduct(ProductModel product)
+        public void UpdateAdvertisement(AdvertisementModel product)
         {
+            throw new NotImplementedException();
         }
+        public AdvertisementModel GetAdvertisementById(int advertisementId)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

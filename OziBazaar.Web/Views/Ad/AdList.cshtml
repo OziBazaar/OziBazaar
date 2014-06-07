@@ -29,7 +29,7 @@
                 @Html.ActionLink("View", "ViewProduct", "Product", new { productId = item.ProductId }, null)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditProduct", "Product", new { productId = item.ProductId,categoryId=item.CategoryId }, null)
+                @Html.ActionLink("Edit", "EditProduct", "Product", new {advertisementId=item.Id , productId = item.ProductId,categoryId=item.CategoryId }, null)
             </td>
         </tr>
     }
