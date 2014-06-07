@@ -1,6 +1,7 @@
 ﻿using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Web.Infrastructure.Repository;
 using OziBazaar.Web.Models;
+using OziBazaar.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        
+        private string[] reservedKeys = new string[5] {"CategoryId", "Title", "StartDate", "FinishDate", "__RequestVerificationToken" };
         private readonly IRenderEngine renderEngine;
         private readonly IProductRepository productRepository;
 
@@ -26,35 +27,44 @@ namespace OziBazaar.Web.Controllers
         {
             return View();
         }
-        public ActionResult ViewProduct(int Id)
+        public ActionResult ViewProduct(int productId)
         {
-            var productview = productRepository.GetProduct(Id);
+            var productview = productRepository.GetProduct(productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View();
         }
-        public ActionResult EditProduct(int Id)
+        public ActionResult EditProduct(int categoryId,int productId)
         {
-            var productview = productRepository.EditProduct(Id);
+            var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View();
         }
-        public ActionResult AddProduct(int category)
+        public ActionResult AddProduct(AdvertisementViewModel  advertisemnt)
         {
-            var productAdd = productRepository.AddProduct(category);
+            var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
             ViewBag.ProductInfo = renderEngine.Render(productAdd);
-            return RedirectToAction("AdList","Ad");
+            return View(advertisemnt);
         }
         public ActionResult CreateProduct()
         {
             var keys = Request.Form.AllKeys;
             List<ProductFeature> features = new List<ProductFeature>();
-            foreach (var key in keys)
+            foreach (var key in keys.Where(x => !reservedKeys.Contains( x)))
             {
                 features.Add(new ProductFeature { Key = key, Value = Request[key] });
             }
-            ProductModel prod = new ProductModel() { Features = features };
-            productRepository.AddProduct(prod);
-            return RedirectToAction("Index");
+            DateTime startDate=DateTime.Now;
+            DateTime endDate = DateTime.Now.AddMonths(1);
+            //DateTime.TryParse(Request.Form["StartDate"],out startDate);
+            //DateTime.TryParse(Request.Form["FinishDate"], out endDate);
+            AdvertisementModel ad = new AdvertisementModel() { Features = features };
+            ad.StartDate = startDate;
+            ad.EndDate = endDate;
+            ad.Title = Request.Form["Title"];
+            ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+
+            productRepository.AddAdvertisement(ad);
+            return RedirectToAction("AdList", "Ad");
         }
         public  ActionResult UpdateProduct()
         {

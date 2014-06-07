@@ -8,6 +8,7 @@ namespace OziBazaar.Web.Models
 {
     public class ProductEditView : ProductAddView
     {
+        public  List<ProductFeatureEdit> Features { get; set; }
         private string renderTemplate = "~/Templates/EditProduct.xslt";
         protected override string RenderTemplate
         {

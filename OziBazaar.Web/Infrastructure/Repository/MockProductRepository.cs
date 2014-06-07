@@ -62,7 +62,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return product;
         }
 
-        public ProductEditView EditProduct(int productId)
+        public ProductEditView EditProduct(int CategoryId,int productId)
         {
             ProductEditView product = new ProductEditView();
             if (productId == 1)// car
@@ -108,7 +108,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return categories;
         }
 
-        public void AddProduct(ProductModel product)
+        public void AddAdvertisement(AdvertisementModel product)
         {
         }
         public void UpdateProduct(ProductModel product)

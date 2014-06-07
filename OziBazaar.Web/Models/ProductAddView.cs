@@ -30,7 +30,7 @@ namespace OziBazaar.Web.Models
         {
             renderTemplate = HttpContext.Current.Server.MapPath(template); ;
         }
-        public List<ProductFeatureAdd> Features { get; set; }
+        public  List<ProductFeatureAdd> Features { get; set; }
         public virtual System.Xml.Linq.XDocument Render()
         {
             List<XElement> features = new List<XElement>();

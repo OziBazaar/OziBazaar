@@ -1,4 +1,4 @@
-﻿
+﻿@model OziBazaar.Web.ViewModel.AdvertisementViewModel
 @{
     ViewBag.Title = "Add Product";
 }
@@ -6,10 +6,27 @@
 <script src="~/Scripts/jquery-2.1.0.js"></script>
 <script src="~/Scripts/ozibazar.dependentdropdown.js"></script>
 <script src="~/Scripts/ozibazar.validation.js"></script>
-<h2>Add Product</h2>
+<h2>Add Advertisement details</h2>
 @using(Html.BeginForm("CreateProduct","Product",FormMethod.Post,new{id="addProdForm"}))
 {
 @Html.AntiForgeryToken()
+ <div>
+     @Html.HiddenFor(model=>model.CategoryId)
+     <table>
+         <tr>
+             <td><strong>Ad Title</strong></td>
+             <td>@Html.TextBoxFor(model => model.Title)</td>
+         </tr>
+         <tr>
+             <td><strong>Start Date</strong></td>
+             <td>@Html.TextBoxFor(model=>model.StartDate)</td>
+         </tr>
+         <tr>
+             <td><strong>End Date</strong></td>
+             <td>@Html.TextBoxFor(model => model.FinishDate)</td>
+         </tr>
+     </table>
+ </div>
 <div>
     @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
 </div>

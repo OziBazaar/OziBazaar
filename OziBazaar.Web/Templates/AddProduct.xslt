@@ -7,13 +7,15 @@
   <xsl:output method="xml" indent="yes" />
   <xsl:template match="/">
          <p>
-         Add Product information
+         Enter Advertisement details
         </p>
+        <br/>
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
            <xsl:variable name="EditorType" select="./@EditorType" />
            <xsl:variable name="FeatureName" select="./@Name" />
           <xsl:variable name="DependsOn" select="./@DependsOn" />
+          <xsl:variable name="FeatureId" select="./@PropertyId" />
             <tr >
               <td>
                   <strong> <xsl:value-of select="./@Name"/>                       
@@ -33,7 +35,7 @@
                       </xsl:when>
                                             
                       <xsl:when test="$EditorType='TextArea'">
-                        <textarea rows="14"  columns="50">
+                        <textarea rows="8"  columns="60">
                           <xsl:attribute name="name">
                               <xsl:value-of select="./@PropertyId"/>
                           </xsl:attribute>
@@ -66,6 +68,9 @@
                           <xsl:attribute name="name">
                             <xsl:value-of select="./@PropertyId"/>
                           </xsl:attribute>
+                          <xsl:attribute name="value">
+                              <xsl:value-of select="$FeatureName"/>
+                            </xsl:attribute>
                         </input>
                       </xsl:when>
                       
@@ -73,7 +78,10 @@
                         <xsl:for-each select="./EnumValue/Value">
                           <input type="radio">
                             <xsl:attribute name="name">
-                              <xsl:value-of select="./@PropertyId"/>
+                              <xsl:value-of select="$FeatureId"/>
+                            </xsl:attribute>
+                             <xsl:attribute name="value">
+                              <xsl:value-of select="."/>
                             </xsl:attribute>
                             <xsl:value-of select="."/>
                           </input>

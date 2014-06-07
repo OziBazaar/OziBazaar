@@ -4,142 +4,102 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OziBazaarModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="OziBazaarModelStoreContainer">
-          <EntitySet Name="Advertisement" EntityType="OziBazaarModel.Store.Advertisement" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Lookup" EntityType="OziBazaarModel.Store.Lookup" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Product" EntityType="OziBazaarModel.Store.Product" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductGroup" EntityType="OziBazaarModel.Store.ProductGroup" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductGroupProperty" EntityType="OziBazaarModel.Store.ProductGroupProperty" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductImage" EntityType="OziBazaarModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductProperty" EntityType="OziBazaarModel.Store.ProductProperty" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Property" EntityType="OziBazaarModel.Store.Property" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="OziBazaarModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="WishList" EntityType="OziBazaarModel.Store.WishList" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Advertizement_Product" Association="OziBazaarModel.Store.FK_Advertizement_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Advertisement" EntitySet="Advertisement" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_ProductGroup" Association="OziBazaarModel.Store.FK_Product_ProductGroup">
-            <End Role="ProductGroup" EntitySet="ProductGroup" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductGroupProperty_ProductGroup" Association="OziBazaarModel.Store.FK_ProductGroupProperty_ProductGroup">
-            <End Role="ProductGroup" EntitySet="ProductGroup" />
-            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductImage_Product" Association="OziBazaarModel.Store.FK_ProductImage_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductImage" EntitySet="ProductImage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductProperty_Product1" Association="OziBazaarModel.Store.FK_ProductProperty_Product1">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductProperty" EntitySet="ProductProperty" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductProperty_ProductGroupProperty" Association="OziBazaarModel.Store.FK_ProductProperty_ProductGroupProperty">
-            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
-            <End Role="ProductProperty" EntitySet="ProductProperty" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WishList_Advertisement" Association="OziBazaarModel.Store.FK_WishList_Advertisement">
-            <End Role="Advertisement" EntitySet="Advertisement" />
-            <End Role="WishList" EntitySet="WishList" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="OziBazaarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="AdvertisementID" />
           </Key>
-          <Property Name="AdvertisementID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AdvertisementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" />
-          <Property Name="Price" Type="nchar" Nullable="false" MaxLength="10" />
-          <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="EndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="Lookup">
           <Key>
             <PropertyRef Name="LookupID" />
           </Key>
-          <Property Name="LookupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LookupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentID" Type="int" />
-          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="ProductGroupID" Type="int" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductGroup">
           <Key>
             <PropertyRef Name="ProductGroupID" />
           </Key>
-          <Property Name="ProductGroupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="ViewTemplate" Type="nvarchar" MaxLength="100" />
           <Property Name="EditTemplate" Type="nvarchar" MaxLength="100" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductGroupProperty">
           <Key>
             <PropertyRef Name="ProductGroupPropertyID" />
           </Key>
-          <Property Name="ProductGroupPropertyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductGroupPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductGroupID" Type="int" Nullable="false" />
           <Property Name="PropertyID" Type="int" Nullable="false" />
-          <Property Name="InitialValue" Type="nvarchar" MaxLength="50" />
-          <Property Name="TabOrder" Type="smallint" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="InitialValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="TabOrder" Type="int" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
             <PropertyRef Name="ProductImageID" />
           </Key>
-          <Property Name="ProductImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="500" />
-          <Property Name="ImageType" Type="nchar" MaxLength="10" />
+          <Property Name="ImageType" Type="nvarchar" MaxLength="50" />
           <Property Name="MimeType" Type="nvarchar" MaxLength="100" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="ImageOrder" Type="smallint" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductProperty">
           <Key>
             <PropertyRef Name="ProductPropertyID" />
           </Key>
-          <Property Name="ProductPropertyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ProductGroupPropertyID" Type="int" Nullable="false" />
-          <Property Name="Value" Type="nvarchar" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Value" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
             <PropertyRef Name="PropertyID" />
           </Key>
-          <Property Name="PropertyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="KeyName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeyName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ControlType" Type="nvarchar" MaxLength="50" />
-          <Property Name="DataType" Type="nvarchar" MaxLength="50" />
+          <Property Name="DataType" Type="nvarchar" MaxLength="100" />
           <Property Name="IsMandatory" Type="bit" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
@@ -147,14 +107,14 @@
           <Key>
             <PropertyRef Name="WishListID" />
           </Key>
-          <Property Name="WishListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WishListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AdvertizementID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <Association Name="FK_Advertizement_Product">
-          <End Role="Product" Type="OziBazaarModel.Store.Product" Multiplicity="1" />
-          <End Role="Advertisement" Type="OziBazaarModel.Store.Advertisement" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
@@ -165,8 +125,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ProductGroup">
-          <End Role="ProductGroup" Type="OziBazaarModel.Store.ProductGroup" Multiplicity="0..1" />
-          <End Role="Product" Type="OziBazaarModel.Store.Product" Multiplicity="*" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductGroup">
               <PropertyRef Name="ProductGroupID" />
@@ -177,8 +137,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductGroupProperty_ProductGroup">
-          <End Role="ProductGroup" Type="OziBazaarModel.Store.ProductGroup" Multiplicity="1" />
-          <End Role="ProductGroupProperty" Type="OziBazaarModel.Store.ProductGroupProperty" Multiplicity="*" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="1" />
+          <End Role="ProductGroupProperty" Type="Self.ProductGroupProperty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductGroup">
               <PropertyRef Name="ProductGroupID" />
@@ -189,8 +149,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductImage_Product">
-          <End Role="Product" Type="OziBazaarModel.Store.Product" Multiplicity="1" />
-          <End Role="ProductImage" Type="OziBazaarModel.Store.ProductImage" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
@@ -201,8 +161,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductProperty_Product1">
-          <End Role="Product" Type="OziBazaarModel.Store.Product" Multiplicity="1" />
-          <End Role="ProductProperty" Type="OziBazaarModel.Store.ProductProperty" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductProperty" Type="Self.ProductProperty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
@@ -213,8 +173,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductProperty_ProductGroupProperty">
-          <End Role="ProductGroupProperty" Type="OziBazaarModel.Store.ProductGroupProperty" Multiplicity="1" />
-          <End Role="ProductProperty" Type="OziBazaarModel.Store.ProductProperty" Multiplicity="*" />
+          <End Role="ProductGroupProperty" Type="Self.ProductGroupProperty" Multiplicity="1" />
+          <End Role="ProductProperty" Type="Self.ProductProperty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductGroupProperty">
               <PropertyRef Name="ProductGroupPropertyID" />
@@ -225,8 +185,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WishList_Advertisement">
-          <End Role="Advertisement" Type="OziBazaarModel.Store.Advertisement" Multiplicity="1" />
-          <End Role="WishList" Type="OziBazaarModel.Store.WishList" Multiplicity="*" />
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Advertisement">
               <PropertyRef Name="AdvertisementID" />
@@ -236,6 +196,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="OziBazaarModelStoreContainer">
+          <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroupProperty" EntityType="Self.ProductGroupProperty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductProperty" EntityType="Self.ProductProperty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Advertizement_Product" Association="Self.FK_Advertizement_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Advertisement" EntitySet="Advertisement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductGroup" Association="Self.FK_Product_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupProperty_ProductGroup" Association="Self.FK_ProductGroupProperty_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImage_Product" Association="Self.FK_ProductImage_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductImage" EntitySet="ProductImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductProperty_Product1" Association="Self.FK_ProductProperty_Product1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductProperty" EntitySet="ProductProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductProperty_ProductGroupProperty" Association="Self.FK_ProductProperty_ProductGroupProperty">
+            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
+            <End Role="ProductProperty" EntitySet="ProductProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_Advertisement" Association="Self.FK_WishList_Advertisement">
+            <End Role="Advertisement" EntitySet="Advertisement" />
+            <End Role="WishList" EntitySet="WishList" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -286,9 +286,9 @@
           </Key>
           <Property Name="AdvertisementID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Product" Relationship="OziBazaarModel.FK_Advertizement_Product" FromRole="Advertisement" ToRole="Product" />
@@ -311,7 +311,7 @@
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
           <Property Name="ProductGroupID" Type="Int32" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Advertisements" Relationship="OziBazaarModel.FK_Advertizement_Product" FromRole="Product" ToRole="Advertisement" />
@@ -338,7 +338,7 @@
           <Property Name="ProductGroupPropertyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProductGroupID" Type="Int32" Nullable="false" />
           <Property Name="PropertyID" Type="Int32" Nullable="false" />
-          <Property Name="InitialValue" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="InitialValue" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
           <Property Name="TabOrder" Type="Int16" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="ProductGroup" Relationship="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" FromRole="ProductGroupProperty" ToRole="ProductGroup" />
@@ -351,9 +351,9 @@
           <Property Name="ProductImageID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="ImagePath" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
-          <Property Name="ImageType" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="ImageType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="MimeType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
           <Property Name="ImageOrder" Type="Int16" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Product" Relationship="OziBazaarModel.FK_ProductImage_Product" FromRole="ProductImage" ToRole="Product" />
@@ -365,7 +365,7 @@
           <Property Name="ProductPropertyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="ProductGroupPropertyID" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Value" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Product" Relationship="OziBazaarModel.FK_ProductProperty_Product1" FromRole="ProductProperty" ToRole="Product" />
           <NavigationProperty Name="ProductGroupProperty" Relationship="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" FromRole="ProductProperty" ToRole="ProductGroupProperty" />
@@ -375,9 +375,9 @@
             <PropertyRef Name="PropertyID" />
           </Key>
           <Property Name="PropertyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="ControlType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="DataType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DataType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="IsMandatory" Type="Boolean" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
         </EntityType>
@@ -625,6 +625,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

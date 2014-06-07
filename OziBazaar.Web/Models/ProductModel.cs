@@ -5,23 +5,19 @@ using System.Web;
 
 namespace OziBazaar.Web.Models
 {
-
     public class ProductModel
     {
         public int Id { get; set; }
         public IEnumerable<ProductFeature> Features { get; set; }
+    }
+    public class AdvertisementModel
+    {
+        public int Id { get; set; }
+        public int Category { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Title { get; set; }
+        public IEnumerable<ProductFeature> Features { get; set; }
 
     }
-    //public class Feature
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
-    //public class ProductFeature
-    //{
-    //    public int ProductId { get; set; }
-    //    public int FeatureId { get; set; }
-    //    public string Value { get; set; }
-    //}
-   
 }
