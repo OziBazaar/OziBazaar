@@ -27,6 +27,8 @@ namespace OziBazaar.Web
       // e.g. container.RegisterType<ITestService, TestService>(); 
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
+      container.RegisterType<ILookupRepository, LookupRepository>();
+
       RegisterTypes(container);
 
       return container;

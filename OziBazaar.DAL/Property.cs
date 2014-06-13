@@ -18,7 +18,8 @@ namespace OziBazaar.DAL
         public string KeyName { get; set; }
         public string ControlType { get; set; }
         public string DataType { get; set; }
-        public Nullable<bool> IsMandatory { get; set; }
         public byte[] Version { get; set; }
+        public string LookupType { get; set; }
+        public string DependsOn { get; set; }
     }
 }

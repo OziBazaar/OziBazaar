@@ -23,7 +23,7 @@
           <Key>
             <PropertyRef Name="LookupID" />
           </Key>
-          <Property Name="LookupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LookupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentID" Type="int" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -57,6 +57,7 @@
           <Property Name="PropertyID" Type="int" Nullable="false" />
           <Property Name="InitialValue" Type="nvarchar" MaxLength="500" />
           <Property Name="TabOrder" Type="int" />
+          <Property Name="IsMandatory" Type="bit" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductImage">
@@ -90,7 +91,8 @@
           <Property Name="KeyName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ControlType" Type="nvarchar" MaxLength="50" />
           <Property Name="DataType" Type="nvarchar" MaxLength="100" />
-          <Property Name="IsMandatory" Type="bit" />
+          <Property Name="LookupType" Type="nvarchar" MaxLength="150" />
+          <Property Name="DependsOn" Type="nvarchar" MaxLength="150" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -343,6 +345,7 @@
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="ProductGroup" Relationship="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" FromRole="ProductGroupProperty" ToRole="ProductGroup" />
           <NavigationProperty Name="ProductProperties" Relationship="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" FromRole="ProductGroupProperty" ToRole="ProductProperty" />
+          <Property Name="IsMandatory" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -378,8 +381,9 @@
           <Property Name="KeyName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="ControlType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="DataType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="IsMandatory" Type="Boolean" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <Property Name="LookupType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DependsOn" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -541,6 +545,7 @@
           <EntitySetMapping Name="ProductGroupProperties">
             <EntityTypeMapping TypeName="OziBazaarModel.ProductGroupProperty">
               <MappingFragment StoreEntitySet="ProductGroupProperty">
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
                 <ScalarProperty Name="ProductGroupPropertyID" ColumnName="ProductGroupPropertyID" />
                 <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
@@ -578,11 +583,12 @@
           <EntitySetMapping Name="Properties">
             <EntityTypeMapping TypeName="OziBazaarModel.Property">
               <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="DependsOn" ColumnName="DependsOn" />
+                <ScalarProperty Name="LookupType" ColumnName="LookupType" />
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
                 <ScalarProperty Name="KeyName" ColumnName="KeyName" />
                 <ScalarProperty Name="ControlType" ColumnName="ControlType" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
-                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
               </MappingFragment>
             </EntityTypeMapping>

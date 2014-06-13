@@ -28,6 +28,7 @@ namespace OziBazaar.Web.Controllers
         public ActionResult ViewProduct(int productId)
         {
             var productview = productRepository.GetProduct(productId);
+            ViewBag.ProductId = productId;
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View();
         }

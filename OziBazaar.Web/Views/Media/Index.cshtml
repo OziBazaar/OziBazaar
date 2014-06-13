@@ -1,0 +1,13 @@
+﻿<h4>Upload Images</h4>
+
+@using (Html.BeginForm("Upload", "Media", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <h5>
+            You can selected multiple files and then click upload
+        </h5>
+    <label for="file">Image:</label>
+     <input type="file" name="files" value="" multiple="multiple" /><br /><br />
+     <input type="submit" value="Upload Image" class="btn btn-primary" />
+    </div>
+}

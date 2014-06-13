@@ -161,8 +161,11 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
+    <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\MockProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\ProductRepository.cs" />
     <Compile Include="Models\Ad.cs" />
@@ -307,6 +310,7 @@
     <Content Include="Views\Product\EditProduct.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ShortDateTime.cshtml" />
     <Content Include="Views\Product\AdvertisementInfo.cshtml" />
+    <Content Include="Views\Media\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">

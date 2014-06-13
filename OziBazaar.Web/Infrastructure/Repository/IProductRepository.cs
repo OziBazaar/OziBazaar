@@ -1,4 +1,5 @@
-﻿using OziBazaar.Web.Models;
+﻿using OziBazaar.DAL;
+using OziBazaar.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         void                  AddAdvertisement(AdvertisementModel advertisement);
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
         AdvertisementModel GetAdvertisementById(int advertisementId);
+        void AddAttachment(List<ProductImage> images);
     }
    
 }

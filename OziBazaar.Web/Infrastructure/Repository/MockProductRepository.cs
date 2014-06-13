@@ -121,5 +121,11 @@ namespace OziBazaar.Web.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+
+
+        public void AddAttachment(List<DAL.ProductImage> images)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OziBazaar.Web.Infrastructure.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,35 +10,16 @@ namespace OziBazaar.Web.Areas.API.Controllers
 {
     public class CategoryDataController : ApiController
     {
-
-        // GET api/<controller>/toyota
-        public IEnumerable<string> Get(string type)
+        public CategoryDataController()
         {
-            List<string> types = new List<string>();
-            if (type.ToLower() == "toyota")
-            {
-                types.Add("Camary");
-                types.Add("Corola");
-                types.Add("yari");
-            }
-            else if (type.ToLower() == "mazda")
-            {
-                types.Add("mazda2");
-                types.Add("mazda 3");
-                types.Add("mazda 6");
-            }
-            else if (type.ToLower() == "iphone")
-            {
-                types.Add("iphone 3");
-                types.Add("iphone 4");
-                types.Add("iphone 5");
-            }
-            else if (type.ToLower() == "samsung")
-            {
-                types.Add("Galxy S3");
-                types.Add("Glaxy S4");
-                types.Add("Galaxy Note");
-            }
+            this.lookupRepository = new LookupRepository();
+        }
+        public ILookupRepository lookupRepository { get; set; }
+        // GET api/<controller>/toyota
+        public IEnumerable<string> Get(string lookuptype,string parent)
+        {
+           
+            IEnumerable<string> types = lookupRepository.GetLookups(lookuptype, parent).Select(l=>l.Name);
             return types;
         }
 

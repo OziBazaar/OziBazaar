@@ -12,11 +12,14 @@
                       );
 });
 function SetDependentDropDownList(parentId, thisId) {
-    $.get('/api/CategoryData/'+$('#' + parentId).val())
-        .success(function (data) {
-            $('#' + thisId).empty();
-            $.each(data, function (index, item) {
-                $('#' + thisId).append($('<option></option>').val(item).html(item));
-            });
-        })
+
+    $.get('/api/CategoryData/' + thisId+'/'+ $('#' + parentId).val()).success(     
+            function (data) {
+                $('#' + thisId).empty();
+                $.each(data, function (index, item) {
+                    $('#' + thisId).append($('<option></option>').val(item).html(item));
+                });
+            }
+            );
+      
 }

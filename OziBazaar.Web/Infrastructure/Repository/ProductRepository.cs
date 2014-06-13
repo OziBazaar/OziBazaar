@@ -11,7 +11,11 @@ namespace OziBazaar.Web.Infrastructure.Repository
     {
         
         private OziBazaarEntities dbContext = new OziBazaarEntities();
-
+        private readonly ILookupRepository lookupRepository;
+        public ProductRepository(ILookupRepository lookupRepository)
+        {
+            this.lookupRepository = lookupRepository;
+        }
         public  ProductView GetProduct(int productId)
         {
 
@@ -51,9 +55,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
                          FeatureName = property.KeyName,
                          EditorType = property.ControlType,
                          ValueType = property.DataType,
-                         IsMandatory = property.IsMandatory.Value,
+                         IsMandatory=productGroupProperty.IsMandatory,
                          DisplayOrder = (int)productGroupProperty.TabOrder,
                          ValueEnum = productGroupProperty.InitialValue,
+                         DataType = property.DataType,
+                         LookupType = property.LookupType,
+                         DependsOn=property.DependsOn
                        
                      }).ToList();
                var  productFeatureAdds =productFeatureDetails.Select(x=>new ProductFeatureAdd
@@ -62,19 +69,35 @@ namespace OziBazaar.Web.Infrastructure.Repository
                          FeatureName = x.FeatureName,
                          EditorType = x.EditorType,
                          ValueType = x.ValueType,
-                         IsMandatory = x.IsMandatory,
+                         IsMandatory = x.IsMandatory??false,
                          DisplayOrder = (int)x.DisplayOrder,
-                         ValueEnum = ((x.EditorType.ToLower() == "dropdown" || x.EditorType.ToLower() == "radiobutton") &&
-                                      !(string.IsNullOrEmpty(x.ValueEnum))) ?
-                                      x.ValueEnum.Split(';').ToList<string>() :
-                                      null
+                         DependsOn = x.DependsOn,
+                         ValueEnum = ((x.EditorType.ToLower() == "dropdown" || x.EditorType.ToLower() == "radiobutton") 
+                                       ?GetEnumValue(x.DataType,x.LookupType,x.DependsOn,x.ValueEnum)
+                                       :null)
                      }
                     ).ToList();
                 
                 return new ProductAddView { Features = productFeatureAdds.OrderBy(feature=>feature.DisplayOrder).ToList() };
 
         }
-
+        
+        private List<string> GetEnumValue(string dataType,string lookupType,string dependsOn,string valueString)
+        {
+            if( dataType!=null &&  dataType.ToLower()=="lookup")
+            {
+                if (!string.IsNullOrEmpty(dependsOn))
+                    return null;
+                return lookupRepository.GetMainLookups(lookupType).Select(x => x.Name).ToList();
+            }
+            else
+            {
+               return !(string.IsNullOrEmpty(valueString)) ?
+                                      valueString.Split(';').ToList<string>() :
+                                      null;
+            }
+        }
+        
         public IEnumerable<Ad> GetAdvertisementsList()
         {
                 List<Ad> ads = (from advertisement in dbContext.Advertisements
@@ -92,6 +115,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 return ads;
           
         }
+
         public IEnumerable<Category> GetAllCategories()
         {
                 List<Category> categories = (from productGroup in dbContext.ProductGroups
@@ -130,15 +154,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 dbContext.Advertisements.Add(adv);
                 dbContext.SaveChanges();
         }
-
-        private int GetProperty(string propertyName)
-        {
-            int propertyId = (from property in dbContext.Properties
-                              where property.KeyName == propertyName
-                              select property.PropertyID).FirstOrDefault();
-            return propertyId;
-      }
-
+        
         public ProductEditView EditProduct(int categoryId, int productId)
         {
             var productFeatureDetails =
@@ -155,10 +171,13 @@ namespace OziBazaar.Web.Infrastructure.Repository
               FeatureName = property.KeyName,
               EditorType = property.ControlType,
               ValueType = property.DataType,
-              IsMandatory = property.IsMandatory.Value,
+              IsMandatory = productGroupProperty.IsMandatory.Value,
               DisplayOrder = (int)productGroupProperty.TabOrder,
               ValueEnum = productGroupProperty.InitialValue,
-              CurrentValue=setProperty.Value
+              CurrentValue=setProperty.Value,
+              DataType = property.DataType,
+              LookupType = property.LookupType,
+              DependsOn = property.DependsOn
 
           }).ToList();
             var productFeatureEdits = productFeatureDetails.Select(x => new ProductFeatureEdit
@@ -170,10 +189,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 Value = x.CurrentValue,
                 IsMandatory = x.IsMandatory,
                 DisplayOrder = (int)x.DisplayOrder,
-                ValueEnum = ((x.EditorType.ToLower() == "dropdown" || x.EditorType.ToLower() == "radiobutton") &&
-                             !(string.IsNullOrEmpty(x.ValueEnum))) ?
-                             x.ValueEnum.Split(';').ToList<string>() :
-                             null
+                DependsOn = x.DependsOn,
+                ValueEnum = ((x.EditorType.ToLower() == "dropdown" || x.EditorType.ToLower() == "radiobutton")
+                                       ? GetEnumValue(x.DataType, x.LookupType, x.DependsOn, x.ValueEnum)
+                                       : null)
             }
                  ).ToList();
 
@@ -227,6 +246,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                                             EndDate=ad.EndDate
                                                         };
             return query.Single();
+        }
+        public void AddAttachment(List<ProductImage> images)
+        {
+
+            foreach (var image in images)
+            {
+                dbContext.ProductImages.Add(image);
+            }
+            dbContext.SaveChanges();
         }
     }
 }

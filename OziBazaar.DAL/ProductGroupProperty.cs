@@ -25,6 +25,7 @@ namespace OziBazaar.DAL
         public string InitialValue { get; set; }
         public Nullable<short> TabOrder { get; set; }
         public byte[] Version { get; set; }
+        public Nullable<bool> IsMandatory { get; set; }
     
         public virtual ProductGroup ProductGroup { get; set; }
         public virtual ICollection<ProductProperty> ProductProperties { get; set; }

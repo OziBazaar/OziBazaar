@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "View Product";
 }
 
@@ -7,6 +6,5 @@
 <div>
 @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
 </div>
-<td>
     @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
-</td>
+   @Html.ActionLink("Upload Images", "Index", new { controller = "Media", productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
