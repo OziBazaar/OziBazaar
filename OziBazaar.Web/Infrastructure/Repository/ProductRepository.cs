@@ -256,5 +256,19 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
             dbContext.SaveChanges();
         }
+
+
+        public IEnumerable<ProductImage> GetProductImages(int productId)
+        {
+          return  dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToArray();
+        }
+
+
+        public void DeleteImage(int productImageId)
+        {
+            var toBeDeletedImage = dbContext.ProductImages.Single(pi => pi.ProductImageID == productImageId);
+            dbContext.ProductImages.Remove(toBeDeletedImage);
+            dbContext.SaveChanges();
+        }
     }
 }

@@ -19,6 +19,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
         AdvertisementModel GetAdvertisementById(int advertisementId);
         void AddAttachment(List<ProductImage> images);
+
+        IEnumerable<ProductImage> GetProductImages(int productId);
+
+        void DeleteImage(int productImageId);
     }
    
 }

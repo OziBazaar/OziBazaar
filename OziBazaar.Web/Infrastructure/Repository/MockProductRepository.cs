@@ -120,10 +120,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-
-
-
         public void AddAttachment(List<DAL.ProductImage> images)
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<DAL.ProductImage> GetProductImages(int productId)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteImage(int productImageId)
         {
             throw new NotImplementedException();
         }

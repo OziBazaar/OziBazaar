@@ -10,7 +10,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class MediaController : Controller
     {
-       private readonly IProductRepository productRepository;
+        private readonly IProductRepository productRepository;
         public MediaController(IProductRepository productRepository)
         {
             this.productRepository = productRepository;
@@ -18,14 +18,14 @@ namespace OziBazaar.Web.Controllers
         
         public ActionResult Index(int productId)
         {
-            TempData["ProductId"] = productId;
-            return View();
+            ViewBag.ProductId = productId;
+            return View(productRepository.GetProductImages(productId));
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase[] files)
+        public ActionResult Upload(HttpPostedFileBase[] files, int productId)
         {
-            int productId =Int32.Parse(TempData["ProductId"].ToString());
+           // int productId =Int32.Parse(TempData["ProductId"].ToString());
             List<ProductImage> images=new List<ProductImage>();
             foreach (HttpPostedFileBase file in files)
             {
@@ -36,6 +36,16 @@ namespace OziBazaar.Web.Controllers
             }
             productRepository.AddAttachment(images);
             return RedirectToAction("ViewProduct", "Product", new { productId =productId});
+        }
+        public ActionResult ProductImages(int productId)
+        {
+               return View(productRepository.GetProductImages(productId));
+        }
+        public ActionResult Delete(int id,int productId)
+        {
+            productRepository.DeleteImage(id);
+            return RedirectToAction("Index", new { productId = productId });
+
         }
 	}
 }

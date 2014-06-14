@@ -1,0 +1,46 @@
+﻿@model IEnumerable<OziBazaar.DAL.ProductImage>
+
+<p>
+ Product Images
+</p>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.ImageType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MimeType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MimeType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+         <img src="@Html.DisplayFor(modelItem => item.ImagePath)" />
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new {controller="Media", id=item.ProductImageID, productId=item.ProductID })
+        </td>
+    </tr>
+}
+
+</table>

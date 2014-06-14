@@ -311,6 +311,7 @@
     <Content Include="Views\Shared\DisplayTemplates\ShortDateTime.cshtml" />
     <Content Include="Views\Product\AdvertisementInfo.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
+    <Content Include="Views\Media\ProductImages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">
