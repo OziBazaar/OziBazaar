@@ -15,6 +15,7 @@ namespace OziBazaar.Web
             // Web API routes
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("Lookup", "api/{controller}/{lookuptype}/{parent}");
+            config.Routes.MapHttpRoute("Media", "OziBazaar.Web/api/{controller}");
 
 
             config.Routes.MapHttpRoute(

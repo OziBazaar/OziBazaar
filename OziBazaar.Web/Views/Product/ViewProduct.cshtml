@@ -1,10 +1,32 @@
 ﻿@{
     ViewBag.Title = "View Product";
 }
+<script src="~/Scripts/jquery-2.1.0.js"></script>
 
-<h2>View Product</h2>
+<h2>View Product 222</h2>
+
 <div>
 @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
 </div>
-    @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
-   @Html.ActionLink("Upload Images", "Index", new { controller = "Media", productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Upload Images", "Index", new { controller = "Media", productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
+@Html.ActionLink("View Images", "FilpView", new { controller = "Media", productId = ViewBag.ProductId }, new { @id = "modal" })
+<div id="my-dialog"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#my-dialog').dialog({
+            autoOpen: false,
+            width: 400,
+            resizable: false,
+            modal: true
+        });
+
+        $('#modal').click(function () {
+            $('#my-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+            return false;
+        });
+    });
+</script>

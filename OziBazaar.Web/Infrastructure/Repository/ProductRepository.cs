@@ -157,29 +157,33 @@ namespace OziBazaar.Web.Infrastructure.Repository
         
         public ProductEditView EditProduct(int categoryId, int productId)
         {
-            var productFeatureDetails =
-         (from property in dbContext.Properties
-          join productGroupProperty in dbContext.ProductGroupProperties
-              on property.PropertyID equals productGroupProperty.PropertyID
-          join productProperty in dbContext.ProductProperties 
-              on productGroupProperty.ProductGroupPropertyID equals productProperty.ProductGroupPropertyID into filledProperties
-          from setProperty in filledProperties.DefaultIfEmpty()
-          where productGroupProperty.ProductGroupID == categoryId && setProperty.ProductID==productId
-          select new
-          {
-              PropertyId = productGroupProperty.ProductGroupPropertyID,
-              FeatureName = property.KeyName,
-              EditorType = property.ControlType,
-              ValueType = property.DataType,
-              IsMandatory = productGroupProperty.IsMandatory.Value,
-              DisplayOrder = (int)productGroupProperty.TabOrder,
-              ValueEnum = productGroupProperty.InitialValue,
-              CurrentValue=setProperty.Value,
-              DataType = property.DataType,
-              LookupType = property.LookupType,
-              DependsOn = property.DependsOn
+           var q=from p in dbContext.ProductProperties
+                  where p.ProductID==productId
+                      select p;
+         var productFeatureDetails =
+                                     (from property in dbContext.Properties
+                                      join productGroupProperty in dbContext.ProductGroupProperties
+                                          on property.PropertyID equals productGroupProperty.PropertyID
+                                      join productProperty in q
+                                          on productGroupProperty.ProductGroupPropertyID equals productProperty.ProductGroupPropertyID into filledProperties
+                                      from setProperty in filledProperties.DefaultIfEmpty()
+                                      where productGroupProperty.ProductGroupID == categoryId 
+                                      select new
+                                      {
+                                          PropertyId = productGroupProperty.ProductGroupPropertyID,
+                                          FeatureName = property.KeyName,
+                                          EditorType = property.ControlType,
+                                          ValueType = property.DataType,
+                                          IsMandatory = productGroupProperty.IsMandatory.Value,
+                                          DisplayOrder = (int)productGroupProperty.TabOrder,
+                                          ValueEnum = productGroupProperty.InitialValue,
+                                          CurrentValue=setProperty.Value,
+                                          DataType = property.DataType,
+                                          LookupType = property.LookupType,
+                                          DependsOn = property.DependsOn
 
-          }).ToList();
+                                      })
+          .ToList();
             var productFeatureEdits = productFeatureDetails.Select(x => new ProductFeatureEdit
             {
                 PropertyId = x.PropertyId,
@@ -256,14 +260,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
             dbContext.SaveChanges();
         }
-
-
         public IEnumerable<ProductImage> GetProductImages(int productId)
         {
           return  dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToArray();
         }
-
-
         public void DeleteImage(int productImageId)
         {
             var toBeDeletedImage = dbContext.ProductImages.Single(pi => pi.ProductImageID == productImageId);

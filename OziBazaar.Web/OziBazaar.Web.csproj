@@ -157,6 +157,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\WebAPI\APIAreaRegistration.cs" />
+    <Compile Include="Areas\WebAPI\Controllers\Media.cs" />
     <Compile Include="Areas\WebAPI\Controllers\CategoryData.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AdController.cs" />
@@ -254,8 +255,18 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\flip-viewer.js" />
+    <Content Include="Scripts\Imageviewer\customsignsfooter.js" />
+    <Content Include="Scripts\Imageviewer\customsignsheader.js" />
+    <Content Include="Scripts\Imageviewer\dhtmlHistory.js" />
+    <Content Include="Scripts\Imageviewer\effects.js" />
+    <Content Include="Scripts\Imageviewer\lightbox.js" />
+    <Content Include="Scripts\Imageviewer\prototype.compressed.js" />
+    <Content Include="Scripts\Imageviewer\scriptaculous.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Templates\EditProduct.xslt">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -276,6 +287,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\WebAPI\Views\web.config" />
+    <Content Include="Scripts\Imageviewer\WS_FTP.LOG" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\ozibazar.dependentdropdown.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
@@ -312,6 +324,7 @@
     <Content Include="Views\Product\AdvertisementInfo.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
     <Content Include="Views\Media\ProductImages.cshtml" />
+    <Content Include="Views\Media\FilpView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">
@@ -348,7 +361,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62923</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62923/</IISUrl>
+          <IISUrl>http://localhost:62923/OziBazaar.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
