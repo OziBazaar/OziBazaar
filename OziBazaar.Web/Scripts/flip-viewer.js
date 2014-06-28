@@ -63,7 +63,7 @@ function viewModel()
     }
 }
 
-$(document).ready(function (data)
-{
-    DownloadImages();
-});
+//$(document).ready(function (data)
+//{
+//    DownloadImages();
+//});

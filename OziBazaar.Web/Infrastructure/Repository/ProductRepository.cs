@@ -38,8 +38,14 @@ namespace OziBazaar.Web.Infrastructure.Repository
                     }).ToList<ProductFeatureView>();
             var imglist = from img in dbContext.ProductImages
                             where img.ProductID == productId
-                            select new ProductFeatureView{DisplayOrder=(int)img.ImageOrder,FeatureName="Image",FeatureValue=img.ImagePath,ProductId=productId,ViewType="" };
-            return new ProductView { Features = productFeatureViews.Union(imglist).ToList() };
+                            orderby img.ImageOrder
+                            select new ProductFeatureView{
+                                                            DisplayOrder=(int)img.ImageOrder,
+                                                            FeatureName="Image",
+                                                            FeatureValue=img.ImagePath,
+                                                            ProductId=productId,ViewType="" };
+
+            return new ProductView { Features = productFeatureViews.Union(imglist.Take(1)).ToList() };
         }
 
         public ProductAddView AddProduct(int CategoryId)

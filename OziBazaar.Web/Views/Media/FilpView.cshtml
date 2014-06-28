@@ -7,9 +7,8 @@
 
 }
 <script>
-    function DownloadImages()
+    function DownloadImages(productId)
     {
-        var productId =@prodID;
         var vm = new viewModel();
         $.ajax({
             url: "/OziBazaar.Web/Media/GetImages/"+productId,
