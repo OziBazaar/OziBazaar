@@ -173,7 +173,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                       join productProperty in q
                                           on productGroupProperty.ProductGroupPropertyID equals productProperty.ProductGroupPropertyID into filledProperties
                                       from setProperty in filledProperties.DefaultIfEmpty()
-                                      where productGroupProperty.ProductGroupID == categoryId 
+                                      where    productGroupProperty.ProductGroupID == categoryId 
+                                            && property.DataType !="Image"
                                       select new
                                       {
                                           PropertyId = productGroupProperty.ProductGroupPropertyID,

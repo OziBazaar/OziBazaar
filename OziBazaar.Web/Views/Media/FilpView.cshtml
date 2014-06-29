@@ -23,13 +23,12 @@
     }
 </script>
 
-
 <div class="tablet-border">
     <button data-bind="click: previous"
             class="previous-button">
         Prev
     </button>
-    <img id="displayImage" data-bind="attr: { src: selectedImage }" class="tablet-screen" alt="Current Image" />
+    <img id="displayImage" data-bind="attr: { src: selectedImage }" alt="Current Image" />
     <button data-bind="click: next"
             class="next-button">
         Next
@@ -42,5 +41,6 @@
     <input type="checkbox" id="auto" data-bind="checked: auto" />
     Slide Show
 </div>
+
 <script src="~/Scripts/knockout-3.1.0.debug.js"></script>
 <script src="~/Scripts/flip-viewer.js"></script>

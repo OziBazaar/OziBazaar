@@ -7,7 +7,7 @@
   <xsl:output method="xml" indent="yes" />
   <xsl:template match="/">
          <p>
-         Add Product information
+         Edit Product information
         </p>
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
