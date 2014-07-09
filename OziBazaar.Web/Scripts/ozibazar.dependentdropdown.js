@@ -13,7 +13,7 @@
 });
 function SetDependentDropDownList(parentId, thisId) {
 
-    $.get('/OziBazaar.Web/api/CategoryData/' + thisId + '/' + $('#' + parentId).val()).success(
+    $.get('/api/CategoryData/' + thisId + '/' + $('#' + parentId).val()).success(
             function (data) {
                 $('#' + thisId).empty();
                 $.each(data, function (index, item) {

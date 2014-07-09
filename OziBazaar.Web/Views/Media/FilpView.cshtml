@@ -11,7 +11,7 @@
     {
         var vm = new viewModel();
         $.ajax({
-            url: "/OziBazaar.Web/Media/GetImages/"+productId,
+            url: "/Media/GetImages/"+productId,
             type: "GET"
         }).done(function (data) {
             for (i = 0; i < data.length; i++) {

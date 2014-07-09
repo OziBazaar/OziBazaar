@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{6ba688c8-f73f-4553-ad1a-ff7cfdd23f2c}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -72,6 +72,7 @@
     <Build Include="dbo\Tables\Advertisement.sql" />
     <Build Include="dbo\Tables\ProductGroupProperty.sql" />
     <Build Include="dbo\Tables\Lookup.sql" />
+    <Build Include="dbo\Tables\UserProfile.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OziBazaar.Database.publish.xml" />

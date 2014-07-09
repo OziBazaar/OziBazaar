@@ -29,7 +29,7 @@ namespace OziBazaar.Web.Controllers
             {
                 string path = System.IO.Path.Combine(Server.MapPath("~/Content/Image/"), System.IO.Path.GetFileName(file.FileName));
                 file.SaveAs(path);
-                images.Add(new ProductImage() { ProductID = productId, MimeType = "image", ImagePath = "/OziBazaar.Web/Content/Image/" + System.IO.Path.GetFileName(file.FileName), Description = "Description", ImageType = "Image", ImageOrder = 1 });
+                images.Add(new ProductImage() { ProductID = productId, MimeType = "image", ImagePath = "/Content/Image/" + System.IO.Path.GetFileName(file.FileName), Description = "Description", ImageType = "Image", ImageOrder = 1 });
 
             }
             productRepository.AddAttachment(images);

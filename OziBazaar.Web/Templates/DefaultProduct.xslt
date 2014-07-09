@@ -18,7 +18,7 @@
               <td>
                     <xsl:choose>
                       <xsl:when test="$IsImage='Image'">
-                        <a  class="imageViewerdialog" href="/OziBazaar.Web/Media/FilpView?productId=1">
+                        <a  class="imageViewerdialog" href="/Media/FilpView?productId=1">
                           <img>
                           <xsl:attribute name="src">
                               <xsl:value-of select="./@Value"/>

@@ -16,8 +16,8 @@ namespace OziBazaar.Web.Areas.API.Controllers
         public IEnumerable<string> Get()
         {
 
-            yield return "/OziBazaar.Web/Content/Image/mazda1.jpg";
-            yield return "/OziBazaar.Web/Content/Image/mazda2.jpg";
+            yield return "/Content/Image/mazda1.jpg";
+            yield return "/Content/Image/mazda2.jpg";
         }
 
         // POST api/<controller>
