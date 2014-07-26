@@ -24,11 +24,23 @@ namespace OziBazaar.Web.Controllers
         public ActionResult AdList()
         {
             var lst = productRepository.GetAdvertisementsList();
+            ViewBag.IsEditable = false;
             return View(lst);
         }
+
+        [Authorize]
+        public ActionResult MyAdList()
+        {
+            var lst = productRepository.GetAdvertisementsList(User.Identity.Name);
+            ViewBag.IsEditable = true;
+            return View("AdList",lst);
+        }
+
+        [Authorize]
         public ActionResult AddAd()
         {
              ViewBag.Categories= new SelectList( productRepository.GetAllCategories(),"Id","Name");
+            
             return View();
         }
 	}

@@ -23,7 +23,7 @@
                           <xsl:attribute name="src">
                               <xsl:value-of select="./@Value"/>
                           </xsl:attribute>
-                        </img>
+                          </img>
                        </a>
                       </xsl:when>
                     <xsl:otherwise>

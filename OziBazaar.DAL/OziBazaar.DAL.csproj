@@ -92,6 +92,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="WishList.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>

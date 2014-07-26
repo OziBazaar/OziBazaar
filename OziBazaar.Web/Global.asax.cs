@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using OziBazaar.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace OziBazaar.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Bootstrapper.Initialise();
+            SecurityConfig.InitializeComponents();
         }
     }
 }

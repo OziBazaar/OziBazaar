@@ -1,4 +1,16 @@
-﻿.tablet-border {
+﻿footer {
+width:940px;
+margin:5px auto;
+border-top:1px solid rgba(107, 82, 82, 0.63); 
+padding-top:5px;
+padding-left:20px;
+color:#999;
+}
+#body-content {
+min-height:250px;
+
+}
+.tablet-border {
     border: solid 30px black;
     border-radius: 4px;
     width: 640px;

@@ -35,5 +35,6 @@ namespace OziBazaar.DAL
         public DbSet<Property> Properties { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<WishList> WishLists { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Web.Infrastructure.Repository;
+using OziBazaar.Web.Infrastructure.Email;
+using OziBazaar.Web.Infrastructure.Cryptography;
 
 namespace OziBazaar.Web
 {
@@ -28,7 +30,8 @@ namespace OziBazaar.Web
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
-
+      container.RegisterType<ISmtpEmail, SmtpEmail>();
+      container.RegisterType<IEncryptionEngine, EncryptionEngine>();
       RegisterTypes(container);
 
       return container;

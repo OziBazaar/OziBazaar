@@ -108,7 +108,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return categories;
         }
 
-        public void AddAdvertisement(AdvertisementModel product)
+        public void AddAdvertisement(string userName,AdvertisementModel product)
         {
             throw new NotImplementedException();
         }
@@ -129,6 +129,56 @@ namespace OziBazaar.Web.Infrastructure.Repository
             throw new NotImplementedException();
         }
         public void DeleteImage(int productImageId)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public DAL.UserProfile GetUser(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ActivateUser(string userName, string emailAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<WishListViewModel> GetWishList(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DAL.ProductGroup> GetProductGroupList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SearchViewModel> SearchProduct(string tag)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void AddToWishList(int adId, string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public ProductView GetAd(int adId)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void RemoveFromWishList(int adId, string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<Ad> GetAdvertisementsList(string userName)
         {
             throw new NotImplementedException();
         }

@@ -4,15 +4,18 @@
 <script src="~/Scripts/jquery-2.1.0.js"></script>
 
 <h2>View Product </h2>
-
+ 
 <div>
-@Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
-</div>
-@Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
-@Html.ActionLink("Upload Images", "Index", new { controller = "Media", productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
-<div id="my-dialog"></div>
+    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
 
-<script type="text/javascript">
+    @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Upload Images", "Index", new { controller = "Media", productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
+    <br />    
+</div>
+@*<div id="my-dialog"></div>*@
+
+@*<script type="text/javascript">
     $(function () {
         $('#my-dialog').dialog({
             autoOpen: false,
@@ -30,4 +33,4 @@
             return false;
         });
     });
-</script>
+</script>*@

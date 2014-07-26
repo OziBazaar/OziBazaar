@@ -22,6 +22,7 @@
         <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_Product1" ManuallyRouted="false" />
         <AssociationConnector Association="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" ManuallyRouted="false" />
         <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OziBazaarModel.UserProfile" Width="1.5" PointX="10.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

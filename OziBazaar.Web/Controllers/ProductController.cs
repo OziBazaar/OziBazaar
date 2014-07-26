@@ -21,17 +21,21 @@ namespace OziBazaar.Web.Controllers
             this.renderEngine = renderEngine;
             this.productRepository = productRepository;
         }
+
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult ViewProduct(int productId)
+
+        public ActionResult ViewProduct(int adId)
         {
-            var productview = productRepository.GetProduct(productId);
-            ViewBag.ProductId = productId;
+            var productview = productRepository.GetAd(adId);
+            ViewBag.AdvertisementId = adId;
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View();
         }
+
+        [Authorize]
         public ActionResult EditProduct(int advertisementId,int categoryId,int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
@@ -44,12 +48,15 @@ namespace OziBazaar.Web.Controllers
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View(adViewModel);
         }
+        [Authorize]
         public ActionResult AddProduct(AdvertisementViewModel  advertisemnt)
         {
             var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
             ViewBag.ProductInfo = renderEngine.Render(productAdd);
             return View(advertisemnt);
         }
+        
+        [Authorize]
         public ActionResult CreateProduct()
         {
             var keys = Request.Form.AllKeys;
@@ -68,9 +75,11 @@ namespace OziBazaar.Web.Controllers
             ad.Title = Request.Form["Title"];
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
-            productRepository.AddAdvertisement(ad);
+            productRepository.AddAdvertisement(User.Identity.Name, ad);
             return RedirectToAction("AdList", "Ad");
         }
+
+        [Authorize]
         public  ActionResult UpdateProduct()
         {
             var keys = Request.Form.AllKeys;
@@ -92,8 +101,6 @@ namespace OziBazaar.Web.Controllers
 
             productRepository.UpdateAdvertisement(ad);
             return RedirectToAction("AdList", "Ad");
-        }
-
-       
+        }       
 	}
 }

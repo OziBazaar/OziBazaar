@@ -21,7 +21,7 @@ namespace OziBazaar.DAL
     
         public int AdvertisementID { get; set; }
         public int ProductID { get; set; }
-        public string Price { get; set; }
+        public decimal Price { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int OwnerID { get; set; }

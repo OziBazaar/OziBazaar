@@ -11,10 +11,46 @@ namespace OziBazaar.Web.Infrastructure.Repository
     {
         
         private OziBazaarEntities dbContext = new OziBazaarEntities();
+
         private readonly ILookupRepository lookupRepository;
         public ProductRepository(ILookupRepository lookupRepository)
         {
             this.lookupRepository = lookupRepository;
+        }
+
+        public ProductView GetAd(int adId)
+        {
+            int productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
+            List<ProductFeatureView> productFeatureViews =
+                (from productProperty in dbContext.ProductProperties
+                 where productProperty.ProductID == productId
+                 join productGroupProperty in dbContext.ProductGroupProperties
+                     on productProperty.ProductGroupPropertyID equals productGroupProperty.ProductGroupPropertyID
+                 join property in dbContext.Properties
+                     on productGroupProperty.PropertyID equals property.PropertyID
+                 join productGroup in dbContext.ProductGroups
+                     on productGroupProperty.ProductGroupID equals productGroup.ProductGroupID
+                 select new ProductFeatureView
+                 {
+                     DisplayOrder = (int)productGroupProperty.TabOrder,
+                     FeatureName = property.KeyName,
+                     FeatureValue = productProperty.Value,
+                     ProductId = productProperty.ProductID,
+                     ViewType = productGroup.ViewTemplate
+                 }).ToList<ProductFeatureView>();
+            var imglist = from img in dbContext.ProductImages
+                          where img.ProductID == productId
+                          orderby img.ImageOrder
+                          select new ProductFeatureView
+                          {
+                              DisplayOrder = (int)img.ImageOrder,
+                              FeatureName = "Image",
+                              FeatureValue = img.ImagePath,
+                              ProductId = productId,
+                              ViewType = ""
+                          };
+
+            return new ProductView { Features = productFeatureViews.Union(imglist).ToList() };
         }
         public  ProductView GetProduct(int productId)
         {
@@ -45,7 +81,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                                             FeatureValue=img.ImagePath,
                                                             ProductId=productId,ViewType="" };
 
-            return new ProductView { Features = productFeatureViews.Union(imglist.Take(1)).ToList() };
+            return new ProductView { Features = productFeatureViews.Union(imglist).ToList() };
         }
 
         public ProductAddView AddProduct(int CategoryId)
@@ -134,7 +170,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
           
         }
 
-        public void AddAdvertisement(AdvertisementModel ad)
+        public void AddAdvertisement(string userName, AdvertisementModel ad)
         {
                 if (ad.Features == null || ad.Features.Count() == 0)
                     throw new ArgumentNullException();
@@ -152,8 +188,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                     });
                 }
                 adv.Product = product;
-                adv.OwnerID = 1;
-                adv.Price = "1000";
+                adv.OwnerID = GetCurrentUser(userName);
+                adv.Price = 1000;
                 adv.Title = ad.Title;
                 adv.IsActive = true;
 
@@ -230,7 +266,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             ad.StartDate = advertisementModel.StartDate;
             ad.EndDate = advertisementModel.EndDate;
             ad.OwnerID = 1;
-            ad.Price = "1000";
+            ad.Price = 1000;
             ad.Title = advertisementModel.Title;
             ad.IsActive = true;
             
@@ -276,6 +312,155 @@ namespace OziBazaar.Web.Infrastructure.Repository
             var toBeDeletedImage = dbContext.ProductImages.Single(pi => pi.ProductImageID == productImageId);
             dbContext.ProductImages.Remove(toBeDeletedImage);
             dbContext.SaveChanges();
+        }
+        
+        public UserProfile GetUser(string userName)
+        {
+            try
+            {
+                UserProfile userProfileModel =
+                    (from userProfile in dbContext.UserProfiles
+                     where userProfile.UserName == userName
+                     select userProfile).FirstOrDefault();
+                return userProfileModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool ActivateUser(string userName, string emailAddress)
+        {
+            try
+            {
+                UserProfile userProfileModel = GetUser(userName);
+                if (userProfileModel != null && userProfileModel.EmailAddress == emailAddress)
+                {
+                    userProfileModel.Activated = true;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<WishListViewModel> GetWishList(string userName)
+        {
+            try
+            {
+                List<WishListViewModel> wishListViewModels =
+                    (from userProfile in dbContext.UserProfiles
+                     where userProfile.UserName == userName
+                     join wishList in dbContext.WishLists
+                         on userProfile.UserId equals wishList.UserID
+                     join advertisement in dbContext.Advertisements
+                         on wishList.AdvertizementID equals advertisement.AdvertisementID
+                     join product in dbContext.Products
+                         on advertisement.ProductID equals product.ProductID
+                     join productGroup in dbContext.ProductGroups
+                         on product.ProductGroupID equals productGroup.ProductGroupID
+                     select new WishListViewModel
+                     {
+                         WishListId = wishList.WishListID,
+                         AdvertisementId = wishList.AdvertizementID,
+                         ProductId = advertisement.ProductID,
+                         ProductDescription = product.Description,
+                         ProductGroupDescription = productGroup.Description,
+                         Price = advertisement.Price,
+                         StartDate = advertisement.StartDate,
+                         EndDate = advertisement.EndDate
+                     }).ToList<WishListViewModel>();
+                return wishListViewModels;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<ProductGroup> GetProductGroupList()
+        {
+            List<ProductGroup> productGroups;
+
+            productGroups = dbContext.ProductGroups.ToList<ProductGroup>();
+            return productGroups;
+        }
+
+        public List<SearchViewModel> SearchProduct(string tag)
+        {
+            List<SearchViewModel> searchResult =
+            (from advertisement in dbContext.Advertisements
+             join product in dbContext.Products
+             on advertisement.ProductID equals product.ProductID
+             join productProperty in dbContext.ProductProperties
+             on product.ProductID equals productProperty.ProductID
+             where advertisement.IsActive == true && productProperty.Value == tag
+             select new SearchViewModel
+             {
+                 ProductId = product.ProductID,
+                 ProductDescription = product.Description,
+            //     Price = advertisement.Price,
+                 StartDate = advertisement.StartDate,
+                 EndDate = advertisement.EndDate
+             }
+            ).Distinct().ToList();
+            return searchResult;
+        }
+
+        public void AddToWishList(int adId,string userName)
+        {
+            int userId = GetCurrentUser(userName);
+            var newItem= new WishList(){AdvertizementID=adId,UserID = userId};
+            if (!dbContext.WishLists.Any(wi => wi.UserID == userId && wi.AdvertizementID == adId))
+            {
+                dbContext.WishLists.Add(newItem);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void RemoveFromWishList(int adId, string userName)
+        {
+            int userId = GetCurrentUser(userName);
+             var deletedItem=dbContext.WishLists.SingleOrDefault(item => item.AdvertizementID == adId && item.UserID== userId);
+
+             if (deletedItem != null)
+             {
+                 dbContext.WishLists.Remove(deletedItem);
+                 dbContext.SaveChanges();
+             }
+        }
+
+
+        public IEnumerable<Ad> GetAdvertisementsList(string userName)
+        {
+            int userId = GetCurrentUser(userName);
+            List<Ad> ads = (from advertisement in dbContext.Advertisements
+                            where advertisement.OwnerID == userId
+                            select new Ad
+                            {
+                                Id = advertisement.AdvertisementID,
+                                ProductId = advertisement.ProductID,
+                                CategoryId = advertisement.Product.ProductGroupID.Value,
+                                Title = advertisement.Title,
+                                StartDate = advertisement.StartDate,
+                                EndDate = advertisement.EndDate,
+                                IsActive = advertisement.IsActive.Value,
+                                UserId = advertisement.OwnerID
+                            }).ToList<Ad>();
+            return ads;
+        }
+        private int GetCurrentUser(string userName)
+        {
+            int userId = dbContext.UserProfiles.Single(up => up.UserName == userName).UserId;
+            return userId;
         }
     }
 }
