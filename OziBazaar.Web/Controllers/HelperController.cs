@@ -22,7 +22,7 @@ namespace OziBazaar.Web.Controllers
             img.GenerateImage();
             img.Image.Save(Server.MapPath("~") + rootFolder + this.Session.SessionID.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
             Session["captchaText"] = text;
-            return Json(@"/OziBazaar.Web/Temp/"+this.Session.SessionID.ToString() + ".png?t=" + DateTime.Now.Ticks, JsonRequestBehavior.AllowGet);
+            return Json(@"/Temp/"+this.Session.SessionID.ToString() + ".png?t=" + DateTime.Now.Ticks, JsonRequestBehavior.AllowGet);
         }
 	}
 }

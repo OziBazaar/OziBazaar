@@ -18,7 +18,7 @@
             Price
         </th>
         <th>
-            Show details
+           &nbsp;
         </th>
     </tr>
 
@@ -26,17 +26,16 @@
     {
         <tr>
             <td>
+                
                 @Html.DisplayFor(modelItem => item.ProductGroupDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductDescription)
+                @Html.ActionLink(item.ProductDescription, "ViewProduct", "Product", new { adId = item.AdvertisementId }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                @Html.ActionLink("View", "ViewProduct", "Product", new { adId = item.AdvertisementId }, null)
-                |
+            <td>               
                 @Html.ActionLink("Remove", "Remove", "WishList", new { adId = item.AdvertisementId }, null)
             </td>
         </tr>

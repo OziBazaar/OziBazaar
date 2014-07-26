@@ -18,12 +18,13 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public ProductView GetAd(int adId)
+        public ProductView GetAd(int adId,out int productId)
         {
-            int productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
+            productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
+            int localProdutId=productId;
             List<ProductFeatureView> productFeatureViews =
                 (from productProperty in dbContext.ProductProperties
-                 where productProperty.ProductID == productId
+                 where productProperty.ProductID == localProdutId
                  join productGroupProperty in dbContext.ProductGroupProperties
                      on productProperty.ProductGroupPropertyID equals productGroupProperty.ProductGroupPropertyID
                  join property in dbContext.Properties
@@ -39,14 +40,14 @@ namespace OziBazaar.Web.Infrastructure.Repository
                      ViewType = productGroup.ViewTemplate
                  }).ToList<ProductFeatureView>();
             var imglist = from img in dbContext.ProductImages
-                          where img.ProductID == productId
+                          where img.ProductID == localProdutId
                           orderby img.ImageOrder
                           select new ProductFeatureView
                           {
                               DisplayOrder = (int)img.ImageOrder,
                               FeatureName = "Image",
                               FeatureValue = img.ImagePath,
-                              ProductId = productId,
+                              ProductId = localProdutId,
                               ViewType = ""
                           };
 
@@ -303,8 +304,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
             dbContext.SaveChanges();
         }
-        public IEnumerable<ProductImage> GetProductImages(int productId)
+        public IEnumerable<ProductImage> GetAdImages(int adId)
         {
+            int productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
           return  dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToArray();
         }
         public void DeleteImage(int productImageId)
@@ -457,10 +459,20 @@ namespace OziBazaar.Web.Infrastructure.Repository
                             }).ToList<Ad>();
             return ads;
         }
+        public bool IsAdOwner(string userName, int adId)
+        { 
+             int userId = GetCurrentUser(userName);
+              bool isOwner = (from advertisement in dbContext.Advertisements
+                             where advertisement.OwnerID == userId && advertisement.AdvertisementID == adId
+                             select advertisement.AdvertisementID).Any();
+            return isOwner;
+
+        }
         private int GetCurrentUser(string userName)
         {
             int userId = dbContext.UserProfiles.Single(up => up.UserName == userName).UserId;
             return userId;
         }
+       
     }
 }

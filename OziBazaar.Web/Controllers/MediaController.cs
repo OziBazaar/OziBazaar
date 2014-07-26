@@ -15,15 +15,19 @@ namespace OziBazaar.Web.Controllers
         {
             this.productRepository = productRepository;
         }
-        public ActionResult Index(int productId)
+
+        [Authorize]
+        public ActionResult Index(int adId, int productId)
         {
+            ViewBag.AdvertisementId = adId;
             ViewBag.ProductId = productId;
-            return View(productRepository.GetProductImages(productId));
+            return View(productRepository.GetAdImages(adId));
         }
+
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase[] files, int productId)
+        [Authorize]
+        public ActionResult Upload(HttpPostedFileBase[] files, int productId, int adId)
         {
-           // int productId =Int32.Parse(TempData["ProductId"].ToString());
             List<ProductImage> images=new List<ProductImage>();
             foreach (HttpPostedFileBase file in files)
             {
@@ -33,11 +37,11 @@ namespace OziBazaar.Web.Controllers
 
             }
             productRepository.AddAttachment(images);
-            return RedirectToAction("ViewProduct", "Product", new { productId =productId});
+            return RedirectToAction("ViewProduct", "Product", new { productId = productId, adId = adId });
         }
-        public ActionResult ProductImages(int productId)
+        public ActionResult ProductImages(int adId)
         {
-               return View(productRepository.GetProductImages(productId));
+               return View(productRepository.GetAdImages(adId));
         }
         public ActionResult Delete(int id,int productId)
         {
@@ -52,7 +56,7 @@ namespace OziBazaar.Web.Controllers
         }
         private IEnumerable<string> Get(int productId)
         {
-            return productRepository.GetProductImages(productId).OrderBy(img => img.ImageOrder).Select(img => img.ImagePath);
+            return productRepository.GetAdImages(productId).OrderBy(img => img.ImageOrder).Select(img => img.ImagePath);
         }
         public JsonResult GetImages(int id)
         {

@@ -214,7 +214,6 @@
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
-    <Compile Include="Infrastructure\Repository\MockProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\ProductRepository.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />

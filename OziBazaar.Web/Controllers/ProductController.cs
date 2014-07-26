@@ -29,8 +29,19 @@ namespace OziBazaar.Web.Controllers
 
         public ActionResult ViewProduct(int adId)
         {
-            var productview = productRepository.GetAd(adId);
+            int productId;
+            var productview = productRepository.GetAd(adId,out productId);
+            if (!User.Identity.IsAuthenticated)
+                ViewBag.IsAdOwner = false;
+            else
+            {
+                if (productRepository.IsAdOwner(User.Identity.Name, adId))
+                    ViewBag.IsAdOwner = true;
+                else ViewBag.IsAdOwner = false;
+            }
+                        
             ViewBag.AdvertisementId = adId;
+            ViewBag.ProductId = productId;
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View();
         }

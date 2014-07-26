@@ -11,7 +11,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public interface IProductRepository
     {
         ProductView           GetProduct(int productId);
-        ProductView           GetAd(int adId);
+        ProductView           GetAd(int adId,out int productId);
         ProductAddView        AddProduct(int CategoryId);
         ProductEditView       EditProduct(int CategoryId,int productId);       
         IEnumerable<Ad>       GetAdvertisementsList();
@@ -23,7 +23,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         AdvertisementModel GetAdvertisementById(int advertisementId);
         void AddAttachment(List<ProductImage> images);
 
-        IEnumerable<ProductImage> GetProductImages(int productId);
+        IEnumerable<ProductImage> GetAdImages(int productId);
 
         void DeleteImage(int productImageId);
 
@@ -35,6 +35,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         void AddToWishList(int adId, string userName);
         void RemoveFromWishList(int adId, string userName);
+        bool IsAdOwner(string userName, int adId);
+       
 
     }
    

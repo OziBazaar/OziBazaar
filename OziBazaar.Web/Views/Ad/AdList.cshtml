@@ -16,10 +16,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
+
 @if(ViewBag.IsEditable)
             {
               <th></th>
             }
+            
     </tr>
 
     @foreach (var item in Model)
@@ -28,11 +30,7 @@
            
             <td>                
                 @Html.ActionLink(item.Title, "ViewProduct", "Product", new { adId = item.Id }, null)
-                @*@Html.DisplayFor(modelItem => item.Title)*@
             </td>
-            @*<td>
-                @Html.ActionLink("View", "ViewProduct", "Product", new { adId = item.Id }, null)
-            </td>*@
             @if(ViewBag.IsEditable)
             { 
             <td>
@@ -41,5 +39,4 @@
             }
         </tr>
     }
-
 </table>
