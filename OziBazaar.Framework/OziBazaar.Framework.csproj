@@ -69,6 +69,16 @@
     <Compile Include="RenderEngine\IRenderEngine.cs" />
     <Compile Include="RenderEngine\IXMLRenderable.cs" />
     <Compile Include="RenderEngine\XslRenderEngine.cs" />
+    <Compile Include="Specification\AndSpecification.cs" />
+    <Compile Include="Specification\CompositeSpecification.cs" />
+    <Compile Include="Specification\DirectSpecification.cs" />
+    <Compile Include="Specification\ExpressionBuilder.cs" />
+    <Compile Include="Specification\ISpecification.cs" />
+    <Compile Include="Specification\NotSpecification.cs" />
+    <Compile Include="Specification\OrSpecification.cs" />
+    <Compile Include="Specification\ParametersRebinder.cs" />
+    <Compile Include="Specification\Specification.cs" />
+    <Compile Include="Specification\TrueSpecification.cs" />
     <Compile Include="WebApiUnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ioc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Specification\SpecificationsDesignNotes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

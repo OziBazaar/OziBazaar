@@ -66,13 +66,13 @@
     <Build Include="dbo\Tables\ProductProperty.sql" />
     <Build Include="dbo\Tables\Property.sql" />
     <Build Include="dbo\Tables\WishList.sql" />
-    <Build Include="dbo\Tables\ProductImage.sql" />
     <Build Include="dbo\Tables\Product.sql" />
     <Build Include="dbo\Tables\ProductGroup.sql" />
     <Build Include="dbo\Tables\Advertisement.sql" />
     <Build Include="dbo\Tables\ProductGroupProperty.sql" />
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\UserProfile.sql" />
+    <Build Include="dbo\Tables\ProductImage.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OziBazaar.Database.publish.xml" />
