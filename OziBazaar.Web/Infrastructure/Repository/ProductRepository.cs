@@ -174,7 +174,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         public void AddAdvertisement(string userName, AdvertisementModel ad)
         {
                 if (ad.Features == null || ad.Features.Count() == 0)
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException("Invalid argument");
                 Advertisement adv = new Advertisement();
                 adv.StartDate = ad.StartDate;
                 adv.EndDate = ad.EndDate;
@@ -190,7 +190,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 }
                 adv.Product = product;
                 adv.OwnerID = GetCurrentUser(userName);
-                adv.Price = 1000;
+                adv.Price = ad.Price;
                 adv.Title = ad.Title;
                 adv.IsActive = true;
 
@@ -266,8 +266,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
             ad.StartDate = advertisementModel.StartDate;
             ad.EndDate = advertisementModel.EndDate;
-            ad.OwnerID = 1;
-            ad.Price = 1000;
+            ad.Price = advertisementModel.Price;
             ad.Title = advertisementModel.Title;
             ad.IsActive = true;
             
@@ -318,24 +317,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
         
         public UserProfile GetUser(string userName)
         {
-            try
-            {
-                UserProfile userProfileModel =
+                 UserProfile userProfileModel =
                     (from userProfile in dbContext.UserProfiles
                      where userProfile.UserName == userName
                      select userProfile).FirstOrDefault();
                 return userProfileModel;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         public bool ActivateUser(string userName, string emailAddress)
-        {
-            try
-            {
+        { 
                 UserProfile userProfileModel = GetUser(userName);
                 if (userProfileModel != null && userProfileModel.EmailAddress == emailAddress)
                 {
@@ -346,12 +336,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 else
                 {
                     return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                }         
         }
 
         public List<WishListViewModel> GetWishList(string userName)
@@ -438,6 +423,21 @@ namespace OziBazaar.Web.Infrastructure.Repository
                  dbContext.WishLists.Remove(deletedItem);
                  dbContext.SaveChanges();
              }
+        }
+
+        public void ClearWishList( string userName)
+        {
+            int userId = GetCurrentUser(userName);
+            var deletedItems = dbContext.WishLists.Where(item => item.UserID == userId);
+
+            if (deletedItems.Any())
+            {
+                foreach (var item in deletedItems)
+                {
+                    dbContext.WishLists.Remove(item);    
+                }                
+                dbContext.SaveChanges();
+            }
         }
 
 

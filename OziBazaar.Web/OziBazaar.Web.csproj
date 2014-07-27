@@ -211,6 +211,8 @@
     <Compile Include="Infrastructure\Email\ISmtpEmail.cs" />
     <Compile Include="Infrastructure\Email\SmtpEmail.cs" />
     <Compile Include="Infrastructure\Graphic\CaptchaImage.cs" />
+    <Compile Include="Infrastructure\Repository\AccountRepository.cs" />
+    <Compile Include="Infrastructure\Repository\IAccountRepository.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />

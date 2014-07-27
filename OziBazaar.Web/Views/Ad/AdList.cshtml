@@ -40,3 +40,9 @@
         </tr>
     }
 </table>
+@if(ViewBag.IsEditable)
+{
+    <div>
+        @Html.ActionLink("Clear","Clear","WishList")
+    </div>
+}

@@ -26,15 +26,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
         IEnumerable<ProductImage> GetAdImages(int productId);
 
         void DeleteImage(int productImageId);
-
-        UserProfile GetUser(string userName);
-        bool ActivateUser(string userName, string emailAddress);
         List<WishListViewModel> GetWishList(string userName);
         List<ProductGroup> GetProductGroupList();
         List<SearchViewModel> SearchProduct(string tag);
 
         void AddToWishList(int adId, string userName);
         void RemoveFromWishList(int adId, string userName);
+
+        void ClearWishList(string userName);
+
         bool IsAdOwner(string userName, int adId);
        
 

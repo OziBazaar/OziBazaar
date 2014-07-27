@@ -12,7 +12,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private string[] reservedKeys = new string[6] { "AdvertisementId", "CategoryId", "Title", "StartDate", "FinishDate", "__RequestVerificationToken" };
+        private string[] reservedKeys = new string[7] { "AdvertisementId", "CategoryId", "Title", "StartDate", "FinishDate","Price", "__RequestVerificationToken" };
         private readonly IRenderEngine renderEngine;
         private readonly IProductRepository productRepository;
 
@@ -84,6 +84,7 @@ namespace OziBazaar.Web.Controllers
             ad.StartDate = startDate;
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
+            ad.Price = decimal.Parse(Request.Form["Price"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
             productRepository.AddAdvertisement(User.Identity.Name, ad);

@@ -13,5 +13,7 @@ namespace OziBazaar.Web.ViewModel
 
         public string StartDate { get; set; }
         public string FinishDate { get; set; }
+
+        public decimal Price { get; set; }
     }
 }

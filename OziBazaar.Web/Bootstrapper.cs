@@ -30,6 +30,7 @@ namespace OziBazaar.Web
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
+      container.RegisterType<IAccountRepository, AccountRepository>();
       container.RegisterType<ISmtpEmail, SmtpEmail>();
       container.RegisterType<IEncryptionEngine, EncryptionEngine>();
       RegisterTypes(container);

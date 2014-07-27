@@ -37,6 +37,13 @@ namespace OziBazaar.Web.Controllers
              productRepository.RemoveFromWishList(adId, User.Identity.Name);
              return RedirectToAction("Index");
          }
+
+         [Authorize()]
+         public ActionResult Clear()
+         {
+             productRepository.ClearWishList( User.Identity.Name);
+             return RedirectToAction("Index");
+         }
 	}
 
 }

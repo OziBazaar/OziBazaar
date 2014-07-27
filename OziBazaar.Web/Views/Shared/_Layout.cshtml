@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - OziBazaar</title>
     <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
      @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
@@ -22,7 +22,10 @@
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         <li>@Html.ActionLink("Advertisements", "AdList", "Ad")</li>
                         <li>@Html.ActionLink("Wish List", "Index", "WishList")</li>
-                        <li>@Html.ActionLink("My Adds", "MyAdList", "Ad")</li>
+                        @if(User.Identity.IsAuthenticated)
+                        { 
+                            <li>@Html.ActionLink("My Adds", "MyAdList", "Ad")</li>
+                        }
                     </ul>
                 </div>
                 <div class="span4">

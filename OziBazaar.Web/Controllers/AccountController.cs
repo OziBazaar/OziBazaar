@@ -23,15 +23,18 @@ namespace OziBazaar.Web.Controllers
         private readonly IEncryptionEngine _encryptionEngine;
         private readonly ISmtpEmail _smtpEmail;
         private readonly IProductRepository _productRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public AccountController(
             IEncryptionEngine encryptionEngine, 
             ISmtpEmail smtpEmail,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IAccountRepository accountRepository)
         {
             _encryptionEngine = encryptionEngine;
             _smtpEmail = smtpEmail;
             _productRepository = productRepository;
+            _accountRepository = accountRepository;
         }
         
         //
@@ -52,7 +55,7 @@ namespace OziBazaar.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            UserProfile userProfile = _productRepository.GetUser(model.UserName);
+            UserProfile userProfile = _accountRepository.GetUser(model.UserName);
             if (userProfile != null && userProfile.Activated == true)
             {
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
@@ -152,7 +155,7 @@ namespace OziBazaar.Web.Controllers
             {
                 string decActivatioCode = _encryptionEngine.DESDecrypt(activationCode);
                 string[] values = decActivatioCode.Split(separator);
-                if (_productRepository.ActivateUser(values[0], values[1]) == true)
+                if (_accountRepository.ActivateUser(values[0], values[1]) == true)
                 {
                     ViewBag.Message = "The account is activated sucessfuly";
                     return View("Message");
@@ -182,7 +185,7 @@ namespace OziBazaar.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(ResetPasswordModel model)
         {
-            UserProfile userProfile = _productRepository.GetUser(model.UserName);
+            UserProfile userProfile = _accountRepository.GetUser(model.UserName);
             if (userProfile != null && userProfile.Activated == true)
             {
                 if (ModelState.IsValid && userProfile.EmailAddress == model.EmailAddress)
