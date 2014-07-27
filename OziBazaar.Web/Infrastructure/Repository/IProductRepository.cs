@@ -1,4 +1,5 @@
 ﻿using OziBazaar.DAL;
+using OziBazaar.Framework.Specification;
 using OziBazaar.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,14 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public interface IProductRepository
     {
         ProductView           GetProduct(int productId);
-        ProductView           GetAd(int adId,out int productId);
+        ProductView           GetAd(int adId, out int productId);
         ProductAddView        AddProduct(int CategoryId);
         ProductEditView       EditProduct(int CategoryId,int productId);       
-        IEnumerable<Ad>       GetAdvertisementsList();
-        IEnumerable<Ad> GetAdvertisementsList( string userName);
+        IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
+       // IEnumerable<Ad> GetAdvertisementsList( string userName);
 
         IEnumerable<Category> GetAllCategories();
-        void                  AddAdvertisement(string userName, AdvertisementModel advertisement);
+        void                  AddAdvertisement(int userId, AdvertisementModel advertisement);
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
         AdvertisementModel GetAdvertisementById(int advertisementId);
         void AddAttachment(List<ProductImage> images);
@@ -26,16 +27,16 @@ namespace OziBazaar.Web.Infrastructure.Repository
         IEnumerable<ProductImage> GetAdImages(int productId);
 
         void DeleteImage(int productImageId);
-        List<WishListViewModel> GetWishList(string userName);
+        List<WishListViewModel> GetWishList(int userId);
         List<ProductGroup> GetProductGroupList();
         List<SearchViewModel> SearchProduct(string tag);
 
-        void AddToWishList(int adId, string userName);
-        void RemoveFromWishList(int adId, string userName);
+        void AddToWishList(int adId, int userId);
+        void RemoveFromWishList(int adId, int userId);
 
-        void ClearWishList(string userName);
+        void ClearWishList(int userId);
 
-        bool IsAdOwner(string userName, int adId);
+        bool IsAdOwner(int userId, int adId);
        
 
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OziBazaar.DAL;
+using OziBazaar.Framework.Specification;
 
 namespace OziBazaar.Web.Infrastructure.Repository
 {
@@ -141,23 +142,23 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
         }
         
-        public IEnumerable<Ad> GetAdvertisementsList()
-        {
-                List<Ad> ads = (from advertisement in dbContext.Advertisements
-                                select new Ad
-                                {
-                                    Id = advertisement.AdvertisementID,
-                                    ProductId = advertisement.ProductID,
-                                    CategoryId=advertisement.Product.ProductGroupID.Value,
-                                    Title = advertisement.Title,
-                                    StartDate = advertisement.StartDate,
-                                    EndDate = advertisement.EndDate,
-                                    IsActive = advertisement.IsActive.Value,
-                                    UserId = advertisement.OwnerID
-                                }).ToList<Ad>();
-                return ads;
+        //public IEnumerable<Ad> GetAdvertisementsList()
+        //{
+        //        List<Ad> ads = (from advertisement in dbContext.Advertisements
+        //                        select new Ad
+        //                        {
+        //                            Id = advertisement.AdvertisementID,
+        //                            ProductId = advertisement.ProductID,
+        //                            CategoryId=advertisement.Product.ProductGroupID.Value,
+        //                            Title = advertisement.Title,
+        //                            StartDate = advertisement.StartDate,
+        //                            EndDate = advertisement.EndDate,
+        //                            IsActive = advertisement.IsActive.Value,
+        //                            UserId = advertisement.OwnerID
+        //                        }).ToList<Ad>();
+        //        return ads;
           
-        }
+        //}
 
         public IEnumerable<Category> GetAllCategories()
         {
@@ -171,7 +172,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
           
         }
 
-        public void AddAdvertisement(string userName, AdvertisementModel ad)
+        public void AddAdvertisement(int userId, AdvertisementModel ad)
         {
                 if (ad.Features == null || ad.Features.Count() == 0)
                     throw new ArgumentNullException("Invalid argument");
@@ -189,7 +190,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                     });
                 }
                 adv.Product = product;
-                adv.OwnerID = GetCurrentUser(userName);
+                adv.OwnerID = userId;
                 adv.Price = ad.Price;
                 adv.Title = ad.Title;
                 adv.IsActive = true;
@@ -339,13 +340,13 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 }         
         }
 
-        public List<WishListViewModel> GetWishList(string userName)
+        public List<WishListViewModel> GetWishList(int userId)
         {
             try
             {
                 List<WishListViewModel> wishListViewModels =
                     (from userProfile in dbContext.UserProfiles
-                     where userProfile.UserName == userName
+                     where userProfile.UserId == userId
                      join wishList in dbContext.WishLists
                          on userProfile.UserId equals wishList.UserID
                      join advertisement in dbContext.Advertisements
@@ -402,9 +403,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return searchResult;
         }
 
-        public void AddToWishList(int adId,string userName)
+        public void AddToWishList(int adId,int userId)
         {
-            int userId = GetCurrentUser(userName);
             var newItem= new WishList(){AdvertizementID=adId,UserID = userId};
             if (!dbContext.WishLists.Any(wi => wi.UserID == userId && wi.AdvertizementID == adId))
             {
@@ -413,9 +413,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
         }
 
-        public void RemoveFromWishList(int adId, string userName)
+        public void RemoveFromWishList(int adId, int userId)
         {
-            int userId = GetCurrentUser(userName);
              var deletedItem=dbContext.WishLists.SingleOrDefault(item => item.AdvertizementID == adId && item.UserID== userId);
 
              if (deletedItem != null)
@@ -425,9 +424,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
              }
         }
 
-        public void ClearWishList( string userName)
-        {
-            int userId = GetCurrentUser(userName);
+        public void ClearWishList( int userId)
+        {  
             var deletedItems = dbContext.WishLists.Where(item => item.UserID == userId);
 
             if (deletedItems.Any())
@@ -441,12 +439,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
         }
 
 
-        public IEnumerable<Ad> GetAdvertisementsList(string userName)
+        public IEnumerable<Ad> GetAdvertisementsList(ISpecification<Advertisement> specification)
         {
-            int userId = GetCurrentUser(userName);
-            List<Ad> ads = (from advertisement in dbContext.Advertisements
-                            where advertisement.OwnerID == userId
-                            select new Ad
+            List<Ad> ads = (from advertisement in dbContext.Advertisements.Where(specification.SatisfiedBy())
+                             select new Ad
                             {
                                 Id = advertisement.AdvertisementID,
                                 ProductId = advertisement.ProductID,
@@ -459,19 +455,13 @@ namespace OziBazaar.Web.Infrastructure.Repository
                             }).ToList<Ad>();
             return ads;
         }
-        public bool IsAdOwner(string userName, int adId)
+        public bool IsAdOwner(int userId, int adId)
         { 
-             int userId = GetCurrentUser(userName);
               bool isOwner = (from advertisement in dbContext.Advertisements
                              where advertisement.OwnerID == userId && advertisement.AdvertisementID == adId
                              select advertisement.AdvertisementID).Any();
             return isOwner;
 
-        }
-        private int GetCurrentUser(string userName)
-        {
-            int userId = dbContext.UserProfiles.Single(up => up.UserName == userName).UserId;
-            return userId;
         }
        
     }

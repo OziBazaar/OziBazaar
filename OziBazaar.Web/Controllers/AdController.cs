@@ -1,9 +1,12 @@
-﻿using OziBazaar.Web.Infrastructure.Repository;
+﻿using OziBazaar.DAL;
+using OziBazaar.Framework.Specification;
+using OziBazaar.Web.Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace OziBazaar.Web.Controllers
 {
@@ -23,7 +26,8 @@ namespace OziBazaar.Web.Controllers
         }
         public ActionResult AdList()
         {
-            var lst = productRepository.GetAdvertisementsList();
+            ISpecification<Advertisement> spec = new TrueSpecification<Advertisement>();
+            var lst = productRepository.GetAdvertisementsList(spec);
             ViewBag.IsEditable = false;
             return View(lst);
         }
@@ -31,7 +35,9 @@ namespace OziBazaar.Web.Controllers
         [Authorize]
         public ActionResult MyAdList()
         {
-            var lst = productRepository.GetAdvertisementsList(User.Identity.Name);
+            int userId= WebSecurity.GetUserId(User.Identity.Name);
+            ISpecification<Advertisement> myAdSpec = new DirectSpecification<Advertisement>(ad => ad.OwnerID == userId );
+            var lst = productRepository.GetAdvertisementsList(myAdSpec);
             ViewBag.IsEditable = true;
             return View("AdList",lst);
         }

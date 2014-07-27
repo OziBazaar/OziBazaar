@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace OziBazaar.Web.Controllers
 {
@@ -35,7 +36,7 @@ namespace OziBazaar.Web.Controllers
                 ViewBag.IsAdOwner = false;
             else
             {
-                if (productRepository.IsAdOwner(User.Identity.Name, adId))
+                if (productRepository.IsAdOwner(WebSecurity.GetUserId(User.Identity.Name), adId))
                     ViewBag.IsAdOwner = true;
                 else ViewBag.IsAdOwner = false;
             }
@@ -87,7 +88,7 @@ namespace OziBazaar.Web.Controllers
             ad.Price = decimal.Parse(Request.Form["Price"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
-            productRepository.AddAdvertisement(User.Identity.Name, ad);
+            productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
             return RedirectToAction("AdList", "Ad");
         }
 
