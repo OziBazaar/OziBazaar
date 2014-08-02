@@ -13,6 +13,7 @@ using OziBazaar.DAL;
 using OziBazaar.Web.Infrastructure.Cryptography;
 using OziBazaar.Web.Infrastructure.Email;
 using OziBazaar.Web.Infrastructure.Repository;
+using System.Data.SqlClient;
 
 namespace OziBazaar.Web.Controllers
 {
@@ -58,7 +59,7 @@ namespace OziBazaar.Web.Controllers
             UserProfile userProfile = _accountRepository.GetUser(model.UserName);
             if (userProfile != null && userProfile.Activated == true)
             {
-                if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+                if (ModelState.IsValid && WebSecurity.Login(userProfile.UserName, model.Password, persistCookie: model.RememberMe))
                 {
                     return RedirectToLocal(returnUrl);
                 }
@@ -115,6 +116,11 @@ namespace OziBazaar.Web.Controllers
                 // Attempt to register the user
                 try
                 {
+                    var existingUser = _accountRepository.GetUserByEmail(model.EmailAddress);
+
+                    if (existingUser != null)
+                        throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail);
+
                     WebSecurity.CreateUserAndAccount(
                         model.UserName, 
                         model.Password,
@@ -138,6 +144,10 @@ namespace OziBazaar.Web.Controllers
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+                catch(SqlException se)
+                {
+                     ModelState.AddModelError("", "Failed to Register new user, Try with new username/email");
                 }
             }
 

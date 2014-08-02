@@ -20,7 +20,7 @@ namespace OziBazaar.Web.Infrastructure.Email
             {
                 MailFromAddress = ConfigurationManager.AppSettings["MailFromAddress"],
                 Password = ConfigurationManager.AppSettings["Password"],
-                Username = ConfigurationManager.AppSettings["Username"],
+                Username = ConfigurationManager.AppSettings["AccountUsername"],
                 ServerName = ConfigurationManager.AppSettings["ServerName"],
                 ServerPort = int.Parse(ConfigurationManager.AppSettings["ServerPort"]),
                 UseSsl = bool.Parse(ConfigurationManager.AppSettings["UseSsl"])
@@ -52,7 +52,8 @@ namespace OziBazaar.Web.Infrastructure.Email
                 .Append("/Account/Activation?ActivationCode=")
                 .Append(activationCode)
                 .Append("\">Click here to activate your account.</a>")
-                .Append("<br /><br />Thanks");
+                .Append("<br /><br />Thanks<br>")
+                .Append("Ozi Bazaar Team");
                 MailMessage mailMessage = new MailMessage(
                     _emailSettings.MailFromAddress,
                     _emailSettings.MailToAddress,
@@ -82,7 +83,8 @@ namespace OziBazaar.Web.Infrastructure.Email
                 .Append("<br /><br />Your password has been reset to: <b>")
                 .Append(newPassword)
                 .Append("</b>")
-                .Append("<br /><br />Thanks");
+                .Append("<br /><br />Thanks<br>")
+                .Append("Ozi Bazaar Team");
                 MailMessage mailMessage = new MailMessage(
                     _emailSettings.MailFromAddress,
                     _emailSettings.MailToAddress,

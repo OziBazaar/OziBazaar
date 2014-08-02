@@ -9,7 +9,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
 {
     public interface IAccountRepository
     {
-        UserProfile GetUser(string userName);
+        string GetUserNameByEmail(string emailAddress);
+        UserProfile GetUserByEmail(string emailAddress);
+        UserProfile GetUser(string userToken);
         bool ActivateUser(string userName, string emailAddress);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OziBazaar.Web.Infrastructure.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,13 +13,14 @@ namespace OziBazaar.Web.App_Start
         public static void InitializeComponents()
         {
             WebSecurity.InitializeDatabaseConnection("OziBazaarMembership", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            
             InitializeUsresAndRoles();
         }
 
         private static void InitializeUsresAndRoles()
         {
             var roles = (SimpleRoleProvider)Roles.Provider;
-            var membership = (SimpleMembershipProvider)Membership.Provider;
+            var membership = (ExtendedSimpleMembershipProvider)Membership.Provider;
             if (!roles.RoleExists("Admin"))
                 roles.CreateRole("Admin");
             if (membership.GetUser("Administrator", false) == null)

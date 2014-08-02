@@ -61,6 +61,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ProductProperty.sql" />
@@ -73,6 +74,10 @@
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\UserProfile.sql" />
     <Build Include="dbo\Tables\ProductImage.sql" />
+    <Build Include="dbo\Tables\webpages_Membership.sql" />
+    <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
+    <Build Include="dbo\Tables\webpages_Roles.sql" />
+    <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OziBazaar.Database.publish.xml" />

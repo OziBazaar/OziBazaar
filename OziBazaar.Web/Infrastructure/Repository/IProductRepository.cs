@@ -16,7 +16,6 @@ namespace OziBazaar.Web.Infrastructure.Repository
         ProductAddView        AddProduct(int CategoryId);
         ProductEditView       EditProduct(int CategoryId,int productId);       
         IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
-       // IEnumerable<Ad> GetAdvertisementsList( string userName);
 
         IEnumerable<Category> GetAllCategories();
         void                  AddAdvertisement(int userId, AdvertisementModel advertisement);
@@ -36,8 +35,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         void ClearWishList(int userId);
 
-        bool IsAdOwner(int userId, int adId);
-       
+        bool IsAdOwner(int userId, int adId);       
 
     }
    

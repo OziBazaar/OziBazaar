@@ -9,11 +9,11 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public class AccountRepository : IAccountRepository
     {
         private OziBazaarEntities dbContext = new OziBazaarEntities();
-        public UserProfile GetUser(string userName)
+        public UserProfile GetUser(string userToken)
         {
             UserProfile userProfileModel =
                (from userProfile in dbContext.UserProfiles
-                where userProfile.UserName == userName
+                where userProfile.UserName == userToken || userProfile.EmailAddress == userToken
                 select userProfile).FirstOrDefault();
             return userProfileModel;
         }
@@ -33,5 +33,22 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
         }
 
+
+        public UserProfile GetUserByEmail(string emailAddress)
+        {
+            UserProfile userProfileModel =
+              (from userProfile in dbContext.UserProfiles
+               where userProfile.EmailAddress == emailAddress
+               select userProfile).FirstOrDefault();
+            return userProfileModel;
+        }
+
+        public string GetUserNameByEmail(string emailAddress)
+        {
+            var userName = (from usr in dbContext.UserProfiles
+                            where usr.EmailAddress == emailAddress
+                            select usr.UserName).SingleOrDefault();
+            return userName;
+        }
     }
 }

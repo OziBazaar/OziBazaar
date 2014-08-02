@@ -437,8 +437,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 dbContext.SaveChanges();
             }
         }
-
-
+        
         public IEnumerable<Ad> GetAdvertisementsList(ISpecification<Advertisement> specification)
         {
             List<Ad> ads = (from advertisement in dbContext.Advertisements.Where(specification.SatisfiedBy())
