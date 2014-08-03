@@ -17,7 +17,8 @@ namespace OziBazaar.Web.Models
         }
         public ProductView(string template):this()
         {
-            renderTemplate = HttpContext.Current.Server.MapPath(template); ; ;
+            if(!string.IsNullOrEmpty(template))
+                 renderTemplate = HttpContext.Current.Server.MapPath(template); ; ;
         }
         public List<ProductFeatureView> Features { get; set; }
 

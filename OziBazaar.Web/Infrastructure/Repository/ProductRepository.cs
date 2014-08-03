@@ -52,7 +52,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                               ViewType = ""
                           };
 
-            return new ProductView { Features = productFeatureViews.Union(imglist).ToList() };
+            return new ProductView(productFeatureViews.First().ViewType) { Features = productFeatureViews.Union(imglist).ToList() };
         }
         public  ProductView GetProduct(int productId)
         {
