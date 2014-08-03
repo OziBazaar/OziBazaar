@@ -26,7 +26,6 @@ namespace OziBazaar.Web
     private static IUnityContainer BuildUnityContainer()
     {
       var container = new UnityContainer();
-      
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
