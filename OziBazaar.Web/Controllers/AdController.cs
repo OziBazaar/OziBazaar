@@ -24,9 +24,10 @@ namespace OziBazaar.Web.Controllers
         {
             return View();
         }
+    
         public ActionResult AdList()
         {
-            ISpecification<Advertisement> spec = new TrueSpecification<Advertisement>();
+            ISpecification<Advertisement> spec = new DirectSpecification<Advertisement>(ad => ad.EndDate > DateTime.Now);
             var lst = productRepository.GetAdvertisementsList(spec);
             ViewBag.IsEditable = false;
             return View(lst);

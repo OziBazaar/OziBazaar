@@ -52,7 +52,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                               ViewType = ""
                           };
 
-            return new ProductView { Features = productFeatureViews.Union(imglist).ToList() };
+            return new ProductView(productFeatureViews.First().ViewType) { Features = productFeatureViews.Union(imglist).ToList() };
         }
         public  ProductView GetProduct(int productId)
         {
@@ -291,7 +291,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                                             Id=advertisementId,
                                                             Title=ad.Title,
                                                             StartDate=ad.StartDate,
-                                                            EndDate=ad.EndDate
+                                                            EndDate=ad.EndDate,
+                                                            Price=ad.Price
                                                         };
             return query.Single();
         }

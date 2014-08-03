@@ -5,7 +5,6 @@
                 xmlns:dt="urn:schemas-microsoft-com:datatypes"
                 exclude-result-prefixes="msxsl">
   <xsl:output method="xml" indent="yes" />
-
   <xsl:template match="/">
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
@@ -33,7 +32,6 @@
               </td>
             </tr>
         </xsl:for-each>  
-        </table>
-  
+        </table>  
   </xsl:template>
 </xsl:stylesheet>
