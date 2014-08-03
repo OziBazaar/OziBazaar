@@ -16,7 +16,8 @@
            <xsl:variable name="Value" select="./@Value" />
            <xsl:variable name="DependsOn" select="./@DependsOn" />
            <xsl:variable name="FeatureId" select="./@PropertyId" />
-            <tr >
+          <xsl:if test="@EditorType !='Image'">
+             <tr >
               <td>
                   <strong> <xsl:value-of select="./@Name"/>                       
                   </strong>
@@ -111,6 +112,7 @@
                     </xsl:choose>
               </td>
             </tr>
+          </xsl:if>
         </xsl:for-each>  
         </table>
    </xsl:template>

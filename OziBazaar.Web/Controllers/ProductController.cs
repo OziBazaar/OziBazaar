@@ -51,11 +51,14 @@ namespace OziBazaar.Web.Controllers
         public ActionResult EditProduct(int advertisementId,int categoryId,int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
-            AdvertisementViewModel adViewModel = new AdvertisementViewModel {
-                                                                                AdvertisementId=advertisement.Id
-                                                                               ,Title = advertisement.Title
-                                                                               ,StartDate = advertisement.StartDate.ToShortDateString()
-                                                                               ,FinishDate=advertisement.EndDate.ToShortDateString() };
+            AdvertisementViewModel adViewModel = new AdvertisementViewModel
+            {
+                AdvertisementId=advertisement.Id
+                ,Title = advertisement.Title
+                ,Price=advertisement.Price
+                ,StartDate = advertisement.StartDate.ToShortDateString()
+                ,FinishDate=advertisement.EndDate.ToShortDateString() 
+            };
             var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
             return View(adViewModel);
@@ -79,8 +82,8 @@ namespace OziBazaar.Web.Controllers
             }
             DateTime startDate=DateTime.Now;
             DateTime endDate = DateTime.Now.AddMonths(1);
-            //DateTime.TryParse(Request.Form["StartDate"],out startDate);
-            //DateTime.TryParse(Request.Form["FinishDate"], out endDate);
+            DateTime.TryParse(Request.Form["StartDate"],out startDate);
+            DateTime.TryParse(Request.Form["FinishDate"], out endDate);
             AdvertisementModel ad = new AdvertisementModel() { Features = features };
             ad.StartDate = startDate;
             ad.EndDate = endDate;
@@ -103,14 +106,15 @@ namespace OziBazaar.Web.Controllers
             }
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now.AddMonths(1);
-            //DateTime.TryParse(Request.Form["StartDate"],out startDate);
-            //DateTime.TryParse(Request.Form["FinishDate"], out endDate);
+            DateTime.TryParse(Request.Form["StartDate"],out startDate);
+            DateTime.TryParse(Request.Form["FinishDate"], out endDate);
             AdvertisementModel ad = new AdvertisementModel() { Features = features };
             ad.StartDate = startDate;
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+            ad.Price = decimal.Parse(Request.Form["Price"]);
 
             productRepository.UpdateAdvertisement(ad);
             return RedirectToAction("AdList", "Ad");

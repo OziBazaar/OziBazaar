@@ -291,7 +291,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                                             Id=advertisementId,
                                                             Title=ad.Title,
                                                             StartDate=ad.StartDate,
-                                                            EndDate=ad.EndDate
+                                                            EndDate=ad.EndDate,
+                                                            Price=ad.Price
                                                         };
             return query.Single();
         }
