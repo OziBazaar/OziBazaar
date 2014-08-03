@@ -27,10 +27,6 @@ namespace OziBazaar.Web
     {
       var container = new UnityContainer();
       
-      // register all your components with the container here
-      // it is NOT necessary to register your controllers
-        
-      // e.g. container.RegisterType<ITestService, TestService>(); 
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
