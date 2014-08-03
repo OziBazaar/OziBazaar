@@ -19,3 +19,13 @@
     <input type="reset" value="Clear" class="btn btn-primary" />
 @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class="btn btn-primary"})
 }
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $('#StartDate').datepicker({ dateFormat: "dd/mm/yy" });
+            $("#FinishDate").datepicker({ dateFormat: "dd/mm/yy" });
+        });
+    </script>
+}

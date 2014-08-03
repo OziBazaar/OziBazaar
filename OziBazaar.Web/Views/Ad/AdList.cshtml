@@ -32,9 +32,14 @@
                 @Html.ActionLink(item.Title, "ViewProduct", "Product", new { adId = item.Id }, null)
             </td>
             @if(ViewBag.IsEditable)
-            { 
+            {  
             <td>
+               
                 @Html.ActionLink("Edit", "EditProduct", "Product", new {advertisementId=item.Id , productId = item.ProductId,categoryId=item.CategoryId }, null)
+                @if (item.EndDate < DateTime.Now)
+                {
+                    <span style="color:red;">Expired</span>
+                }
             </td>
             }
         </tr>
