@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-
+using OziBazaar.Web.Infrastructure.Util;
 namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
@@ -56,8 +56,8 @@ namespace OziBazaar.Web.Controllers
                 AdvertisementId=advertisement.Id
                 ,Title = advertisement.Title
                 ,Price=advertisement.Price
-                ,StartDate = advertisement.StartDate.ToShortDateString()
-                ,FinishDate=advertisement.EndDate.ToShortDateString() 
+                ,StartDate = advertisement.StartDate.ToString("dd/MM/yyy")
+                ,FinishDate = advertisement.EndDate.ToString("dd/MM/yyy")
             };
             var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
@@ -82,8 +82,8 @@ namespace OziBazaar.Web.Controllers
             }
             DateTime startDate=DateTime.Now;
             DateTime endDate = DateTime.Now.AddMonths(1);
-            DateTime.TryParse(Request.Form["StartDate"],out startDate);
-            DateTime.TryParse(Request.Form["FinishDate"], out endDate);
+            startDate = Request.Form["StartDate"].ConvertToDate();
+            endDate = Request.Form["FinishDate"].ConvertToDate();
             AdvertisementModel ad = new AdvertisementModel() { Features = features };
             ad.StartDate = startDate;
             ad.EndDate = endDate;
@@ -106,8 +106,8 @@ namespace OziBazaar.Web.Controllers
             }
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now.AddMonths(1);
-            DateTime.TryParse(Request.Form["StartDate"],out startDate);
-            DateTime.TryParse(Request.Form["FinishDate"], out endDate);
+            startDate = Request.Form["StartDate"].ConvertToDate();
+            endDate = Request.Form["FinishDate"].ConvertToDate();
             AdvertisementModel ad = new AdvertisementModel() { Features = features };
             ad.StartDate = startDate;
             ad.EndDate = endDate;
