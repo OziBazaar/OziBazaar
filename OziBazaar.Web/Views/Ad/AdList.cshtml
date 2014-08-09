@@ -38,7 +38,11 @@
                 @Html.ActionLink("Edit", "EditProduct", "Product", new {advertisementId=item.Id , productId = item.ProductId,categoryId=item.CategoryId }, null)
                 @if (item.EndDate < DateTime.Now)
                 {
-                    <span style="color:red;">Expired</span>
+                    <span style="color:red;"> (Expired)</span>
+                }
+                else if( item.StartDate > DateTime.Now)
+                {
+                    <span style="color:green;"> (Future)</span>
                 }
             </td>
             }
