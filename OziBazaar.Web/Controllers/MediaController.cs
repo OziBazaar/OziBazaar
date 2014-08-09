@@ -49,7 +49,6 @@ namespace OziBazaar.Web.Controllers
             return RedirectToAction("Index", new { productId = productId, adId = adId});
 
         }
-
         public ActionResult FilpView(int productId)
         {
             return PartialView(productId);
