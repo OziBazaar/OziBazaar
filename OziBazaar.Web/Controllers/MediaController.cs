@@ -43,10 +43,10 @@ namespace OziBazaar.Web.Controllers
         {
                return View(productRepository.GetAdImages(adId));
         }
-        public ActionResult Delete(int id,int productId)
+        public ActionResult Delete(int id,int productId, int adId)
         {
             productRepository.DeleteImage(id);
-            return RedirectToAction("Index", new { productId = productId });
+            return RedirectToAction("Index", new { productId = productId, adId = adId});
 
         }
 
