@@ -218,6 +218,7 @@
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\ProductRepository.cs" />
     <Compile Include="Infrastructure\Security\ExtendedSimpleMembershipProvider.cs" />
+    <Compile Include="Infrastructure\Util\DateUtil.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\AdStatistic.cs" />
