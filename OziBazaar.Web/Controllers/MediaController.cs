@@ -57,6 +57,11 @@ namespace OziBazaar.Web.Controllers
         {
             return productRepository.GetAdImages(productId).OrderBy(img => img.ImageOrder).Select(img => img.ImagePath);
         }
+        /// <summary>
+        /// Get images
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult GetImages(int id)
         {
             return new JsonResult() { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = Get(id) };
