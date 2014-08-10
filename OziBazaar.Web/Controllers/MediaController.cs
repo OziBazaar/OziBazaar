@@ -58,7 +58,7 @@ namespace OziBazaar.Web.Controllers
             return productRepository.GetAdImages(productId).OrderBy(img => img.ImageOrder).Select(img => img.ImagePath);
         }
         /// <summary>
-        /// Get images
+        /// Get images method
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
