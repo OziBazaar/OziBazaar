@@ -16,3 +16,12 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX [UK_Property]
     ON [dbo].[Property]([PropertyID] ASC);
 
+GO
+ALTER TABLE [dbo].[Property] 
+	ADD CONSTRAINT CK_DataType CHECK( [DataType] in('String','bool','Lookup','Image'))
+GO
+ALTER TABLE [dbo].[Property] 
+	ADD CONSTRAINT CK_ValidLookupType CHECK(lookupType IS NULL OR dbo.IsValidLookupType(lookupType)=1	 )
+GO
+ALTER TABLE [dbo].[Property] 
+	ADD CONSTRAINT CK_ControlType CHECK( [ControlType] in('TextBox','TextArea','DropDown','CheckBox','RadioButton','Image'))

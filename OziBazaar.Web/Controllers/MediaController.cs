@@ -43,13 +43,12 @@ namespace OziBazaar.Web.Controllers
         {
                return View(productRepository.GetAdImages(adId));
         }
-        public ActionResult Delete(int id,int productId)
+        public ActionResult Delete(int id,int productId, int adId)
         {
             productRepository.DeleteImage(id);
-            return RedirectToAction("Index", new { productId = productId });
+            return RedirectToAction("Index", new { productId = productId, adId = adId});
 
         }
-
         public ActionResult FilpView(int productId)
         {
             return PartialView(productId);
@@ -58,6 +57,11 @@ namespace OziBazaar.Web.Controllers
         {
             return productRepository.GetAdImages(productId).OrderBy(img => img.ImageOrder).Select(img => img.ImagePath);
         }
+        /// <summary>
+        /// Get images method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult GetImages(int id)
         {
             return new JsonResult() { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = Get(id) };
