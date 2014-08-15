@@ -10,6 +10,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace OziBazaar.Web
 {
+
   public static class Bootstrapper
   {
     public static IUnityContainer Initialise()
