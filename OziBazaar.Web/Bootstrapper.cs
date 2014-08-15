@@ -10,8 +10,6 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace OziBazaar.Web
 {
-
-
     //added something
     //add another line
   public static class Bootstrapper
