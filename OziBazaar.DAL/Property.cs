@@ -21,5 +21,6 @@ namespace OziBazaar.DAL
         public byte[] Version { get; set; }
         public string LookupType { get; set; }
         public string DependsOn { get; set; }
+        public string Title { get; set; }
     }
 }

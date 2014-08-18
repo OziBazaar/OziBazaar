@@ -16,7 +16,7 @@
            </xsl:if>              
           <td>
               <strong>
-                  <xsl:value-of select="./@Name"/>                       
+                  <xsl:value-of select="./@Title"/>                       
               </strong>
           </td>
           <td>

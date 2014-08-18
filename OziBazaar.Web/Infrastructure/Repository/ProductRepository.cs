@@ -36,6 +36,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                  {
                      DisplayOrder = (int)productGroupProperty.TabOrder,
                      FeatureName = property.KeyName,
+                     Title=property.Title,
                      FeatureValue = productProperty.Value,
                      ProductId = productProperty.ProductID,
                      ViewType = productGroup.ViewTemplate
@@ -47,6 +48,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                           {
                               DisplayOrder = (int)img.ImageOrder,
                               FeatureName = "Image",
+                              Title="Image",
                               FeatureValue = img.ImagePath,
                               ProductId = localProdutId,
                               ViewType = ""
@@ -70,6 +72,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                     {
                         DisplayOrder = (int)productGroupProperty.TabOrder,
                         FeatureName = property.KeyName,
+                        Title=property.Title,
                         FeatureValue = productProperty.Value,
                         ProductId = productProperty.ProductID,
                         ViewType = productGroup.ViewTemplate
@@ -80,6 +83,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                             select new ProductFeatureView{
                                                             DisplayOrder=(int)img.ImageOrder,
                                                             FeatureName="Image",
+                                                            Title="Image",
                                                             FeatureValue=img.ImagePath,
                                                             ProductId=productId,ViewType="" };
 
@@ -97,6 +101,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                      {
                          PropertyId = productGroupProperty.ProductGroupPropertyID,
                          FeatureName = property.KeyName,
+                         Title=property.Title,
                          EditorType = property.ControlType,
                          ValueType = property.DataType,
                          IsMandatory=productGroupProperty.IsMandatory,
@@ -111,6 +116,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                      {
                          PropertyId = x.PropertyId,
                          FeatureName = x.FeatureName,
+                         Title=x.Title,
                          EditorType = x.EditorType,
                          ValueType = x.ValueType,
                          IsMandatory = x.IsMandatory??false,
@@ -217,6 +223,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                       {
                                           PropertyId = productGroupProperty.ProductGroupPropertyID,
                                           FeatureName = property.KeyName,
+                                          Title=property.Title,
                                           EditorType = property.ControlType,
                                           ValueType = property.DataType,
                                           IsMandatory = productGroupProperty.IsMandatory.Value,
@@ -233,6 +240,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             {
                 PropertyId = x.PropertyId,
                 FeatureName = x.FeatureName,
+                Title=x.Title,
                 EditorType = x.EditorType,
                 ValueType = x.ValueType,
                 Value = x.CurrentValue,

@@ -44,6 +44,7 @@ namespace OziBazaar.Web.Models
                 List<object> attributeList = new List<object>();
                 attributeList.Add(new XAttribute("PropertyId", feature.PropertyId));
                 attributeList.Add(new XAttribute("Name", feature.FeatureName));
+                attributeList.Add(new XAttribute("Title", feature.Title));
                 attributeList.Add(new XAttribute("EditorType", feature.EditorType));
                 if (feature.IsMandatory )
                     attributeList.Add(new XAttribute("IsMandatory", feature.IsMandatory));
