@@ -471,6 +471,29 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return isOwner;
 
         }
-       
+        
+        public void DeleteAd(int adId, int productId)
+        {
+            var images=dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToList();
+            foreach (var image in images)
+            {
+                dbContext.ProductImages.Remove(image);
+            }
+
+            var productProperties = dbContext.ProductProperties.Where(pp => pp.ProductID == productId).ToList();
+            foreach (var property in productProperties)
+            {
+                dbContext.ProductProperties.Remove(property);
+            }
+
+            var product=dbContext.Products.SingleOrDefault( p => p.ProductID == productId);
+            if (product != null)
+                dbContext.Products.Remove(product);
+
+            var advertisement = dbContext.Advertisements.SingleOrDefault(ad => ad.AdvertisementID == adId);
+            if (advertisement != null)
+                dbContext.Advertisements.Remove(advertisement);
+            dbContext.SaveChanges();
+        }
     }
 }

@@ -44,6 +44,7 @@
                 {
                     <span style="color:green;"> (Future)</span>
                 }
+                @Html.ActionLink("Delete", "DeleteAd", "Ad", new { adId = item.Id, productId = item.ProductId, categoryId = item.CategoryId }, null)
             </td>
             }
         </tr>

@@ -35,8 +35,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         void ClearWishList(int userId);
 
-        bool IsAdOwner(int userId, int adId);       
+        bool IsAdOwner(int userId, int adId);
 
+        void DeleteAd(int adId, int productId);
     }
    
 }

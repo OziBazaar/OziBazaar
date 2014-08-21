@@ -52,5 +52,11 @@ namespace OziBazaar.Web.Controllers
             
             return View();
         }
+
+        public ActionResult DeleteAd(int adId, int productId)
+        {
+            productRepository.DeleteAd(adId, productId);
+            return RedirectToAction("MyAdList");
+        }
 	}
 }

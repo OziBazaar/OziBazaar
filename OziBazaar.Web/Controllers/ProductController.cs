@@ -92,7 +92,7 @@ namespace OziBazaar.Web.Controllers
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
             productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
-            return RedirectToAction("AdList", "Ad");
+            return RedirectToAction("MyAdList", "Ad");
         }
 
         [Authorize]
@@ -117,7 +117,7 @@ namespace OziBazaar.Web.Controllers
             ad.Price = decimal.Parse(Request.Form["Price"]);
 
             productRepository.UpdateAdvertisement(ad);
-            return RedirectToAction("AdList", "Ad");
+            return RedirectToAction("MyAdList", "Ad");
         }       
 	}
 }
