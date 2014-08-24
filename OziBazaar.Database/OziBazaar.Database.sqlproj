@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{6ba688c8-f73f-4553-ad1a-ff7cfdd23f2c}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureDatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -62,6 +62,9 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="Scripts\" />
+    <Folder Include="dbo\Programmability" />
+    <Folder Include="dbo\Programmability\Functions" />
+    <Folder Include="dbo\Programmability\Functions\Scalar-valued Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ProductProperty.sql" />
@@ -78,7 +81,8 @@
     <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
     <Build Include="dbo\Tables\webpages_Roles.sql" />
     <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
-    <Build Include="dbo\IsValidLookupType.sql" />
+    <Build Include="dbo\Programmability\Functions\Scalar-valued Functions\IsValidLookupType.sql" />
+    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OziBazaar.Database.publish.xml" />

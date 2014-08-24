@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using OziBazaar.DAL;
 using OziBazaar.Framework.Specification;
+using OziBazaar.Web.ViewModel;
 
 namespace OziBazaar.Web.Infrastructure.Repository
 {
@@ -19,10 +20,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public ProductView GetAd(int adId,out int productId)
+        public AdView GetAd(int adId,out int productId)
         {
-            productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
-            int localProdutId=productId;
+           var  adInfo = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId);
+           productId = adInfo.ProductID;
+           int localProdutId=adInfo.ProductID;
+
             List<ProductFeatureView> productFeatureViews =
                 (from productProperty in dbContext.ProductProperties
                  where productProperty.ProductID == localProdutId
@@ -36,6 +39,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                  {
                      DisplayOrder = (int)productGroupProperty.TabOrder,
                      FeatureName = property.KeyName,
+                     Title=property.Title,
                      FeatureValue = productProperty.Value,
                      ProductId = productProperty.ProductID,
                      ViewType = productGroup.ViewTemplate
@@ -47,13 +51,18 @@ namespace OziBazaar.Web.Infrastructure.Repository
                           {
                               DisplayOrder = (int)img.ImageOrder,
                               FeatureName = "Image",
+                              Title="Image",
                               FeatureValue = img.ImagePath,
                               ProductId = localProdutId,
                               ViewType = ""
                           };
 
-            return new ProductView(productFeatureViews.First().ViewType) { Features = productFeatureViews.Union(imglist).ToList() };
-        }
+            return new AdView() {
+                                AdTitle = adInfo.Title,
+                                Product = new ProductView(productFeatureViews.First().ViewType) { 
+                                                                Features =   productFeatureViews.Union(imglist).ToList() }
+                                };
+      }
         public  ProductView GetProduct(int productId)
         {
 
@@ -70,6 +79,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                     {
                         DisplayOrder = (int)productGroupProperty.TabOrder,
                         FeatureName = property.KeyName,
+                        Title=property.Title,
                         FeatureValue = productProperty.Value,
                         ProductId = productProperty.ProductID,
                         ViewType = productGroup.ViewTemplate
@@ -80,6 +90,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                             select new ProductFeatureView{
                                                             DisplayOrder=(int)img.ImageOrder,
                                                             FeatureName="Image",
+                                                            Title="Image",
                                                             FeatureValue=img.ImagePath,
                                                             ProductId=productId,ViewType="" };
 
@@ -97,6 +108,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                      {
                          PropertyId = productGroupProperty.ProductGroupPropertyID,
                          FeatureName = property.KeyName,
+                         Title=property.Title,
                          EditorType = property.ControlType,
                          ValueType = property.DataType,
                          IsMandatory=productGroupProperty.IsMandatory,
@@ -111,6 +123,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                      {
                          PropertyId = x.PropertyId,
                          FeatureName = x.FeatureName,
+                         Title=x.Title,
                          EditorType = x.EditorType,
                          ValueType = x.ValueType,
                          IsMandatory = x.IsMandatory??false,
@@ -172,7 +185,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
           
         }
 
-        public void AddAdvertisement(int userId, AdvertisementModel ad)
+        public Ad AddAdvertisement(int userId, AdvertisementModel ad)
         {
                 if (ad.Features == null || ad.Features.Count() == 0)
                     throw new ArgumentNullException("Invalid argument");
@@ -197,11 +210,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
                 dbContext.Advertisements.Add(adv);
                 dbContext.SaveChanges();
+                return new Ad() { 
+                                    Id=adv.AdvertisementID,
+                                    ProductId=adv.ProductID
+                                };
         }
         
         public ProductEditView EditProduct(int categoryId, int productId)
         {
-           var q=from p in dbContext.ProductProperties
+           var q = from p in dbContext.ProductProperties
                   where p.ProductID==productId
                       select p;
          var productFeatureDetails =
@@ -217,6 +234,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                       {
                                           PropertyId = productGroupProperty.ProductGroupPropertyID,
                                           FeatureName = property.KeyName,
+                                          Title=property.Title,
                                           EditorType = property.ControlType,
                                           ValueType = property.DataType,
                                           IsMandatory = productGroupProperty.IsMandatory.Value,
@@ -233,6 +251,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             {
                 PropertyId = x.PropertyId,
                 FeatureName = x.FeatureName,
+                Title=x.Title,
                 EditorType = x.EditorType,
                 ValueType = x.ValueType,
                 Value = x.CurrentValue,
@@ -245,9 +264,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
                  ).ToList();
 
-            return new ProductEditView { Features = productFeatureEdits.OrderBy(feature => feature.DisplayOrder).ToList() };
-
-
+            return   new ProductEditView
+                              {
+                                  Features = productFeatureEdits.OrderBy(feature => feature.DisplayOrder).ToList()
+                              };
         }
 
         public void UpdateAdvertisement(AdvertisementModel advertisementModel)
@@ -463,6 +483,29 @@ namespace OziBazaar.Web.Infrastructure.Repository
             return isOwner;
 
         }
-       
+        
+        public void DeleteAd(int adId, int productId)
+        {
+            var images=dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToList();
+            foreach (var image in images)
+            {
+                dbContext.ProductImages.Remove(image);
+            }
+
+            var productProperties = dbContext.ProductProperties.Where(pp => pp.ProductID == productId).ToList();
+            foreach (var property in productProperties)
+            {
+                dbContext.ProductProperties.Remove(property);
+            }
+
+            var product=dbContext.Products.SingleOrDefault( p => p.ProductID == productId);
+            if (product != null)
+                dbContext.Products.Remove(product);
+
+            var advertisement = dbContext.Advertisements.SingleOrDefault(ad => ad.AdvertisementID == adId);
+            if (advertisement != null)
+                dbContext.Advertisements.Remove(advertisement);
+            dbContext.SaveChanges();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace OziBazaar.Web.Models
 
             foreach (var feature in Features)
             {
-                features.Add(new XElement("Feature", new XAttribute("Name", feature.FeatureName), new XAttribute("Value", feature.FeatureValue)));
+                features.Add(new XElement("Feature", new XAttribute("Name", feature.FeatureName), new XAttribute("Title", feature.Title), new XAttribute("Value", feature.FeatureValue)));
 
             }
             XDocument inputXml = new XDocument(new XElement("Features", features));

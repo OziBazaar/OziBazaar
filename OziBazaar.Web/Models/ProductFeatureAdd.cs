@@ -10,6 +10,7 @@ namespace OziBazaar.Web.Models
         public int ProductId { get; set; }
         public int PropertyId { get; set; }
         public string FeatureName { get; set; }
+        public string Title { get; set; }
         public string EditorType { get; set; }
         public string ValueType { get; set; }
         public int DisplayOrder { get; set; }

@@ -32,6 +32,7 @@ namespace OziBazaar.Web.Controllers
         {
             int productId;
             var productview = productRepository.GetAd(adId,out productId);
+            
             if (!User.Identity.IsAuthenticated)
                 ViewBag.IsAdOwner = false;
             else
@@ -43,8 +44,8 @@ namespace OziBazaar.Web.Controllers
                         
             ViewBag.AdvertisementId = adId;
             ViewBag.ProductId = productId;
-            ViewBag.ProductInfo = renderEngine.Render(productview);
-            return View();
+            ViewBag.ProductInfo = renderEngine.Render(productview.Product);
+            return View(productview);
         }
 
         [Authorize]
@@ -61,8 +62,11 @@ namespace OziBazaar.Web.Controllers
             };
             var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
+            ViewBag.ProductId = productId;
+            ViewBag.AdvertisementId = advertisementId;
             return View(adViewModel);
         }
+
         [Authorize]
         public ActionResult AddProduct(AdvertisementViewModel  advertisemnt)
         {
@@ -91,8 +95,9 @@ namespace OziBazaar.Web.Controllers
             ad.Price = decimal.Parse(Request.Form["Price"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
-            productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
-            return RedirectToAction("AdList", "Ad");
+          var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
+
+            return RedirectToAction("Index", "Media", new { adId = newAd.Id, productId=newAd.ProductId });
         }
 
         [Authorize]
@@ -117,7 +122,7 @@ namespace OziBazaar.Web.Controllers
             ad.Price = decimal.Parse(Request.Form["Price"]);
 
             productRepository.UpdateAdvertisement(ad);
-            return RedirectToAction("AdList", "Ad");
+            return RedirectToAction("MyAdList", "Ad");
         }       
-	}
+	}   
 }

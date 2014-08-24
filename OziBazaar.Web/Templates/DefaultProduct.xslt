@@ -11,7 +11,7 @@
            <xsl:variable name="IsImage" select="./@Name" />
             <tr >
               <td>
-                  <strong> <xsl:value-of select="./@Name"/>                       
+                  <strong> <xsl:value-of select="./@Title"/>                       
                   </strong>
               </td>
               <td>

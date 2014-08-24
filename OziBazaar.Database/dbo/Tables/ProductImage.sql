@@ -7,10 +7,19 @@
 	[Description] [nvarchar](500) NULL,
 	[ImageOrder] [smallint] NULL,
 	[Version] [timestamp] NOT NULL,
- CONSTRAINT [PK_ProductImage] PRIMARY KEY CLUSTERED (	[ProductImageID] ASC),
-CONSTRAINT [FK_ProductImage_Product] FOREIGN KEY([ProductID])REFERENCES [dbo].[Product] ([ProductID])
-) ON [PRIMARY]
+ CONSTRAINT [PK_ProductImage] PRIMARY KEY CLUSTERED 
+(
+	[ProductImageID] ASC
+)
+) 
 
 
 
 
+
+GO
+ALTER TABLE [dbo].[ProductImage]  WITH CHECK ADD  CONSTRAINT [FK_ProductImage_Product] FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Product] ([ProductID])
+GO
+
+ALTER TABLE [dbo].[ProductImage] CHECK CONSTRAINT [FK_ProductImage_Product]

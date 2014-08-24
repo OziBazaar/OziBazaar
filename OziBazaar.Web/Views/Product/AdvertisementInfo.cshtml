@@ -1,7 +1,9 @@
 ﻿@model OziBazaar.Web.ViewModel.AdvertisementViewModel
 
 <div class="form-horizontal">
-        <h4>Advertisement information</h4>
+    <font color="blue">
+        @Model.Title
+    </font>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.CategoryId)
