@@ -1,6 +1,7 @@
 ﻿using OziBazaar.DAL;
 using OziBazaar.Framework.Specification;
 using OziBazaar.Web.Models;
+using OziBazaar.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public interface IProductRepository
     {
         ProductView           GetProduct(int productId);
-        ProductView           GetAd(int adId, out int productId);
+        AdView           GetAd(int adId, out int productId);
         ProductAddView        AddProduct(int CategoryId);
         ProductEditView       EditProduct(int CategoryId,int productId);       
         IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
@@ -20,7 +21,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
         IEnumerable<Category> GetAllCategories();
         void                  AddAdvertisement(int userId, AdvertisementModel advertisement);
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
+
         AdvertisementModel GetAdvertisementById(int advertisementId);
+
         void AddAttachment(List<ProductImage> images);
 
         IEnumerable<ProductImage> GetAdImages(int productId);
@@ -39,5 +42,4 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         void DeleteAd(int adId, int productId);
     }
-   
 }

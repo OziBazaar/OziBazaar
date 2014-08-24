@@ -6,9 +6,6 @@
                 exclude-result-prefixes="msxsl">
   <xsl:output method="xml" indent="yes" />
   <xsl:template match="/">
-         <p>
-         Edit Product information
-        </p>
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
            <xsl:variable name="EditorType" select="./@EditorType" />

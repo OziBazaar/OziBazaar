@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using OziBazaar.DAL;
 using OziBazaar.Framework.Specification;
+using OziBazaar.Web.ViewModel;
 
 namespace OziBazaar.Web.Infrastructure.Repository
 {
@@ -19,10 +20,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public ProductView GetAd(int adId,out int productId)
+        public AdView GetAd(int adId,out int productId)
         {
-            productId = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId).ProductID;
-            int localProdutId=productId;
+           var  adInfo = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId);
+           productId = adInfo.ProductID;
+           int localProdutId=adInfo.ProductID;
+
             List<ProductFeatureView> productFeatureViews =
                 (from productProperty in dbContext.ProductProperties
                  where productProperty.ProductID == localProdutId
@@ -54,8 +57,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
                               ViewType = ""
                           };
 
-            return new ProductView(productFeatureViews.First().ViewType) { Features = productFeatureViews.Union(imglist).ToList() };
-        }
+            return new AdView() {
+                                AdTitle = adInfo.Title,
+                                Product = new ProductView(productFeatureViews.First().ViewType) { 
+                                                                Features =   productFeatureViews.Union(imglist).ToList() }
+                                };
+      }
         public  ProductView GetProduct(int productId)
         {
 
@@ -207,7 +214,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         
         public ProductEditView EditProduct(int categoryId, int productId)
         {
-           var q=from p in dbContext.ProductProperties
+           var q = from p in dbContext.ProductProperties
                   where p.ProductID==productId
                       select p;
          var productFeatureDetails =
@@ -253,9 +260,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
                  ).ToList();
 
-            return new ProductEditView { Features = productFeatureEdits.OrderBy(feature => feature.DisplayOrder).ToList() };
-
-
+            return   new ProductEditView
+                              {
+                                  Features = productFeatureEdits.OrderBy(feature => feature.DisplayOrder).ToList()
+                              };
         }
 
         public void UpdateAdvertisement(AdvertisementModel advertisementModel)

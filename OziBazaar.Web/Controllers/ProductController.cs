@@ -32,6 +32,7 @@ namespace OziBazaar.Web.Controllers
         {
             int productId;
             var productview = productRepository.GetAd(adId,out productId);
+            
             if (!User.Identity.IsAuthenticated)
                 ViewBag.IsAdOwner = false;
             else
@@ -43,8 +44,8 @@ namespace OziBazaar.Web.Controllers
                         
             ViewBag.AdvertisementId = adId;
             ViewBag.ProductId = productId;
-            ViewBag.ProductInfo = renderEngine.Render(productview);
-            return View();
+            ViewBag.ProductInfo = renderEngine.Render(productview.Product);
+            return View(productview);
         }
 
         [Authorize]
