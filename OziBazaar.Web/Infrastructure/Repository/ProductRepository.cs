@@ -185,7 +185,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
           
         }
 
-        public void AddAdvertisement(int userId, AdvertisementModel ad)
+        public Ad AddAdvertisement(int userId, AdvertisementModel ad)
         {
                 if (ad.Features == null || ad.Features.Count() == 0)
                     throw new ArgumentNullException("Invalid argument");
@@ -210,6 +210,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
                 dbContext.Advertisements.Add(adv);
                 dbContext.SaveChanges();
+                return new Ad() { 
+                                    Id=adv.AdvertisementID,
+                                    ProductId=adv.ProductID
+                                };
         }
         
         public ProductEditView EditProduct(int categoryId, int productId)

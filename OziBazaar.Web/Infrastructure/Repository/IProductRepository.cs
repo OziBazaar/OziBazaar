@@ -19,7 +19,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
 
         IEnumerable<Category> GetAllCategories();
-        void                  AddAdvertisement(int userId, AdvertisementModel advertisement);
+        Ad                  AddAdvertisement(int userId, AdvertisementModel advertisement);
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
 
         AdvertisementModel GetAdvertisementById(int advertisementId);
