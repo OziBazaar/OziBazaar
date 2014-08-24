@@ -5,11 +5,17 @@
 <h2>View Product </h2> 
 <div>
     @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
-    @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
     @if (ViewBag.IsAdOwner)
-    {
-        @Html.ActionLink("Upload Images", "Index", new { controller = "Media", adId = ViewBag.AdvertisementId,productId=ViewBag.ProductId }, new { @class = "btn btn-primary" });
+    {   
+        @Html.ActionLink("Back To My Ads", "MyAdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Upload Images", "Index", new { controller = "Media", adId = ViewBag.AdvertisementId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" });
+
+    }
+    else
+    {        
+        @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
     }
     <br />    
 </div>

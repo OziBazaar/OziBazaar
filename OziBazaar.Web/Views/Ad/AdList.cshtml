@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<OziBazaar.Web.Models.Ad>
 
-@{
-    ViewBag.Title = "Ad List";
-}
-
-<h2>All Ad List</h2>
-@if(ViewBag.IsEditable)
+@if (!ViewBag.OwnerView)
 {
+    <h2>All Ad List</h2>
+}
+else
+{
+    <h2>My Advertisement</h2>
     <p>
         @Html.ActionLink("Create New", "AddAd","Ad")
     </p>
@@ -17,34 +17,34 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
 
-@if(ViewBag.IsEditable)
+        @if (ViewBag.OwnerView)
             {
               <th></th>
             }
-            
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-           
             <td>                
-                @Html.ActionLink(item.Title, "ViewProduct", "Product", new { adId = item.Id }, null)
+                @Html.ActionLink(item.Title, "ViewProduct", "Product", new { adId = item.Id}, null)
             </td>
-            @if(ViewBag.IsEditable)
+            @if (ViewBag.OwnerView)
             {  
-            <td>
+              <td>
                
                 @Html.ActionLink("Edit", "EditProduct", "Product", new {advertisementId=item.Id , productId = item.ProductId,categoryId=item.CategoryId }, null)
+                &nbsp;|&nbsp;
+                @Html.ActionLink("Delete", "DeleteAd", "Ad", new { adId = item.Id, productId = item.ProductId, categoryId = item.CategoryId }, null)
+
                 @if (item.EndDate < DateTime.Now)
                 {
                     <span style="color:red;"> (Expired)</span>
                 }
-                else if( item.StartDate > DateTime.Now)
+                else if (item.StartDate > DateTime.Now)
                 {
-                    <span style="color:green;"> (Future)</span>
+                    <span style="color:green;"> (Future,)</span>
                 }
-                @Html.ActionLink("Delete", "DeleteAd", "Ad", new { adId = item.Id, productId = item.ProductId, categoryId = item.CategoryId }, null)
             </td>
             }
         </tr>
