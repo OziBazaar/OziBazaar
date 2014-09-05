@@ -5,16 +5,16 @@
 
 @using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post, new { id = "editProdForm" }))
 {
-@Html.AntiForgeryToken()
-@Html.Partial("AdvertisementInfo",Model)
-    <hr />
-<div>
-    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
-</div>
+    @Html.AntiForgeryToken()
+    @Html.Partial("AdvertisementInfo",Model)
+        <hr />
+    <div>
+        @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
+    </div>
     <input type="submit" value="Update" class="btn btn-primary" />
     @Html.ActionLink("Upload Images", "Index", new { controller = "Media", adId = ViewBag.AdvertisementId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" });
     <input type="reset" value="Clear" class="btn btn-primary" />
-@Html.ActionLink("Back To List", "MyAdList", new { controller = "Ad" }, new { @class="btn btn-primary"})
+    @Html.ActionLink("Back To List", "MyAdList", new { controller = "Ad" }, new { @class="btn btn-primary"})
 }
 @section scripts
 {

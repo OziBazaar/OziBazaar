@@ -8,6 +8,7 @@
     @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
     @if (ViewBag.IsAdOwner)
     {   
+        @Html.ActionLink("Edit", "EditProduct", new { controller = "Product", advertisementId = ViewBag.AdvertisementId, categoryId =ViewBag.CategoryId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Back To My Ads", "MyAdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Upload Images", "Index", new { controller = "Media", adId = ViewBag.AdvertisementId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" });
