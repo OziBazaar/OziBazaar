@@ -5,6 +5,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Diagnostics;
+using Microsoft.WindowsAzure.Storage;
 
 namespace OziBazaat.NotificationUI
 {
@@ -15,6 +16,7 @@ namespace OziBazaat.NotificationUI
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
             ConfigureDiagnostics();
+            CreateTablesQueuesBlobContainers();
             return base.OnStart();
         }
 
@@ -22,12 +24,35 @@ namespace OziBazaat.NotificationUI
         {
             DiagnosticMonitorConfiguration config = DiagnosticMonitor.GetDefaultInitialConfiguration();
             config.Logs.BufferQuotaInMB = 500;
-            config.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
+            config.Logs.ScheduledTransferLogLevelFilter = Microsoft.WindowsAzure.Diagnostics.LogLevel.Verbose;
             config.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(1d);
 
             DiagnosticMonitor.Start(
                 "Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString",
                 config);
+        }
+        private  void CreateTablesQueuesBlobContainers()
+        {
+            var storageAccount = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString"));
+
+            var tableClient = storageAccount.CreateCloudTableClient();
+
+            var mailingListTable = tableClient.GetTableReference("MailingList");
+            mailingListTable.CreateIfNotExists();
+
+            var messageTable = tableClient.GetTableReference("Message");
+            messageTable.CreateIfNotExists();
+
+            var blobClient = storageAccount.CreateCloudBlobClient();
+
+            var blobContainers = blobClient.GetContainerReference("azuremailblobcontainer");
+            blobContainers.CreateIfNotExists();
+
+            var queueClient = storageAccount.CreateCloudQueueClient();
+
+            var subscribeQueue = queueClient.GetQueueReference("azuremailsubscribequeue");
+            subscribeQueue.CreateIfNotExists();
+
         }
 
         public override void OnStop()
