@@ -72,6 +72,7 @@ namespace OziBazaar.Web.Controllers
         }
         
         [Authorize]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateProduct()
         {
             var keys = Request.Form.AllKeys;
@@ -96,6 +97,7 @@ namespace OziBazaar.Web.Controllers
         }
 
         [Authorize]
+        [ValidateAntiForgeryToken]
         public  ActionResult UpdateProduct()
         {
             var keys = Request.Form.AllKeys;
