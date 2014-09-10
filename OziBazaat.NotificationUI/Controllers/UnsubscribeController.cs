@@ -8,6 +8,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using OziBazaat.NotificationUI.Models;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using OziBazaar.Notification.Common.Models;
 
 //Don't review this, we'll make this a vnext function.
 

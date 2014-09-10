@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace OziBazaat.NotificationUI.Models
+namespace OziBazaar.Notification.Common.Models
 {
     public class Subscriber : TableEntity
     {

@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using Microsoft.WindowsAzure.Storage.Table;
+using OziBazaar.Notification.Common.Models;
 using OziBazaat.NotificationUI.Models;
 using System;
 using System.Collections.Generic;
