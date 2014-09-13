@@ -14,4 +14,14 @@
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
+  <Role name="OziBazaar.NotificationSender">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="SendGridUserName" value="behtash" />
+      <Setting name="SendGridPassword" value="Sami2014" />
+      <Setting name="AzureMailServiceURL" value="http://ozibazaar2.azurewebsites.net/" />
+    </ConfigurationSettings>
+  </Role>
 </ServiceConfiguration>

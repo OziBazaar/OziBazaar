@@ -45,6 +45,14 @@
       <RoleName>OziBazaar.NotificationScheduler</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\OziBazaar.NotificationSender\OziBazaar.NotificationSender.csproj">
+      <Name>OziBazaar.NotificationSender</Name>
+      <Project>{be7811c0-62b4-4941-8d7f-1f82496494cb}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>OziBazaar.NotificationSender</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\OziBazaat.NotificationUI\OziBazaat.NotificationUI.csproj">
       <Name>OziBazaat.NotificationUI</Name>
       <Project>{8c5ef28a-6ac5-4804-9f9d-85d5d224aff4}</Project>
@@ -56,10 +64,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OziBazaar.NotificationSchedulerContent\" />
+    <Folder Include="OziBazaar.NotificationSenderContent\" />
     <Folder Include="OziBazaat.NotificationUIContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="OziBazaar.NotificationSchedulerContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="OziBazaar.NotificationSenderContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
     <Content Include="OziBazaat.NotificationUIContent\diagnostics.wadcfg">

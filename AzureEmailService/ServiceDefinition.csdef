@@ -26,4 +26,15 @@
       <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
+  <WorkerRole name="OziBazaar.NotificationSender" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" />
+      <Setting name="SendGridUserName" />
+      <Setting name="SendGridPassword" />
+      <Setting name="AzureMailServiceURL" />
+    </ConfigurationSettings>
+  </WorkerRole>
 </ServiceDefinition>
