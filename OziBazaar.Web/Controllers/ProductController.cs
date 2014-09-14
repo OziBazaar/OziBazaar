@@ -30,8 +30,9 @@ namespace OziBazaar.Web.Controllers
 
         public ActionResult ViewProduct(int adId)
         {
-            int productId;
-            var productview = productRepository.GetAd(adId,out productId);
+            int productId,categoryId;
+            var productview = productRepository.GetAd(adId,out productId,out categoryId);
+            
             if (!User.Identity.IsAuthenticated)
                 ViewBag.IsAdOwner = false;
             else
@@ -43,12 +44,13 @@ namespace OziBazaar.Web.Controllers
                         
             ViewBag.AdvertisementId = adId;
             ViewBag.ProductId = productId;
-            ViewBag.ProductInfo = renderEngine.Render(productview);
-            return View();
+            ViewBag.CategoryId = categoryId;
+            ViewBag.ProductInfo = renderEngine.Render(productview.Product);
+            return View(productview);
         }
 
         [Authorize]
-        public ActionResult EditProduct(int advertisementId,int categoryId,int productId)
+        public ActionResult EditProduct(int advertisementId, int categoryId, int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
             AdvertisementViewModel adViewModel = new AdvertisementViewModel
@@ -61,14 +63,9 @@ namespace OziBazaar.Web.Controllers
             };
             var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
+            ViewBag.ProductId = productId;
+            ViewBag.AdvertisementId = advertisementId;
             return View(adViewModel);
-        }
-        [Authorize]
-        public ActionResult AddProduct(AdvertisementViewModel  advertisemnt)
-        {
-            var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
-            ViewBag.ProductInfo = renderEngine.Render(productAdd);
-            return View(advertisemnt);
         }
         
         [Authorize]
@@ -89,11 +86,14 @@ namespace OziBazaar.Web.Controllers
             ad.StartDate = startDate;
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
-            ad.Price = decimal.Parse(Request.Form["Price"]);
+            decimal adPrice = 0;
+            decimal.TryParse(Request.Form["Price"], out adPrice);
+            ad.Price = adPrice;
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
-            productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
-            return RedirectToAction("AdList", "Ad");
+            var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
+
+            return RedirectToAction("Index", "Media", new { adId = newAd.Id, productId=newAd.ProductId });
         }
 
         [Authorize]
@@ -116,10 +116,11 @@ namespace OziBazaar.Web.Controllers
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
-            ad.Price = decimal.Parse(Request.Form["Price"]);
-
+            decimal adPrice = 0;
+            decimal.TryParse(Request.Form["Price"], out adPrice);
+            ad.Price = adPrice;
             productRepository.UpdateAdvertisement(ad);
-            return RedirectToAction("AdList", "Ad");
+            return RedirectToAction("MyAdList", "Ad");
         }       
-	}
+	}   
 }

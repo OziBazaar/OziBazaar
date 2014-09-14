@@ -8,6 +8,7 @@
 
   <xsl:template match="/">
         <table class="table table-striped table-bordered table-condensed">
+        <xsl:variable name="ImageSize" select="'100px'" />
         <xsl:for-each select="Features/Feature">
           <xsl:variable name="FeatureIndex" select="position() - 1"/>
           <xsl:variable name="IsImage" select="./@Name" />
@@ -26,7 +27,13 @@
                       <xsl:attribute name="src">
                           <xsl:value-of select="./@Value"/>
                       </xsl:attribute>
-                  </img>
+                      <xsl:attribute name="width">
+                        <xsl:value-of select="$ImageSize"/>
+                      </xsl:attribute>
+                      <xsl:attribute name="height">
+                        <xsl:value-of select="$ImageSize"/>
+                      </xsl:attribute>
+                    </img>
                   </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="./@Value"/>
