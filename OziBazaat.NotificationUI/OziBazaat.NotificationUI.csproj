@@ -253,17 +253,17 @@
     <Content Include="Views\Unsubscribe\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OziBazaar.Notification.Common\OziBazaar.Notification.Common.csproj">
-      <Project>{7298a9bb-9a26-4508-bec8-4af3c1fce90b}</Project>
-      <Name>OziBazaar.Notification.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OziBazaar.Notification.Common\OziBazaar.Notification.Common.csproj">
+      <Project>{51489ce9-f2ee-4efb-8b14-5beaeda0d09f}</Project>
+      <Name>OziBazaar.Notification.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

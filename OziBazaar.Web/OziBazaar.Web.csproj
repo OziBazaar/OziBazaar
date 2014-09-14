@@ -417,6 +417,10 @@
       <Project>{389a5160-13ec-44c4-94aa-133edb21ea3f}</Project>
       <Name>OziBazaar.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OziBazaar.Notification.Common\OziBazaar.Notification.Common.csproj">
+      <Project>{51489ce9-f2ee-4efb-8b14-5beaeda0d09f}</Project>
+      <Name>OziBazaar.Notification.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

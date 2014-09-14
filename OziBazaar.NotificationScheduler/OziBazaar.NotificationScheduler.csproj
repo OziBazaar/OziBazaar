@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.Notification.Common\OziBazaar.Notification.Common.csproj">
-      <Project>{7298a9bb-9a26-4508-bec8-4af3c1fce90b}</Project>
+      <Project>{51489ce9-f2ee-4efb-8b14-5beaeda0d09f}</Project>
       <Name>OziBazaar.Notification.Common</Name>
     </ProjectReference>
   </ItemGroup>
