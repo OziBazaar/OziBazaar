@@ -24,6 +24,7 @@ namespace OziBazaar.Web.ViewModel
         [Required(ErrorMessage = "Finish Date is mandatory field", AllowEmptyStrings = false)]
         public string FinishDate { get; set; }
 
+        [DataType(DataType.Currency, ErrorMessage="Price should be in currency format")]
         public decimal Price { get; set; }
     }
 }

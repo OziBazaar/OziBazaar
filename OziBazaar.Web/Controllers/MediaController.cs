@@ -31,10 +31,27 @@ namespace OziBazaar.Web.Controllers
             List<ProductImage> images=new List<ProductImage>();
             foreach (HttpPostedFileBase file in files)
             {
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/Image/"), System.IO.Path.GetFileName(file.FileName));
-                file.SaveAs(path);
-                images.Add(new ProductImage() { ProductID = productId, MimeType = "image", ImagePath = "/Content/Image/" + System.IO.Path.GetFileName(file.FileName), Description = "Description", ImageType = "Image", ImageOrder = 1 });
-
+                if (file != null)
+                {
+                    try
+                    {
+                        string path = System.IO.Path.Combine(Server.MapPath("~/Content/Image/"), System.IO.Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorMessage = "File upload is failed becuase of followingexception" + ex.ToString();
+                    }
+                    images.Add(new ProductImage() { ProductID = productId, MimeType = "image", ImagePath = "/Content/Image/" + System.IO.Path.GetFileName(file.FileName), Description = "Description", ImageType = "Image", ImageOrder = 1 });
+                }
+                else
+                {
+                    ModelState.AddModelError("Filepath", "File should be choosen before clik on upload");
+                    ViewBag.ErrorMessage = "File is not selected for upload";
+                    ViewBag.AdvertisementId = adId;
+                    ViewBag.ProductId = productId;
+                    return View("Index", productRepository.GetAdImages(adId));
+                }
             }
             productRepository.AddAttachment(images);
             return RedirectToAction("ViewProduct", "Product", new { productId = productId, adId = adId });

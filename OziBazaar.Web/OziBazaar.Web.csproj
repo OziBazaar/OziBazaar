@@ -442,7 +442,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Product\ViewProduct.cshtml" />
-    <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Scripts\ozibazar.validation.js" />
     <Content Include="Views\Ad\AdList.cshtml" />

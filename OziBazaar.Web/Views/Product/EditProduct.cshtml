@@ -21,8 +21,18 @@
     <script type="text/javascript" language="javascript">
         $(function () {
 
+            // Configure date pickers
             $('#StartDate').datepicker({ dateFormat: "dd/mm/yy" });
             $("#FinishDate").datepicker({ dateFormat: "dd/mm/yy" });
+
+            // Configure validators for start date and end date
+            $('input[type="submit"]').click(function () {
+                if ($('#StartDate').val() == '' || $('#FinishDate').val() == '') {
+                    alert('Start date and Finish date for advertisement are required');
+                    return false;
+                }
+                return true;
+            });
         });
     </script>
 }

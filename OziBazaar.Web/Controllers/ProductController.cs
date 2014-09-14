@@ -50,7 +50,7 @@ namespace OziBazaar.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult EditProduct(int advertisementId,int categoryId,int productId)
+        public ActionResult EditProduct(int advertisementId, int categoryId, int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
             AdvertisementViewModel adViewModel = new AdvertisementViewModel
@@ -67,8 +67,6 @@ namespace OziBazaar.Web.Controllers
             ViewBag.AdvertisementId = advertisementId;
             return View(adViewModel);
         }
-
-        
         
         [Authorize]
         public ActionResult CreateProduct()
@@ -87,10 +85,12 @@ namespace OziBazaar.Web.Controllers
             ad.StartDate = startDate;
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
-            ad.Price = decimal.Parse(Request.Form["Price"]);
+            decimal adPrice = 0;
+            decimal.TryParse(Request.Form["Price"], out adPrice);
+            ad.Price = adPrice;
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
 
-          var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
+            var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
 
             return RedirectToAction("Index", "Media", new { adId = newAd.Id, productId=newAd.ProductId });
         }
@@ -114,8 +114,9 @@ namespace OziBazaar.Web.Controllers
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
             ad.Category = Int32.Parse(Request.Form["CategoryId"]);
-            ad.Price = decimal.Parse(Request.Form["Price"]);
-
+            decimal adPrice = 0;
+            decimal.TryParse(Request.Form["Price"], out adPrice);
+            ad.Price = adPrice;
             productRepository.UpdateAdvertisement(ad);
             return RedirectToAction("MyAdList", "Ad");
         }       
