@@ -68,13 +68,7 @@ namespace OziBazaar.Web.Controllers
             return View(adViewModel);
         }
 
-        [Authorize]
-        public ActionResult AddProduct(AdvertisementViewModel  advertisemnt)
-        {
-            var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
-            ViewBag.ProductInfo = renderEngine.Render(productAdd);
-            return View(advertisemnt);
-        }
+        
         
         [Authorize]
         public ActionResult CreateProduct()

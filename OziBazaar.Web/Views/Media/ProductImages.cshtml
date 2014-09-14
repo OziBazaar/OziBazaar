@@ -23,8 +23,6 @@
 
 @foreach (var item in Model) {
     <tr>
-      
-     
         <td>
             @Html.DisplayFor(modelItem => item.ImageType)
         </td>
@@ -35,10 +33,10 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-         <img src="@Html.DisplayFor(modelItem => item.ImagePath)" />
+         <img src="@Html.DisplayFor(modelItem => item.ImagePath)" style="width:50px; height:50px"/>
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { controller = "Media", id = item.ProductImageID, productId = item.ProductID, adId=ViewBag.AdvertisementId })
+            @Html.ActionLink("Delete", "Delete", new { controller = "Media", id = item.ProductImageID, productId = item.ProductID, adId = ViewBag.AdvertisementId })
         </td>
     </tr>
 }

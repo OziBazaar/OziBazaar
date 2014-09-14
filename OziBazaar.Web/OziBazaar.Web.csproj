@@ -449,7 +449,7 @@
     <Content Include="Views\Ad\AddAd.cshtml" />
     <Content Include="Views\Product\EditProduct.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ShortDateTime.cshtml" />
-    <Content Include="Views\Product\AdvertisementInfo.cshtml" />
+    <Content Include="Views\Shared\AdvertisementInfo.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
     <Content Include="Views\Media\ProductImages.cshtml" />
     <Content Include="Views\Media\FilpView.cshtml" />
@@ -466,6 +466,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Ad\AddAdDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">

@@ -8,6 +8,7 @@ namespace OziBazaar.Web.ViewModel
 {
     public class AdView
     {
+       
         public string AdTitle { get; set; }
         public ProductView Product { get; set; }
     }
