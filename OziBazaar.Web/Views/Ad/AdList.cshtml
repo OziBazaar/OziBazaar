@@ -27,7 +27,7 @@ else
     {
         <tr>
             <td>                
-                @Html.ActionLink(item.Title, "ViewProduct", "Product", new { adId = item.Id}, null)
+                @Html.ActionLink(string.IsNullOrWhiteSpace(item.Title)? "No Title" : item.Title, "ViewProduct", "Product", new { adId = item.Id}, null)
             </td>
             @if (ViewBag.OwnerView)
             {  

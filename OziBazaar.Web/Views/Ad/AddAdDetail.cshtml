@@ -1,0 +1,43 @@
+﻿@model OziBazaar.Web.ViewModel.AdvertisementViewModel
+
+@{
+    ViewBag.Title = "Add new advertisement";
+}
+
+<script src="~/Scripts/jquery-2.1.0.js"></script>
+<script src="~/Scripts/ozibazar.dependentdropdown.js"></script>
+<script src="~/Scripts/ozibazar.validation.js"></script>
+
+<h4>Add advertisement detail</h4>
+@using(Html.BeginForm("CreateProduct","Product",FormMethod.Post,new{id="addProdForm"}))
+{    
+    
+ @Html.AntiForgeryToken()
+ @Html.Partial("AdvertisementInfo",Model)
+ <div>
+    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
+ </div>
+ <input type="submit" value="Add" class="btn btn-primary" />
+ <input type="reset" value="Clear" class="btn btn-primary" />
+  @Html.ActionLink("Back To My Ads", "MyAdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
+}
+<script language="javacript" type="text/javascript">
+    $(function () {
+
+        // Configure date pickers
+        $('#StartDate').datepicker({ dateFormat: "dd/mm/yy" });
+        $("#FinishDate").datepicker({ dateFormat: "dd/mm/yy" });
+
+        // Configure validators for start date and finish date
+        $('input[type="submit"]').click(function () {
+            if ($('#StartDate').val() == '' || $('#FinishDate').val() == '') {
+                alert('Start date and Finish date for advertisement are required');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+
+
+

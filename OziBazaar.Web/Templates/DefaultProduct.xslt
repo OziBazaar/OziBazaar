@@ -6,6 +6,7 @@
                 exclude-result-prefixes="msxsl">
   <xsl:output method="xml" indent="yes" />
   <xsl:template match="/">
+    <xsl:variable name="ImageSize" select="'100px'" />
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
            <xsl:variable name="IsImage" select="./@Name" />
@@ -21,6 +22,12 @@
                           <img>
                           <xsl:attribute name="src">
                               <xsl:value-of select="./@Value"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="width">
+                            <xsl:value-of select="$ImageSize"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="height">
+                            <xsl:value-of select="$ImageSize"/>
                           </xsl:attribute>
                           </img>
                        </a>

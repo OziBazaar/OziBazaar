@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<OziBazaar.DAL.ProductImage>
 
+<script src="~/Scripts/jquery-2.1.0.js"></script>
 <h4>Upload Images</h4>
 
 @using (Html.BeginForm("Upload", "Media", new { adId = ViewBag.AdvertisementId, productId = ViewBag.ProductId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.ValidationSummary(true)
+
     <div class="form-horizontal">
         <h5>
             You can select multiple files and then click upload
@@ -13,9 +16,27 @@
      <input type="submit" value="Upload Image" class="btn btn-primary" />
      @Html.ActionLink("Back", "ViewProduct", new { controller = "Product", adId = ViewBag.AdvertisementId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
     </div>
+    <br><br>
+    <font color="red">
+        @ViewBag.ErrorMessage
+    </font>
 }
 <br />
 <br/>
 <div class="form-horizontal">
     @Html.Partial("ProductImages", Model)
 </div>
+
+<script language="javacript" type="text/javascript">
+    $(function () {
+
+        $('input[type="submit"]').click(function () {
+            if($('input[type="file"]').val()=='')
+            {
+                alert('Please choose a file');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>

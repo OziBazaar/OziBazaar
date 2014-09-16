@@ -33,11 +33,20 @@
                           <xsl:attribute name="data-required">
                             <xsl:value-of select="./@IsMandatory"/>
                           </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
+                          </xsl:attribute>
                       </input>
                       </xsl:when>
                                             
                       <xsl:when test="$EditorType='TextArea'">
                         <textarea rows="8"  columns="160">
+                          <xsl:attribute name="data-required">
+                            <xsl:value-of select="./@IsMandatory"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
+                          </xsl:attribute>
                           <xsl:attribute name="name">
                               <xsl:value-of select="./@PropertyId"/>
                           </xsl:attribute>
@@ -49,6 +58,12 @@
                         <select>
                           <xsl:attribute name="name">
                             <xsl:value-of select="./@PropertyId"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-required">
+                            <xsl:value-of select="./@IsMandatory"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
                           </xsl:attribute>
                           <xsl:attribute name="id">
                             <xsl:value-of select="./@Name"/>

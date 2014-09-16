@@ -20,30 +20,39 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public AdView GetAd(int adId,out int productId)
+        public AdView GetAd(int adId,out int productId, out int categoryId)
         {
-           var  adInfo = dbContext.Advertisements.Single(ad => ad.AdvertisementID == adId);
+            var adInfo = (from ad in dbContext.Advertisements
+                          join p in dbContext.Products on ad.ProductID equals p.ProductID
+                          where ad.AdvertisementID == adId
+                          select new {ad.ProductID, p.ProductGroupID, ad.Title }).SingleOrDefault();
+
            productId = adInfo.ProductID;
+           categoryId = adInfo.ProductGroupID.Value;
+
            int localProdutId=adInfo.ProductID;
 
-            List<ProductFeatureView> productFeatureViews =
-                (from productProperty in dbContext.ProductProperties
-                 where productProperty.ProductID == localProdutId
-                 join productGroupProperty in dbContext.ProductGroupProperties
-                     on productProperty.ProductGroupPropertyID equals productGroupProperty.ProductGroupPropertyID
-                 join property in dbContext.Properties
-                     on productGroupProperty.PropertyID equals property.PropertyID
-                 join productGroup in dbContext.ProductGroups
-                     on productGroupProperty.ProductGroupID equals productGroup.ProductGroupID
-                 select new ProductFeatureView
-                 {
-                     DisplayOrder = (int)productGroupProperty.TabOrder,
-                     FeatureName = property.KeyName,
-                     Title=property.Title,
-                     FeatureValue = productProperty.Value,
-                     ProductId = productProperty.ProductID,
-                     ViewType = productGroup.ViewTemplate
-                 }).ToList<ProductFeatureView>();
+           List<ProductFeatureView> productFeatureViews =
+                                                        (
+                                                            from productProperty in dbContext.ProductProperties
+                                                                where productProperty.ProductID == localProdutId
+                                                                join productGroupProperty in dbContext.ProductGroupProperties
+                                                                    on productProperty.ProductGroupPropertyID equals productGroupProperty.ProductGroupPropertyID
+                                                                join property in dbContext.Properties
+                                                                    on productGroupProperty.PropertyID equals property.PropertyID
+                                                                join productGroup in dbContext.ProductGroups
+                                                                    on productGroupProperty.ProductGroupID equals productGroup.ProductGroupID
+                                                                select new ProductFeatureView
+                                                                {
+                                                                    DisplayOrder = (int)productGroupProperty.TabOrder,
+                                                                    FeatureName = property.KeyName,
+                                                                    Title=property.Title,
+                                                                    FeatureValue = productProperty.Value,
+                                                                    ProductId = productProperty.ProductID,
+                                                                    ViewType = productGroup.ViewTemplate
+                                                                }
+                                                        ).ToList<ProductFeatureView>();
+
             var imglist = from img in dbContext.ProductImages
                           where img.ProductID == localProdutId
                           orderby img.ImageOrder
@@ -58,8 +67,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                           };
 
             return new AdView() {
-                                AdTitle = adInfo.Title,
-                                Product = new ProductView(productFeatureViews.First().ViewType) { 
+                                     AdTitle = adInfo.Title,
+                                     Product = new ProductView(productFeatureViews.First().ViewType) { 
                                                                 Features =   productFeatureViews.Union(imglist).ToList() }
                                 };
       }
