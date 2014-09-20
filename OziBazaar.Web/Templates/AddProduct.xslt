@@ -8,8 +8,10 @@
   <xsl:template match="/">
     <h4>
          <p>
-         Enter Advertisement details
-        </p>
+           <strong>
+             Enter Advertisement details
+          </strong>
+         </p>
     </h4>
         <hr/>
         <table class="table table-striped table-bordered table-condensed">
