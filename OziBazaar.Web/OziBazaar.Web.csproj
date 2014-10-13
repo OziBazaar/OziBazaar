@@ -306,6 +306,7 @@
     <Content Include="Content\Image\mobile1.jpg" />
     <Content Include="Content\Image\mobile2.jpg" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\sweet-alert.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -388,6 +389,8 @@
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
+    <Content Include="Scripts\sweet-alert.js" />
+    <Content Include="Scripts\sweet-alert.min.js" />
     <Content Include="Templates\EditProduct.xslt">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

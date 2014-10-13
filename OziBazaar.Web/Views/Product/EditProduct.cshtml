@@ -2,6 +2,9 @@
 <script src="~/Scripts/jquery-2.1.0.js"></script>
 <script src="~/Scripts/ozibazar.dependentdropdown.js"></script>
 <script src="~/Scripts/ozibazar.validation.js"></script>
+<script src="~/Scripts/sweet-alert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/sweet-alert.css">
+
 
 @using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post, new { id = "editProdForm" }))
 {
@@ -28,7 +31,8 @@
             // Configure validators for start date and end date
             $('input[type="submit"]').click(function () {
                 if ($('#StartDate').val() == '' || $('#FinishDate').val() == '') {
-                    alert('Start date and Finish date for advertisement are required');
+                    swal({ title: "Error!", text: "Start date and Finish date for advertisement are required", type: "error", confirmButtonText: "Ok" });
+                    //alert('Start date and Finish date for advertisement are required');
                     return false;
                 }
                 return true;
