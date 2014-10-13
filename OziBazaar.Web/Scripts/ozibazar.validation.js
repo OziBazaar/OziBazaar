@@ -13,7 +13,8 @@
                                               }
                               );
             if (isValidationError) {
-                alert(errorMessage);
+                //      alert(errorMessage);
+                swal({ title: "Error!", text: errorMessage, type: "error", confirmButtonText: "Ok" });
                 return false;
             }
         });
