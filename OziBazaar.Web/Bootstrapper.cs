@@ -28,6 +28,7 @@ namespace OziBazaar.Web
       var container = new UnityContainer();
       container.RegisterType<IRenderEngine, XslRenderEngine>();
       container.RegisterType<IProductRepository, ProductRepository>();
+      container.RegisterType<IAdminRepository, AdminRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
       container.RegisterType<IAccountRepository, AccountRepository>();
       container.RegisterType<ISmtpEmail, SmtpEmail>();

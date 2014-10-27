@@ -25,6 +25,7 @@
                         @if(User.Identity.IsAuthenticated)
                         { 
                             <li>@Html.ActionLink("My Adds", "MyAdList", "Ad")</li>
+                            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                         }
                     </ul>
                 </div>
