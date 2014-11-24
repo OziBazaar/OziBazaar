@@ -6,9 +6,6 @@
                 exclude-result-prefixes="msxsl">
   <xsl:output method="xml" indent="yes" />
   <xsl:template match="/">
-         <p>
-         Edit Product information
-        </p>
         <table class="table table-striped table-bordered table-condensed">
         <xsl:for-each select="Features/Feature">
            <xsl:variable name="EditorType" select="./@EditorType" />
@@ -19,7 +16,7 @@
           <xsl:if test="@EditorType !='Image'">
              <tr >
               <td>
-                  <strong> <xsl:value-of select="./@Name"/>                       
+                  <strong> <xsl:value-of select="./@Title"/>                       
                   </strong>
                </td>
               <td>
@@ -36,11 +33,20 @@
                           <xsl:attribute name="data-required">
                             <xsl:value-of select="./@IsMandatory"/>
                           </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
+                          </xsl:attribute>
                       </input>
                       </xsl:when>
                                             
                       <xsl:when test="$EditorType='TextArea'">
                         <textarea rows="8"  columns="160">
+                          <xsl:attribute name="data-required">
+                            <xsl:value-of select="./@IsMandatory"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
+                          </xsl:attribute>
                           <xsl:attribute name="name">
                               <xsl:value-of select="./@PropertyId"/>
                           </xsl:attribute>
@@ -52,6 +58,12 @@
                         <select>
                           <xsl:attribute name="name">
                             <xsl:value-of select="./@PropertyId"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-required">
+                            <xsl:value-of select="./@IsMandatory"/>
+                          </xsl:attribute>
+                          <xsl:attribute name="data-title">
+                            <xsl:value-of select="./@Title"/>
                           </xsl:attribute>
                           <xsl:attribute name="id">
                             <xsl:value-of select="./@Name"/>

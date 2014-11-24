@@ -1,22 +1,30 @@
 ﻿@model OziBazaar.Web.ViewModel.AdvertisementViewModel
 
 <div class="form-horizontal">
-        <h4>Advertisement information</h4>
+    <h4>
+        <font color="blue">
+            @Model.Title
+        </font>
+    </h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.CategoryId)
         @Html.HiddenFor(model => model.AdvertisementId)
       
         <div class="form-group">
+        <strong>
             @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate)
-                @Html.ValidationMessageFor(model => model.StartDate)
-            </div>
+        </strong>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.StartDate)
+            @Html.ValidationMessageFor(model => model.StartDate)
         </div>
+    </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FinishDate, new { @class = "control-label col-md-2" })
+            <strong>
+                @Html.LabelFor(model => model.FinishDate, new { @class = "control-label col-md-2" })
+            </strong>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FinishDate)
                 @Html.ValidationMessageFor(model => model.FinishDate)
@@ -24,7 +32,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <strong>
+                @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            </strong>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title)
                 @Html.ValidationMessageFor(model => model.Title)
@@ -32,7 +42,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <strong>
+                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2 " })
+            </strong>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price)
                 @Html.ValidationMessageFor(model => model.Price)

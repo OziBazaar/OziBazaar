@@ -9,6 +9,7 @@ namespace OziBazaar.Web.Models
     public class ProductEditView : ProductAddView
     {
         public  List<ProductFeatureEdit> Features { get; set; }
+
         private string renderTemplate = "~/Templates/EditProduct.xslt";
         protected override string RenderTemplate
         {
@@ -34,7 +35,7 @@ namespace OziBazaar.Web.Models
                 List<object> attributeList = new List<object>();
                 attributeList.Add(new XAttribute("PropertyId", feature.PropertyId));
                 attributeList.Add(new XAttribute("Name", feature.FeatureName));
-                
+                attributeList.Add(new XAttribute("Title", feature.Title));
                 if(feature.Value != null)
                     attributeList.Add(new XAttribute("Value", feature.Value));
 

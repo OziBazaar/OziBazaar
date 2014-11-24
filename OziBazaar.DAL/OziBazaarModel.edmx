@@ -89,6 +89,7 @@
           </Key>
           <Property Name="PropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KeyName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="ControlType" Type="nvarchar" MaxLength="50" />
           <Property Name="DataType" Type="nvarchar" MaxLength="100" />
           <Property Name="LookupType" Type="nvarchar" MaxLength="150" />
@@ -110,11 +111,11 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Activated" Type="bit" Nullable="false" />
+          <Property Name="Activated" Type="bit" />
           <Property Name="ActivationDate" Type="date" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
@@ -303,7 +304,7 @@
           </Key>
           <Property Name="AdvertisementID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
@@ -399,6 +400,7 @@
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <Property Name="LookupType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DependsOn" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -509,11 +511,11 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Activated" Type="Boolean" Nullable="false" />
+          <Property Name="Activated" Type="Boolean" />
           <Property Name="ActivationDate" Type="DateTime" Precision="0" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
@@ -611,6 +613,7 @@
           <EntitySetMapping Name="Properties">
             <EntityTypeMapping TypeName="OziBazaarModel.Property">
               <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="DependsOn" ColumnName="DependsOn" />
                 <ScalarProperty Name="LookupType" ColumnName="LookupType" />
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />

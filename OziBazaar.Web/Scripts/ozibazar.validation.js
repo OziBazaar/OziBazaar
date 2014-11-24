@@ -1,19 +1,20 @@
 ﻿ $(function ()
     {
-        $(document).on('submit', "#addProdForm", function () {
+     $(document).on('submit', "#addProdForm,#editProdForm", function () {
             var isValidationError = false;
             var errorMessage = '';
-            $('input[data-required]').each(
+            $('input[data-required],select[data-required],textarea[data-required]').each(
                                               function (index, control) {
                                                   if ($(control).attr('data-required') && $(control).val() == '')
                                                   {
                                                       isValidationError = true;
-                                                      errorMessage += control.name + ' is required field\n';
+                                                      errorMessage += $(control).attr('data-title') + ' is required field\n';
                                                   }
                                               }
                               );
             if (isValidationError) {
-                alert(errorMessage);
+                //      alert(errorMessage);
+                swal({ title: "Error!", text: errorMessage, type: "error", confirmButtonText: "Ok" });
                 return false;
             }
         });
