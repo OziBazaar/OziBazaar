@@ -28,6 +28,7 @@ namespace OziBazaar.DAL
         public byte[] Version { get; set; }
         public string Title { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string AdvertisementCode { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }

@@ -14,6 +14,11 @@ namespace OziBazaar.DAL
     
     public partial class UserProfile
     {
+        public UserProfile()
+        {
+            this.webpages_Roles = new HashSet<webpages_Roles>();
+        }
+    
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string EmailAddress { get; set; }
@@ -22,5 +27,7 @@ namespace OziBazaar.DAL
         public Nullable<bool> Activated { get; set; }
         public Nullable<System.DateTime> ActivationDate { get; set; }
         public byte[] Version { get; set; }
+    
+        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

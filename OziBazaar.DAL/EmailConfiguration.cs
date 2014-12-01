@@ -12,23 +12,21 @@ namespace OziBazaar.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductGroup
+    public partial class EmailConfiguration
     {
-        public ProductGroup()
+        public EmailConfiguration()
         {
-            this.Products = new HashSet<Product>();
-            this.ProductGroupProperties = new HashSet<ProductGroupProperty>();
+            this.EmailAudits = new HashSet<EmailAudit>();
         }
     
-        public int ProductGroupID { get; set; }
+        public int EmailConfigurationID { get; set; }
         public string Description { get; set; }
-        public string ViewTemplate { get; set; }
-        public string EditTemplate { get; set; }
+        public string TemplatePath { get; set; }
+        public Nullable<int> EmailTypeID { get; set; }
+        public string Subject { get; set; }
         public byte[] Version { get; set; }
-        public Nullable<int> ProductMainGroupID { get; set; }
     
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<ProductGroupProperty> ProductGroupProperties { get; set; }
-        public virtual ProductMainGroup ProductMainGroup { get; set; }
+        public virtual ICollection<EmailAudit> EmailAudits { get; set; }
+        public virtual EmailType EmailType { get; set; }
     }
 }

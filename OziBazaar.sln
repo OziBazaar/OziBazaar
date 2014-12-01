@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OziBazaar.Web", "OziBazaar.Web\OziBazaar.Web.csproj", "{35F930F2-FEF3-492F-9605-70917BF8FD85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OziBazaar.Framework", "OziBazaar.Framework\OziBazaar.Framework.csproj", "{389A5160-13EC-44C4-94AA-133EDB21EA3F}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3E1367
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OziBazaar.Notification", "OziBazaar.Notification\OziBazaar.Notification.csproj", "{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +34,10 @@ Global
 		{EBA0A2C5-1DFF-40DF-8D68-80F26C6978A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA0A2C5-1DFF-40DF-8D68-80F26C6978A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBA0A2C5-1DFF-40DF-8D68-80F26C6978A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

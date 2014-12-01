@@ -54,6 +54,15 @@
     <Compile Include="Advertisement.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmailAudit.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailConfiguration.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailType.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Lookup.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -84,6 +93,9 @@
     <Compile Include="ProductImage.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductMainGroup.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductProperty.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -95,6 +107,15 @@
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_Membership.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_OAuthMembership.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_Roles.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WishList.cs">

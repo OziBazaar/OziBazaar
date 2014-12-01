@@ -36,5 +36,12 @@ namespace OziBazaar.DAL
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<EmailAudit> EmailAudits { get; set; }
+        public DbSet<EmailConfiguration> EmailConfigurations { get; set; }
+        public DbSet<EmailType> EmailTypes { get; set; }
+        public DbSet<ProductMainGroup> ProductMainGroups { get; set; }
+        public DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public DbSet<webpages_Roles> webpages_Roles { get; set; }
     }
 }
