@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace OziBazaar.Web.Infrastructure.Cryptography
+namespace OziBazaar.Common.Cryptography
 {
     public class EncryptionEngine : IEncryptionEngine
     {

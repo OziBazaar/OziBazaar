@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using OziBazaar.Web.Infrastructure.Graphic;
+using OziBazaar.Common.Graphic;
 
 namespace OziBazaar.Web.Controllers
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OziBazaar.Web.Infrastructure.Repository
+namespace OziBazaar.DAL.Repository
 {
     public interface IAccountRepository
     {

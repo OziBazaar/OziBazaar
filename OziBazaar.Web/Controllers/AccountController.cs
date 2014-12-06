@@ -10,10 +10,11 @@ using System.Web.Security;
 using System.Transactions;
 using DotNetOpenAuth.AspNet;
 using OziBazaar.DAL;
-using OziBazaar.Web.Infrastructure.Cryptography;
 using OziBazaar.Web.Infrastructure.Email;
 using OziBazaar.Web.Infrastructure.Repository;
 using System.Data.SqlClient;
+using OziBazaar.DAL.Repository;
+using OziBazaar.Common.Cryptography;
 
 namespace OziBazaar.Web.Controllers
 {

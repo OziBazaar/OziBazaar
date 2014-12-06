@@ -4,9 +4,10 @@ using Unity.Mvc4;
 using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Web.Infrastructure.Repository;
 using OziBazaar.Web.Infrastructure.Email;
-using OziBazaar.Web.Infrastructure.Cryptography;
 using OziBazaar.Web.Infrastructure.Security;
 using Microsoft.Practices.ServiceLocation;
+using OziBazaar.DAL.Repository;
+using OziBazaar.Common.Cryptography;
 
 namespace OziBazaar.Web
 {

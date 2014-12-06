@@ -103,6 +103,8 @@
     <Compile Include="Property.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\AccountRepository.cs" />
+    <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>

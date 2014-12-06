@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OziBazaar.Web.Infrastructure.Cryptography
+namespace OziBazaar.Common.Cryptography
 {
     public interface IEncryptionEngine
     {

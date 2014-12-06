@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using WebMatrix.WebData;
+using OziBazaar.DAL.Repository;
 
 namespace OziBazaar.Web.Infrastructure.Security
 {

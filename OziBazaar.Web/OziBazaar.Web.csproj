@@ -253,13 +253,8 @@
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
-    <Compile Include="Infrastructure\Cryptography\EncryptionEngine.cs" />
-    <Compile Include="Infrastructure\Cryptography\IEncryptionEngine.cs" />
     <Compile Include="Infrastructure\Email\ISmtpEmail.cs" />
     <Compile Include="Infrastructure\Email\SmtpEmail.cs" />
-    <Compile Include="Infrastructure\Graphic\CaptchaImage.cs" />
-    <Compile Include="Infrastructure\Repository\AccountRepository.cs" />
-    <Compile Include="Infrastructure\Repository\IAccountRepository.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
@@ -467,6 +462,10 @@
     <Content Include="Views\Ad\AddAdDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OziBazaar.Common\OziBazaar.Common.csproj">
+      <Project>{e1ad3228-5ed6-4cb5-97ef-599b27e7efe3}</Project>
+      <Name>OziBazaar.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">
       <Project>{eba0a2c5-1dff-40df-8d68-80f26c6978a6}</Project>
       <Name>OziBazaar.DAL</Name>
