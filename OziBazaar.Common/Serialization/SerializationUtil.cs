@@ -23,11 +23,12 @@ namespace OziBazaar.Common.Serialization
         public XDocument Serialize<T>(T value)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-
+            XmlSerializerNamespaces xmlnsEmpty = new XmlSerializerNamespaces();
+            xmlnsEmpty.Add("", "");
             XDocument document = new XDocument();
             using (var writer = document.CreateWriter())
             {
-                xmlSerializer.Serialize(writer, value);
+                xmlSerializer.Serialize(writer, value, xmlnsEmpty);
             }
             return document;
         }

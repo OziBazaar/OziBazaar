@@ -13,7 +13,7 @@ namespace OziBazaar.Notification.Entities
         [XmlElement]
         public string Code { get; set; }
         [XmlElement]
-        public string Tilte { get; set; }
+        public string Title { get; set; }
         [XmlElement]
         public decimal Price { get; set; }
     }
