@@ -12,21 +12,17 @@ namespace OziBazaar.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class EmailConfiguration
+    public partial class NotificationType
     {
-        public EmailConfiguration()
+        public NotificationType()
         {
-            this.EmailAudits = new HashSet<EmailAudit>();
+            this.NotificationTemplates = new HashSet<NotificationTemplate>();
         }
     
-        public int EmailConfigurationID { get; set; }
+        public int NotificationTypeID { get; set; }
         public string Description { get; set; }
-        public string TemplatePath { get; set; }
-        public Nullable<int> EmailTypeID { get; set; }
-        public string Subject { get; set; }
         public byte[] Version { get; set; }
     
-        public virtual ICollection<EmailAudit> EmailAudits { get; set; }
-        public virtual EmailType EmailType { get; set; }
+        public virtual ICollection<NotificationTemplate> NotificationTemplates { get; set; }
     }
 }

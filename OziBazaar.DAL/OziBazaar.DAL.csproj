@@ -54,16 +54,16 @@
     <Compile Include="Advertisement.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EmailAudit.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EmailConfiguration.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EmailType.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Lookup.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationAudit.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationTemplate.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationType.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OziBazaarModel.Context.cs">

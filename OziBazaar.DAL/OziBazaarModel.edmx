@@ -7,10 +7,10 @@
     <Schema Namespace="OziBazaarModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="OziBazaarModelStoreContainer">
           <EntitySet Name="Advertisement" EntityType="OziBazaarModel.Store.Advertisement" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="EmailAudit" EntityType="OziBazaarModel.Store.EmailAudit" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="EmailConfiguration" EntityType="OziBazaarModel.Store.EmailConfiguration" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="EmailType" EntityType="OziBazaarModel.Store.EmailType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Lookup" EntityType="OziBazaarModel.Store.Lookup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NotificationAudit" EntityType="OziBazaarModel.Store.NotificationAudit" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NotificationTemplate" EntityType="OziBazaarModel.Store.NotificationTemplate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NotificationType" EntityType="OziBazaarModel.Store.NotificationType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Product" EntityType="OziBazaarModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductGroup" EntityType="OziBazaarModel.Store.ProductGroup" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductGroupProperty" EntityType="OziBazaarModel.Store.ProductGroupProperty" store:Type="Tables" Schema="dbo" />
@@ -29,13 +29,13 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Advertisement" EntitySet="Advertisement" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmailAudit_EmailConfiguration" Association="OziBazaarModel.Store.FK_EmailAudit_EmailConfiguration">
-            <End Role="EmailConfiguration" EntitySet="EmailConfiguration" />
-            <End Role="EmailAudit" EntitySet="EmailAudit" />
+          <AssociationSet Name="FK_NotificationAudit_EmailConfiguration" Association="OziBazaarModel.Store.FK_NotificationAudit_EmailConfiguration">
+            <End Role="NotificationTemplate" EntitySet="NotificationTemplate" />
+            <End Role="NotificationAudit" EntitySet="NotificationAudit" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmailConfiguration_EmailType" Association="OziBazaarModel.Store.FK_EmailConfiguration_EmailType">
-            <End Role="EmailType" EntitySet="EmailType" />
-            <End Role="EmailConfiguration" EntitySet="EmailConfiguration" />
+          <AssociationSet Name="FK_NotificationConfiguration_EmailType" Association="OziBazaarModel.Store.FK_NotificationConfiguration_EmailType">
+            <End Role="NotificationType" EntitySet="NotificationType" />
+            <End Role="NotificationTemplate" EntitySet="NotificationTemplate" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ProductGroup" Association="OziBazaarModel.Store.FK_Product_ProductGroup">
             <End Role="ProductGroup" EntitySet="ProductGroup" />
@@ -89,36 +89,6 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
-        <EntityType Name="EmailAudit">
-          <Key>
-            <PropertyRef Name="EmailAuditID" />
-          </Key>
-          <Property Name="EmailAuditID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="EmailConfigurationID" Type="int" />
-          <Property Name="Sender" Type="nvarchar" MaxLength="50" />
-          <Property Name="Receiver" Type="nvarchar" MaxLength="50" />
-          <Property Name="Date" Type="datetime" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="EmailConfiguration">
-          <Key>
-            <PropertyRef Name="EmailConfigurationID" />
-          </Key>
-          <Property Name="EmailConfigurationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="TemplatePath" Type="nvarchar" MaxLength="500" />
-          <Property Name="EmailTypeID" Type="int" />
-          <Property Name="Subject" Type="nvarchar" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="EmailType">
-          <Key>
-            <PropertyRef Name="EmailTypeID" />
-          </Key>
-          <Property Name="EmailTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
-        </EntityType>
         <EntityType Name="Lookup">
           <Key>
             <PropertyRef Name="LookupID" />
@@ -128,6 +98,36 @@
           <Property Name="ParentID" Type="int" />
           <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="NotificationAudit">
+          <Key>
+            <PropertyRef Name="NotificationAuditID" />
+          </Key>
+          <Property Name="NotificationAuditID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationConfigurationID" Type="int" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Receiver" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="NotificationTemplate">
+          <Key>
+            <PropertyRef Name="NotificationTemplateID" />
+          </Key>
+          <Property Name="NotificationTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="TemplatePath" Type="nvarchar" MaxLength="500" />
+          <Property Name="NotificationTypeID" Type="int" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="NotificationType">
+          <Key>
+            <PropertyRef Name="NotificationTypeID" />
+          </Key>
+          <Property Name="NotificationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -289,27 +289,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmailAudit_EmailConfiguration">
-          <End Role="EmailConfiguration" Type="OziBazaarModel.Store.EmailConfiguration" Multiplicity="0..1" />
-          <End Role="EmailAudit" Type="OziBazaarModel.Store.EmailAudit" Multiplicity="*" />
+        <Association Name="FK_NotificationAudit_EmailConfiguration">
+          <End Role="NotificationTemplate" Type="OziBazaarModel.Store.NotificationTemplate" Multiplicity="0..1" />
+          <End Role="NotificationAudit" Type="OziBazaarModel.Store.NotificationAudit" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EmailConfiguration">
-              <PropertyRef Name="EmailConfigurationID" />
+            <Principal Role="NotificationTemplate">
+              <PropertyRef Name="NotificationTemplateID" />
             </Principal>
-            <Dependent Role="EmailAudit">
-              <PropertyRef Name="EmailConfigurationID" />
+            <Dependent Role="NotificationAudit">
+              <PropertyRef Name="NotificationConfigurationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmailConfiguration_EmailType">
-          <End Role="EmailType" Type="OziBazaarModel.Store.EmailType" Multiplicity="0..1" />
-          <End Role="EmailConfiguration" Type="OziBazaarModel.Store.EmailConfiguration" Multiplicity="*" />
+        <Association Name="FK_NotificationConfiguration_EmailType">
+          <End Role="NotificationType" Type="OziBazaarModel.Store.NotificationType" Multiplicity="0..1" />
+          <End Role="NotificationTemplate" Type="OziBazaarModel.Store.NotificationTemplate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EmailType">
-              <PropertyRef Name="EmailTypeID" />
+            <Principal Role="NotificationType">
+              <PropertyRef Name="NotificationTypeID" />
             </Principal>
-            <Dependent Role="EmailConfiguration">
-              <PropertyRef Name="EmailTypeID" />
+            <Dependent Role="NotificationTemplate">
+              <PropertyRef Name="NotificationTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -465,21 +465,10 @@
             <End Role="ProductProperty" EntitySet="ProductProperties" />
           </AssociationSet>
           <EntitySet Name="UserProfiles" EntityType="OziBazaarModel.UserProfile" />
-          <EntitySet Name="EmailAudits" EntityType="OziBazaarModel.EmailAudit" />
-          <EntitySet Name="EmailConfigurations" EntityType="OziBazaarModel.EmailConfiguration" />
-          <EntitySet Name="EmailTypes" EntityType="OziBazaarModel.EmailType" />
           <EntitySet Name="ProductMainGroups" EntityType="OziBazaarModel.ProductMainGroup" />
           <EntitySet Name="webpages_Membership" EntityType="OziBazaarModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="OziBazaarModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="OziBazaarModel.webpages_Roles" />
-          <AssociationSet Name="FK_EmailAudit_EmailConfiguration" Association="OziBazaarModel.FK_EmailAudit_EmailConfiguration">
-            <End Role="EmailConfiguration" EntitySet="EmailConfigurations" />
-            <End Role="EmailAudit" EntitySet="EmailAudits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmailConfiguration_EmailType" Association="OziBazaarModel.FK_EmailConfiguration_EmailType">
-            <End Role="EmailType" EntitySet="EmailTypes" />
-            <End Role="EmailConfiguration" EntitySet="EmailConfigurations" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductGroup_ProductMainGroup" Association="OziBazaarModel.FK_ProductGroup_ProductMainGroup">
             <End Role="ProductMainGroup" EntitySet="ProductMainGroups" />
             <End Role="ProductGroup" EntitySet="ProductGroups" />
@@ -488,7 +477,18 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="NotificationAudits" EntityType="OziBazaarModel.NotificationAudit" />
+          <EntitySet Name="NotificationTemplates" EntityType="OziBazaarModel.NotificationTemplate" />
+          <EntitySet Name="NotificationTypes" EntityType="OziBazaarModel.NotificationType" />
+          <AssociationSet Name="FK_NotificationAudit_EmailConfiguration" Association="OziBazaarModel.FK_NotificationAudit_EmailConfiguration">
+            <End Role="NotificationTemplate" EntitySet="NotificationTemplates" />
+            <End Role="NotificationAudit" EntitySet="NotificationAudits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationConfiguration_EmailType" Association="OziBazaarModel.FK_NotificationConfiguration_EmailType">
+            <End Role="NotificationType" EntitySet="NotificationTypes" />
+            <End Role="NotificationTemplate" EntitySet="NotificationTemplates" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="AdvertisementID" />
@@ -714,40 +714,6 @@
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="webpages_Roles" Relationship="OziBazaarModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
         </EntityType>
-        <EntityType Name="EmailAudit">
-          <Key>
-            <PropertyRef Name="EmailAuditID" />
-          </Key>
-          <Property Type="Int32" Name="EmailAuditID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="EmailConfigurationID" />
-          <Property Type="String" Name="Sender" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Receiver" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="Date" Precision="3" />
-          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="EmailConfiguration" Relationship="OziBazaarModel.FK_EmailAudit_EmailConfiguration" FromRole="EmailAudit" ToRole="EmailConfiguration" />
-        </EntityType>
-        <EntityType Name="EmailConfiguration">
-          <Key>
-            <PropertyRef Name="EmailConfigurationID" />
-          </Key>
-          <Property Type="Int32" Name="EmailConfigurationID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="TemplatePath" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="EmailTypeID" />
-          <Property Type="String" Name="Subject" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="EmailAudits" Relationship="OziBazaarModel.FK_EmailAudit_EmailConfiguration" FromRole="EmailConfiguration" ToRole="EmailAudit" />
-          <NavigationProperty Name="EmailType" Relationship="OziBazaarModel.FK_EmailConfiguration_EmailType" FromRole="EmailConfiguration" ToRole="EmailType" />
-        </EntityType>
-        <EntityType Name="EmailType">
-          <Key>
-            <PropertyRef Name="EmailTypeID" />
-          </Key>
-          <Property Type="Int32" Name="EmailTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="EmailConfigurations" Relationship="OziBazaarModel.FK_EmailConfiguration_EmailType" FromRole="EmailType" ToRole="EmailConfiguration" />
-        </EntityType>
         <EntityType Name="ProductMainGroup">
           <Key>
             <PropertyRef Name="ProductMainGroupID" />
@@ -790,30 +756,6 @@
           <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfiles" Relationship="OziBazaarModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
         </EntityType>
-        <Association Name="FK_EmailAudit_EmailConfiguration">
-          <End Type="OziBazaarModel.EmailConfiguration" Role="EmailConfiguration" Multiplicity="0..1" />
-          <End Type="OziBazaarModel.EmailAudit" Role="EmailAudit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmailConfiguration">
-              <PropertyRef Name="EmailConfigurationID" />
-            </Principal>
-            <Dependent Role="EmailAudit">
-              <PropertyRef Name="EmailConfigurationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmailConfiguration_EmailType">
-          <End Type="OziBazaarModel.EmailType" Role="EmailType" Multiplicity="0..1" />
-          <End Type="OziBazaarModel.EmailConfiguration" Role="EmailConfiguration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmailType">
-              <PropertyRef Name="EmailTypeID" />
-            </Principal>
-            <Dependent Role="EmailConfiguration">
-              <PropertyRef Name="EmailTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductGroup_ProductMainGroup">
           <End Type="OziBazaarModel.ProductMainGroup" Role="ProductMainGroup" Multiplicity="0..1" />
           <End Type="OziBazaarModel.ProductGroup" Role="ProductGroup" Multiplicity="*" />
@@ -830,7 +772,65 @@
           <End Type="OziBazaarModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
           <End Type="OziBazaarModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-      </Schema>
+        <EntityType Name="NotificationAudit">
+          <Key>
+            <PropertyRef Name="NotificationAuditID" />
+          </Key>
+          <Property Type="Int32" Name="NotificationAuditID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="NotificationConfigurationID" />
+          <Property Type="String" Name="Sender" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Receiver" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Date" Precision="3" />
+          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="NotificationTemplate" Relationship="OziBazaarModel.FK_NotificationAudit_EmailConfiguration" FromRole="NotificationAudit" ToRole="NotificationTemplate" />
+        </EntityType>
+        <EntityType Name="NotificationTemplate">
+          <Key>
+            <PropertyRef Name="NotificationTemplateID" />
+          </Key>
+          <Property Type="Int32" Name="NotificationTemplateID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TemplatePath" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NotificationTypeID" />
+          <Property Type="String" Name="Subject" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="NotificationAudits" Relationship="OziBazaarModel.FK_NotificationAudit_EmailConfiguration" FromRole="NotificationTemplate" ToRole="NotificationAudit" />
+          <NavigationProperty Name="NotificationType" Relationship="OziBazaarModel.FK_NotificationConfiguration_EmailType" FromRole="NotificationTemplate" ToRole="NotificationType" />
+        </EntityType>
+        <EntityType Name="NotificationType">
+          <Key>
+            <PropertyRef Name="NotificationTypeID" />
+          </Key>
+          <Property Type="Int32" Name="NotificationTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="NotificationTemplates" Relationship="OziBazaarModel.FK_NotificationConfiguration_EmailType" FromRole="NotificationType" ToRole="NotificationTemplate" />
+        </EntityType>
+        <Association Name="FK_NotificationAudit_EmailConfiguration">
+          <End Type="OziBazaarModel.NotificationTemplate" Role="NotificationTemplate" Multiplicity="0..1" />
+          <End Type="OziBazaarModel.NotificationAudit" Role="NotificationAudit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTemplate">
+              <PropertyRef Name="NotificationTemplateID" />
+            </Principal>
+            <Dependent Role="NotificationAudit">
+              <PropertyRef Name="NotificationConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationConfiguration_EmailType">
+          <End Type="OziBazaarModel.NotificationType" Role="NotificationType" Multiplicity="0..1" />
+          <End Type="OziBazaarModel.NotificationTemplate" Role="NotificationTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationType">
+              <PropertyRef Name="NotificationTypeID" />
+            </Principal>
+            <Dependent Role="NotificationTemplate">
+              <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -972,39 +972,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmailAudits">
-            <EntityTypeMapping TypeName="OziBazaarModel.EmailAudit">
-              <MappingFragment StoreEntitySet="EmailAudit">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Sender" ColumnName="Sender" />
-                <ScalarProperty Name="EmailConfigurationID" ColumnName="EmailConfigurationID" />
-                <ScalarProperty Name="EmailAuditID" ColumnName="EmailAuditID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmailConfigurations">
-            <EntityTypeMapping TypeName="OziBazaarModel.EmailConfiguration">
-              <MappingFragment StoreEntitySet="EmailConfiguration">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="EmailTypeID" ColumnName="EmailTypeID" />
-                <ScalarProperty Name="TemplatePath" ColumnName="TemplatePath" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EmailConfigurationID" ColumnName="EmailConfigurationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmailTypes">
-            <EntityTypeMapping TypeName="OziBazaarModel.EmailType">
-              <MappingFragment StoreEntitySet="EmailType">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EmailTypeID" ColumnName="EmailTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductMainGroups">
             <EntityTypeMapping TypeName="OziBazaarModel.ProductMainGroup">
               <MappingFragment StoreEntitySet="ProductMainGroup">
@@ -1056,6 +1023,39 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="NotificationAudits">
+            <EntityTypeMapping TypeName="OziBazaarModel.NotificationAudit">
+              <MappingFragment StoreEntitySet="NotificationAudit">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="NotificationConfigurationID" ColumnName="NotificationConfigurationID" />
+                <ScalarProperty Name="NotificationAuditID" ColumnName="NotificationAuditID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTemplates">
+            <EntityTypeMapping TypeName="OziBazaarModel.NotificationTemplate">
+              <MappingFragment StoreEntitySet="NotificationTemplate">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+                <ScalarProperty Name="TemplatePath" ColumnName="TemplatePath" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NotificationTemplateID" ColumnName="NotificationTemplateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTypes">
+            <EntityTypeMapping TypeName="OziBazaarModel.NotificationType">
+              <MappingFragment StoreEntitySet="NotificationType">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

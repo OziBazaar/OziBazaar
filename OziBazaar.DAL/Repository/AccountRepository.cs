@@ -50,5 +50,13 @@ namespace OziBazaar.DAL.Repository
                             select usr.UserName).SingleOrDefault();
             return userName;
         }
+
+        public NotificationTemplate GetNotificationTemplate(string notificationType, string templateDescription)
+        {
+            NotificationTemplate result = (from template in dbContext.NotificationTemplates
+                                                where template.Description == templateDescription && template.NotificationType.Description == notificationType
+                                                select template).FirstOrDefault();
+            return result;
+        }
     }
 }

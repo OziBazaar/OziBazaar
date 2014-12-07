@@ -12,15 +12,15 @@ namespace OziBazaar.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class EmailAudit
+    public partial class NotificationAudit
     {
-        public int EmailAuditID { get; set; }
-        public Nullable<int> EmailConfigurationID { get; set; }
+        public int NotificationAuditID { get; set; }
+        public Nullable<int> NotificationConfigurationID { get; set; }
         public string Sender { get; set; }
         public string Receiver { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public byte[] Version { get; set; }
     
-        public virtual EmailConfiguration EmailConfiguration { get; set; }
+        public virtual NotificationTemplate NotificationTemplate { get; set; }
     }
 }

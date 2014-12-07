@@ -23,17 +23,17 @@
         <AssociationConnector Association="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" ManuallyRouted="false" />
         <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" ManuallyRouted="false" />
         <EntityTypeShape EntityType="OziBazaarModel.UserProfile" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="OziBazaarModel.EmailAudit" Width="1.5" PointX="16.25" PointY="1" />
-        <EntityTypeShape EntityType="OziBazaarModel.EmailConfiguration" Width="1.5" PointX="14" PointY="1" />
-        <EntityTypeShape EntityType="OziBazaarModel.EmailType" Width="1.5" PointX="11.75" PointY="1.375" />
         <EntityTypeShape EntityType="OziBazaarModel.ProductMainGroup" Width="1.5" PointX="0.75" PointY="7.375" />
         <EntityTypeShape EntityType="OziBazaarModel.webpages_Membership" Width="1.5" PointX="9.75" PointY="11.75" />
         <EntityTypeShape EntityType="OziBazaarModel.webpages_OAuthMembership" Width="1.5" PointX="11.75" PointY="11.75" />
         <EntityTypeShape EntityType="OziBazaarModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="1.5" />
-        <AssociationConnector Association="OziBazaarModel.FK_EmailAudit_EmailConfiguration" />
-        <AssociationConnector Association="OziBazaarModel.FK_EmailConfiguration_EmailType" />
         <AssociationConnector Association="OziBazaarModel.FK_ProductGroup_ProductMainGroup" />
         <AssociationConnector Association="OziBazaarModel.webpages_UsersInRoles" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationAudit" Width="1.5" PointX="16.25" PointY="1" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationTemplate" Width="1.5" PointX="14" PointY="1" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationType" Width="1.5" PointX="11.75" PointY="1.375" />
+        <AssociationConnector Association="OziBazaarModel.FK_NotificationAudit_EmailConfiguration" />
+        <AssociationConnector Association="OziBazaarModel.FK_NotificationConfiguration_EmailType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
