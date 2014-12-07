@@ -22,7 +22,7 @@ namespace OziBazaar.UnitTest
         }
 
         [TestMethod]
-        public void SerializeEmailAdertisementSummary()
+        public void SerializeAdertisementSummary()
         {
             //Arrange
             SerializationUtil serializationUtil = new SerializationUtil();
@@ -74,6 +74,5 @@ namespace OziBazaar.UnitTest
             Assert.AreEqual("OziBazaarUser", result.Element("Parameters").Element("Fullname").Value);
             Assert.AreEqual("aaccc123@", result.Element("Parameters").Element("NewPassword").Value);
         }
-
     }
 }
