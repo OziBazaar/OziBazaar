@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43EB1EE0-6B1F-4FD5-B21F-5007DC823DAB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OziBazaar.Notification</RootNamespace>
+    <AssemblyName>OziBazaar.Notification</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Email\ISmtpEmailUtil.cs" />
+    <Compile Include="Email\SmtpEmailUtil.cs" />
+    <Compile Include="Entities\AdertisementSummary.cs" />
+    <Compile Include="Entities\ActivationEmail.cs" />
+    <Compile Include="Entities\EmailSetting.cs" />
+    <Compile Include="Entities\EmailContentBase.cs" />
+    <Compile Include="Entities\ResetPassword.cs" />
+    <Compile Include="Enums\NotificationEnum.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OziBazaar.Common\OziBazaar.Common.csproj">
+      <Project>{aa68b8e6-63c9-445b-a57a-c89b494782ee}</Project>
+      <Name>OziBazaar.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">
+      <Project>{eba0a2c5-1dff-40df-8d68-80f26c6978a6}</Project>
+      <Name>OziBazaar.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OziBazaar.Framework\OziBazaar.Framework.csproj">
+      <Project>{389a5160-13ec-44c4-94aa-133edb21ea3f}</Project>
+      <Name>OziBazaar.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Templates\AccountDisable.xslt" />
+    <Content Include="Templates\ActivationEmail.xslt" />
+    <Content Include="Templates\AdvertisementInsert.xslt" />
+    <Content Include="Templates\AdvertisementSuspend.xslt" />
+    <Content Include="Templates\ResetPassword.xslt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
