@@ -49,7 +49,7 @@
     <Compile Include="Entities\EmailContentBase.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Enums\NotificationEnum.cs" />
-    <Compile Include="Notification.cs" />
+    <Compile Include="NotificationController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ using OziBazaar.Common.Serialization;
 using OziBazaar.Common.Transformation;
 using OziBazaar.Notification.Entities;
 
-namespace OziBazaar.UnitTest
+namespace OziBazaar.IntegrationTest
 {
     [TestClass]
     public class XlstTransformTests

@@ -13,14 +13,14 @@ using OziBazaar.Notification.Enums;
 
 namespace OziBazaar.Notification
 {
-    public class Notification
+    public class NotificationController
     {
         private readonly ISmtpEmailUtil _smtpEmailUtil;
         private readonly ITransformerUtil _transformerUtil;
         private readonly ISerializationUtil _serializationUtil;
         private readonly IAccountRepository _accountRepository;
 
-        public Notification(
+        public NotificationController(
             ISmtpEmailUtil smtpEmailUtil,
             ITransformerUtil transformerUtil,
             ISerializationUtil serializationUtil,
@@ -51,7 +51,7 @@ namespace OziBazaar.Notification
             return result;
         }
 
-        public bool SendAdvertisementSuspend(EmailContentBase content, string mailTo)
+        public bool SendAdvertisementSuspend(AdertisementSummary content, string mailTo)
         {
             bool result;
             try
@@ -59,7 +59,7 @@ namespace OziBazaar.Notification
                 NotificationTemplate notificationTemplate = _accountRepository.GetNotificationTemplate(
                     NotificationEnum.NotificationType.Email.ToString(),
                     NotificationEnum.NotificationTemplate.AdvertisementSuspend.ToString());
-                string body = _transformerUtil.XmlToHtml(_serializationUtil.Serialize<EmailContentBase>(content), notificationTemplate.TemplatePath);
+                string body = _transformerUtil.XmlToHtml(_serializationUtil.Serialize<AdertisementSummary>(content), notificationTemplate.TemplatePath);
                 _smtpEmailUtil.SendEmail(mailTo, notificationTemplate.Subject, body);
                 result = true;
             }
