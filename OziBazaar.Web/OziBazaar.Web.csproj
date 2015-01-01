@@ -252,9 +252,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Infrastructure\Email\ISmtpEmail.cs" />
     <Compile Include="Infrastructure\Email\SmtpEmail.cs" />
+    <Compile Include="Infrastructure\Filter\LayoutInjecterAttribute.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
@@ -460,6 +462,8 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Ad\AddAdDetail.cshtml" />
+    <Content Include="Views\Shared\_UserDashboard.cshtml" />
+    <Content Include="Views\UserDashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.Common\OziBazaar.Common.csproj">

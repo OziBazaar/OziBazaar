@@ -9,21 +9,14 @@
     @Styles.Render("~/Content/bootstrap/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-inner">
         <div class="container">
             <div class="row">
                 <div class="span8">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Ozi Bazaar", "Index", "Home", null, new { @class = "navbar-brand" })</li>
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Advertisements", "AdList", "Ad")</li>
-                        <li>@Html.ActionLink("Wish List", "Index", "WishList")</li>
-                        @if(User.Identity.IsAuthenticated)
-                        { 
-                            <li>@Html.ActionLink("My Adds", "MyAdList", "Ad")</li>
-                        }
+                    <ul class="nav">
+                        <li>@Html.ActionLink("Ozi Bazaar", "Index", "Home", null, new { @class = "brand" })</li>
+                        <li>@Html.ActionLink("My details", "Detail", "UserDashboard")</li>
+                        <li>@Html.ActionLink("My Advertisements", "Advertisement", "UserDashboard")</li>
                     </ul>
                 </div>
                 <div class="span4">
@@ -50,3 +43,5 @@
 
 </body>
 </html>
+
+
