@@ -7,6 +7,7 @@
     <Schema Namespace="OziBazaarModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="OziBazaarModelStoreContainer">
           <EntitySet Name="Advertisement" EntityType="OziBazaarModel.Store.Advertisement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Country" EntityType="OziBazaarModel.Store.Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Lookup" EntityType="OziBazaarModel.Store.Lookup" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NotificationAudit" EntityType="OziBazaarModel.Store.NotificationAudit" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NotificationTemplate" EntityType="OziBazaarModel.Store.NotificationTemplate" store:Type="Tables" Schema="dbo" />
@@ -69,6 +70,10 @@
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_Country" Association="OziBazaarModel.Store.FK_UserProfile_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
           <AssociationSet Name="FK_WishList_Advertisement" Association="OziBazaarModel.Store.FK_WishList_Advertisement">
             <End Role="Advertisement" EntitySet="Advertisement" />
             <End Role="WishList" EntitySet="WishList" />
@@ -87,6 +92,15 @@
           <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="nchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Lookup">
@@ -223,6 +237,10 @@
           <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="200" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Activated" Type="bit" />
           <Property Name="ActivationDate" Type="date" />
@@ -409,6 +427,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserProfile_Country">
+          <End Role="Country" Type="OziBazaarModel.Store.Country" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="OziBazaarModel.Store.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WishList_Advertisement">
           <End Role="Advertisement" Type="OziBazaarModel.Store.Advertisement" Multiplicity="1" />
           <End Role="WishList" Type="OziBazaarModel.Store.WishList" Multiplicity="*" />
@@ -487,6 +517,11 @@
           <AssociationSet Name="FK_NotificationConfiguration_EmailType" Association="OziBazaarModel.FK_NotificationConfiguration_EmailType">
             <End Role="NotificationType" EntitySet="NotificationTypes" />
             <End Role="NotificationTemplate" EntitySet="NotificationTemplates" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="OziBazaarModel.Country" />
+          <AssociationSet Name="FK_UserProfile_Country" Association="OziBazaarModel.FK_UserProfile_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Advertisement">
@@ -713,6 +748,11 @@
           <Property Name="ActivationDate" Type="DateTime" Precision="0" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="webpages_Roles" Relationship="OziBazaarModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+          <Property Type="Int32" Name="CountryID" />
+          <Property Type="String" Name="Address1" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address2" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PostCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="OziBazaarModel.FK_UserProfile_Country" FromRole="UserProfile" ToRole="Country" />
         </EntityType>
         <EntityType Name="ProductMainGroup">
           <Key>
@@ -827,6 +867,28 @@
             </Principal>
             <Dependent Role="NotificationTemplate">
               <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Code" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="Version" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="UserProfiles" Relationship="OziBazaarModel.FK_UserProfile_Country" FromRole="Country" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_UserProfile_Country">
+          <End Type="OziBazaarModel.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="OziBazaarModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="CountryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -961,6 +1023,10 @@
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="OziBazaarModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
                 <ScalarProperty Name="Activated" ColumnName="Activated" />
@@ -1053,6 +1119,16 @@
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="OziBazaarModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

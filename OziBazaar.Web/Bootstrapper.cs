@@ -3,11 +3,18 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Web.Infrastructure.Repository;
-using OziBazaar.Web.Infrastructure.Email;
-using OziBazaar.Web.Infrastructure.Security;
+using OziBazaar.Web.Areas.UserManagement.Security;
 using Microsoft.Practices.ServiceLocation;
 using OziBazaar.DAL.Repository;
 using OziBazaar.Common.Cryptography;
+using OziBazaar.DAL;
+using OziBazaar.Common.Provider;
+using OziBazaar.Notification.Email;
+using OziBazaar.Common.Transformation;
+using OziBazaar.Common.Serialization;
+using OziBazaar.Notification.Controller;
+using OziBazaar.Web.Areas.UserManagement.Models;
+using OziBazaar.Web.Areas.UserManagement.Converter;
 
 namespace OziBazaar.Web
 {
@@ -33,9 +40,14 @@ namespace OziBazaar.Web
       container.RegisterType<IProductRepository, ProductRepository>();
       container.RegisterType<ILookupRepository, LookupRepository>();
       container.RegisterType<IAccountRepository, AccountRepository>();
-      container.RegisterType<ISmtpEmail, SmtpEmail>();
       container.RegisterType<IEncryptionEngine, EncryptionEngine>();
-            
+      container.RegisterType<ICacheRepository<Country>, CountryRepository>();
+      container.RegisterType<ICacheProvider, DefaultCacheProvider>();
+      container.RegisterType<INotificationController, NotificationController>();
+      container.RegisterType<ISmtpEmailUtil, SmtpEmailUtil>();
+      container.RegisterType<ITransformerUtil, TransformerUtil>();
+      container.RegisterType<ISerializationUtil, SerializationUtil>();
+      container.RegisterType<IConverter<UserProfile, UserProfileViewModel>, UserProfileViewModelConverter>();
       RegisterTypes(container);
 
       return container;

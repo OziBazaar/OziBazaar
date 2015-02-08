@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\INotificationController.cs" />
     <Compile Include="Email\ISmtpEmailUtil.cs" />
     <Compile Include="Email\SmtpEmailUtil.cs" />
     <Compile Include="Entities\AdertisementSummary.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="Entities\EmailContentBase.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Enums\NotificationEnum.cs" />
-    <Compile Include="NotificationController.cs" />
+    <Compile Include="Controller\NotificationController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

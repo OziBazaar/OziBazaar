@@ -1,4 +1,4 @@
-﻿using OziBazaar.Web.Infrastructure.Security;
+﻿using OziBazaar.Web.Areas.UserManagement.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;

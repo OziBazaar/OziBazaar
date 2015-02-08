@@ -1,0 +1,63 @@
+﻿@model OziBazaar.Web.Areas.UserManagement.Models.UserProfileViewModel
+@{
+    ViewBag.Title = "UpdateUserProfile";
+    Layout = "~/Areas/UserManagement/Views/Shared/_UserDashboardLayout.cshtml";
+}
+
+@Html.HiddenFor(m => m.UserId)
+
+<h2>Update User Profile Information</h2>
+
+div class="container-fluid">
+    <div class="row-fluid">
+
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <fieldset>
+                <legend>Registration Form</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { @readonly="readonly" })
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.FullName)
+                        @Html.TextBoxFor(m => m.FullName)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.EmailAddress)
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @readonly="readonly" })
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.TextBoxFor(m => m.Phone)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.CountryID)
+                        @Html.DropDownListFor(x => x.CountryID, new SelectList(Model.CountryList, "CountryID", "Description"), "Please Select a country")
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Address1)
+                        @Html.TextBoxFor(m => m.Address1, new { @class = "input-xxlarge" })
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Address2)
+                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-xxlarge" })
+                    </li>
+
+                    <li>
+                        @Html.LabelFor(m => m.PostCode)
+                        @Html.TextBoxFor(m => m.PostCode)
+                    </li>
+                </ol>
+
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </fieldset>
+        }
+    </div>
+</div>

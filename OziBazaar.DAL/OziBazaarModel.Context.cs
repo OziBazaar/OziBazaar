@@ -43,5 +43,6 @@ namespace OziBazaar.DAL
         public DbSet<NotificationAudit> NotificationAudits { get; set; }
         public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
+        public DbSet<Country> Countries { get; set; }
     }
 }

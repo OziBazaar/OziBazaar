@@ -27,7 +27,12 @@ namespace OziBazaar.DAL
         public Nullable<bool> Activated { get; set; }
         public Nullable<System.DateTime> ActivationDate { get; set; }
         public byte[] Version { get; set; }
+        public Nullable<int> CountryID { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string PostCode { get; set; }
     
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

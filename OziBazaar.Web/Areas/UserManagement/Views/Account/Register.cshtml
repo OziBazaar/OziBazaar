@@ -1,0 +1,93 @@
+﻿@model OziBazaar.Web.Areas.UserManagement.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/UserManagement/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <fieldset>
+                <legend>Registration Form</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.FullName)
+                        @Html.TextBoxFor(m => m.FullName)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.EmailAddress)
+                        @Html.TextBoxFor(m => m.EmailAddress)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.TextBoxFor(m => m.Phone)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.CountryID)
+                        @Html.DropDownListFor(x => x.CountryID, new SelectList(Model.CountryList, "CountryID", "Description"), "Please Select a country")
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Address1)
+                        @Html.TextBoxFor(m => m.Address1, new { @class = "input-xxlarge" })
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Address2)
+                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-xxlarge" })
+                    </li>
+
+                    <li>
+                        @Html.LabelFor(m => m.PostCode)
+                        @Html.TextBoxFor(m => m.PostCode)
+                    </li>
+                    <li>
+                        <img id="m_imgCaptcha" alt="Click to Change image" src="" title="Click to Change image"
+                            onclick="loadCaptcha();" style="width: 200px; height: 50px;" />
+                        @Html.TextBoxFor(m => m.Captcha)
+                    </li>
+                </ol>
+
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            loadCaptcha();
+        });
+        function loadCaptcha() {
+            $.ajax({
+                type: 'GET', url: '/Helper/generateCaptcha',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (data) {
+                    $("#m_imgCaptcha").attr('src', data);
+                },
+                error: function (data) { alert("Error while loading captcha image") }
+            });
+        }
+    </script>
+}

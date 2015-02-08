@@ -4,6 +4,7 @@ using OziBazaar.Common.Serialization;
 using OziBazaar.Common.Transformation;
 using OziBazaar.DAL.Repository;
 using OziBazaar.Notification;
+using OziBazaar.Notification.Controller;
 using OziBazaar.Notification.Email;
 using OziBazaar.Notification.Entities;
 
