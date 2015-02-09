@@ -243,6 +243,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\UserManagement\Converter\IConverter.cs" />
+    <Compile Include="Areas\UserManagement\Converter\UserProfileConverter.cs" />
     <Compile Include="Areas\UserManagement\Converter\UserProfileViewModelConverter.cs" />
     <Compile Include="Areas\UserManagement\Models\UserProfileViewModel.cs" />
     <Compile Include="Areas\UserManagement\UserManagementAreaRegistration.cs" />
@@ -370,7 +371,7 @@
     <Content Include="Areas\UserManagement\Views\web.config" />
     <Content Include="Areas\UserManagement\Views\UserDashboard\EditUserInfo.cshtml" />
     <Content Include="Areas\UserManagement\Views\Shared\_AccountLayout.cshtml" />
-    <Content Include="Areas\UserManagement\Views\Shared\Message.cshtml" />
+    <Content Include="Areas\UserManagement\Views\Account\Message.cshtml" />
     <Content Include="Areas\UserManagement\Views\Account\UpdateUserProfile.cshtml" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

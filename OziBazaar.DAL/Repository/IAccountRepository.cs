@@ -14,5 +14,6 @@ namespace OziBazaar.DAL.Repository
         UserProfile GetUser(string userToken);
         bool ActivateUser(string userName, string emailAddress);
         NotificationTemplate GetNotificationTemplate(string notificationType, string templateDescription);
+        int UpdateUserProfile(UserProfile userProfile);
     }
 }

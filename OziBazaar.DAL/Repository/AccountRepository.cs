@@ -33,7 +33,6 @@ namespace OziBazaar.DAL.Repository
             }
         }
 
-
         public UserProfile GetUserByEmail(string emailAddress)
         {
             UserProfile userProfileModel =
@@ -57,6 +56,21 @@ namespace OziBazaar.DAL.Repository
                                                 where template.Description == templateDescription && template.NotificationType.Description == notificationType
                                                 select template).FirstOrDefault();
             return result;
+        }
+
+        public int UpdateUserProfile(UserProfile userProfile)
+        {
+            if (userProfile == null)
+                throw new ArgumentNullException();
+            UserProfile savedRow = GetUser(userProfile.UserName);
+            if (savedRow == null)
+                throw new KeyNotFoundException();
+            savedRow.Address1 = userProfile.Address1;
+            savedRow.Address2 = userProfile.Address2;
+            savedRow.CountryID = userProfile.CountryID;
+            savedRow.Phone = userProfile.Phone;
+            savedRow.PostCode = userProfile.PostCode;
+            return dbContext.SaveChanges();
         }
     }
 }

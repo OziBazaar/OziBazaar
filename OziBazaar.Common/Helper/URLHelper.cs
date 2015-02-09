@@ -9,6 +9,7 @@ namespace OziBazaar.Common.Helper
 {
     public class URLHelper
     {
+
         public static string GetInitialUrl()
         {
             StringBuilder initUrl = new StringBuilder();
@@ -19,11 +20,12 @@ namespace OziBazaar.Common.Helper
             return initUrl.ToString();
         }
 
-        public static string GetActivationEmailUrl()
+        public static string GetActivationEmailUrl(string activationCode)
         {
             StringBuilder activationUrl = new StringBuilder();
             activationUrl.Append(GetInitialUrl());
             activationUrl.Append("UserManagement/Account/Activation?ActivationCode=");
+            activationUrl.Append(activationCode);
             return activationUrl.ToString();
         }
     }

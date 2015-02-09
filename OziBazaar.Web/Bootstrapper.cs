@@ -48,6 +48,8 @@ namespace OziBazaar.Web
       container.RegisterType<ITransformerUtil, TransformerUtil>();
       container.RegisterType<ISerializationUtil, SerializationUtil>();
       container.RegisterType<IConverter<UserProfile, UserProfileViewModel>, UserProfileViewModelConverter>();
+      container.RegisterType<IConverter<UserProfileViewModel, UserProfile>, UserProfileConverter>();
+      container.RegisterType<IActivationManager, ActivationManager>();
       RegisterTypes(container);
 
       return container;

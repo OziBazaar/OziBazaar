@@ -31,28 +31,31 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        const char separator = ';';
-        private readonly IEncryptionEngine _encryptionEngine;
+        private readonly IActivationManager _activationManager;
         private readonly INotificationController _notificationController;
         private readonly IProductRepository _productRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly ICacheRepository<Country> _countryRepository;
         private readonly IConverter<UserProfile, UserProfileViewModel> _userProfileViewModelConverter;
+        private readonly IConverter<UserProfileViewModel, UserProfile> _userProfileConverter;
 
         public AccountController(
-            IEncryptionEngine encryptionEngine, 
+            IActivationManager activationManager, 
             INotificationController notificationController,
             IProductRepository productRepository,
             IAccountRepository accountRepository,
             ICacheRepository<Country> countryRepository,
-            IConverter<UserProfile, UserProfileViewModel> userProfileViewModelConverter)
+            IConverter<UserProfile, UserProfileViewModel> userProfileViewModelConverter,
+            IConverter<UserProfileViewModel, UserProfile> userProfileConverter
+            )
         {
-            this._encryptionEngine = encryptionEngine;
+            this._activationManager = activationManager;
             this._notificationController = notificationController;
             this._productRepository = productRepository;
             this._accountRepository = accountRepository;
             this._countryRepository = countryRepository;
             this._userProfileViewModelConverter = userProfileViewModelConverter;
+            this._userProfileConverter = userProfileConverter;
         }
         
         //
@@ -161,16 +164,11 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                             PostCode = model.PostCode
                         },
                         false);
-                    string activationCode = _encryptionEngine.DESEncrypt(
-                        model.UserName + separator.ToString() + model.EmailAddress);
-                    StringBuilder callBackUrl = new StringBuilder();
-                    callBackUrl.Append(URLHelper.GetActivationEmailUrl());
-                    callBackUrl.Append(activationCode);
                     bool result = _notificationController.SendActivationEmail(
                         new ActivationEmail()
                         {
                             Fullname = model.UserName,
-                            ActivationUrl = callBackUrl.ToString()
+                            ActivationUrl = _activationManager.GenerateCode(new string[] {model.UserName, model.EmailAddress})
                         },
                         model.EmailAddress
                     );
@@ -199,8 +197,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         {
             try
             {
-                string decActivatioCode = _encryptionEngine.DESDecrypt(activationCode);
-                string[] values = decActivatioCode.Split(separator);
+                string[] values = _activationManager.InterpretCode(activationCode);
                 if (_accountRepository.ActivateUser(values[0], values[1]) == true)
                 {
                     ViewBag.Message = "The account is activated sucessfuly";
@@ -238,7 +235,8 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 // Attempt to update user profile information
                 try
                 {
-                    return View("Message");
+                    _accountRepository.UpdateUserProfile(_userProfileConverter.ConvertTo(model));
+                    return RedirectToAction("Index", "UserDashboard", new { area = "UserManagement" });
                 }
                 catch (SqlException se)
                 {
