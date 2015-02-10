@@ -39,6 +39,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         private readonly ICacheRepository<Country> _countryRepository;
         private readonly IConverter<UserProfile, UserProfileViewModel> _userProfileViewModelConverter;
         private readonly IConverter<UserProfileViewModel, UserProfile> _userProfileConverter;
+        private readonly IRandomPasswordGenerator _randomPasswordGenerator;
 
         public AccountController(
             IActivationManager activationManager, 
@@ -47,7 +48,8 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             IAccountRepository accountRepository,
             ICacheRepository<Country> countryRepository,
             IConverter<UserProfile, UserProfileViewModel> userProfileViewModelConverter,
-            IConverter<UserProfileViewModel, UserProfile> userProfileConverter
+            IConverter<UserProfileViewModel, UserProfile> userProfileConverter,
+            IRandomPasswordGenerator randomPasswordGenerator
             )
         {
             this._activationManager = activationManager;
@@ -57,6 +59,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             this._countryRepository = countryRepository;
             this._userProfileViewModelConverter = userProfileViewModelConverter;
             this._userProfileConverter = userProfileConverter;
+            this._randomPasswordGenerator = randomPasswordGenerator;
         }
         
         //
@@ -275,14 +278,15 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             {
                 if (ModelState.IsValid && userProfile.EmailAddress == model.EmailAddress)
                 {
+                    string newPassword = _randomPasswordGenerator.CreatePassword(8);
                     var token = WebSecurity.GeneratePasswordResetToken(model.UserName);
-                    var result = WebSecurity.ResetPassword(token, model.UserName+"1234");
+                    var result = WebSecurity.ResetPassword(token, newPassword);
 
                     bool result1 = _notificationController.SendResetPassword(
                         new ResetPassword()
                         {
                             Fullname = userProfile.FullName,
-                            NewPassword = model.UserName + "1234"
+                            NewPassword = newPassword
                         },
                         model.EmailAddress
                     );

@@ -50,6 +50,8 @@ namespace OziBazaar.Web
       container.RegisterType<IConverter<UserProfile, UserProfileViewModel>, UserProfileViewModelConverter>();
       container.RegisterType<IConverter<UserProfileViewModel, UserProfile>, UserProfileConverter>();
       container.RegisterType<IActivationManager, ActivationManager>();
+      container.RegisterType<IRandomPasswordGenerator, RandomPasswordGenerator>();
+      
       RegisterTypes(container);
 
       return container;

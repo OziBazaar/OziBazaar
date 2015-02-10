@@ -48,6 +48,8 @@
     <Compile Include="Cryptography\EncryptionEngine.cs" />
     <Compile Include="Cryptography\IActivationManager.cs" />
     <Compile Include="Cryptography\IEncryptionEngine.cs" />
+    <Compile Include="Cryptography\IRandomPasswordGenerator.cs" />
+    <Compile Include="Cryptography\RandomPasswordGenerator.cs" />
     <Compile Include="Graphic\CaptchaImage.cs" />
     <Compile Include="Graphic\CaptchaException.cs" />
     <Compile Include="Helper\URLHelper.cs" />
