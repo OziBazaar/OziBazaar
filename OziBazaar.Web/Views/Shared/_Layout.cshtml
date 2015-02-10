@@ -21,7 +21,7 @@
                             <li>@Html.ActionLink("Advertisements", "AdList", "Ad")</li>
                             @if (User.Identity.IsAuthenticated)
                             { 
-                                <li>@Html.ActionLink("My Ozi Bazaar", "Index", "UserDashboard", null, new { area = "UserManagement" })</li>
+                                <li>@Html.ActionLink("My Ozi Bazaar", "Index", "UserDashboard", new { area = "UserManagement" }, new{})</li>
                             }
                         </ul>
                     </div>

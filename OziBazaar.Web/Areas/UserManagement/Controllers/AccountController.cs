@@ -25,6 +25,7 @@ using OziBazaar.Web.Areas.UserManagement.Models;
 using System.Configuration;
 using OziBazaar.Notification.Controller;
 using OziBazaar.Web.Areas.UserManagement.Converter;
+using OziBazaar.Common.Graphic;
 
 namespace OziBazaar.Web.Areas.UserManagement.Controllers
 {
@@ -136,23 +137,22 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Captcha.ToLower() != Session["captchaText"].ToString().ToLower())
-                {
-                    ModelState.AddModelError("CaptchText", new Exception("Invalid captcha"));
-                    return View(model); 
-                }
-                if ( _accountRepository.GetUserByEmail(model.EmailAddress) != null)
-                {
-                    ModelState.AddModelError("Email address already exits", new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail));
-                    return View(model);
-                }
-                // Attempt to register the user
                 try
                 {
+                    if (model.Captcha.ToLower() != Session["captchaText"].ToString().ToLower())
+                    {
+                        throw new CaptchaException("Invalid captcha");
+                    }
+                    if (_accountRepository.GetUserByEmail(model.EmailAddress) != null)
+                    {
+                        throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail);
+                    }
+                    // Attempt to register the user
+
                     WebSecurity.CreateUserAndAccount(
-                        model.UserName, 
+                        model.UserName,
                         model.Password,
-                        new 
+                        new
                         {
                             FullName = model.FullName,
                             EmailAddress = model.EmailAddress,
@@ -168,24 +168,30 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                         new ActivationEmail()
                         {
                             Fullname = model.UserName,
-                            ActivationUrl = _activationManager.GenerateCode(new string[] {model.UserName, model.EmailAddress})
+                            ActivationUrl = URLHelper.GetActivationEmailUrl(
+                               _activationManager.GenerateCode(new string[] { model.UserName, model.EmailAddress }))
                         },
                         model.EmailAddress
                     );
                     ViewBag.Message = "An activation email has been sent to your email address";
                     return View("Message");
                 }
+                catch (CaptchaException c)
+                {
+                    ModelState.AddModelError("", c.Message);
+                }
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
-                catch(SqlException se)
+                catch (SqlException se)
                 {
-                     ModelState.AddModelError("", "Failed to Register new user, Try with new username/email");
+                    ModelState.AddModelError("", "Failed to Register new user, Try with new username/email");
                 }
             }
             // If we got this far, something failed, redisplay form
             model.CountryList = _countryRepository.GetAll().ToList<Country>();
+            model.Captcha = "";
             return View(model);
         }
 

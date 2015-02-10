@@ -24,7 +24,7 @@ namespace OziBazaar.Common.Helper
         {
             StringBuilder activationUrl = new StringBuilder();
             activationUrl.Append(GetInitialUrl());
-            activationUrl.Append("UserManagement/Account/Activation?ActivationCode=");
+            activationUrl.Append("/UserManagement/Account/Activation?ActivationCode=");
             activationUrl.Append(activationCode);
             return activationUrl.ToString();
         }
