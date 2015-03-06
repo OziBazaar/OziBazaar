@@ -1,14 +1,12 @@
 ﻿@model OziBazaar.Web.Areas.UserManagement.Models.UserProfileViewModel
 @{
-    ViewBag.Title = "UpdateUserProfile";
+    ViewBag.Title = "Update User Profile Information";
     Layout = "~/Areas/UserManagement/Views/Shared/_UserDashboardLayout.cshtml";
 }
 
 @Html.HiddenFor(m => m.UserId)
 
-<h2>Update User Profile Information</h2>
-
-div class="container-fluid">
+<div class="container-fluid">
     <div class="row-fluid">
 
         <h2>@ViewBag.Title</h2>
@@ -19,7 +17,7 @@ div class="container-fluid">
             @Html.ValidationSummary()
 
             <fieldset>
-                <legend>Registration Form</legend>
+                <legend>User Profile Form</legend>
                 <ol>
                     <li>
                         @Html.LabelFor(m => m.UserName)
@@ -56,7 +54,7 @@ div class="container-fluid">
                     </li>
                 </ol>
 
-                <input type="submit" value="Register" class="btn btn-primary" />
+                <input type="submit" value="Update" class="btn btn-primary" />
             </fieldset>
         }
     </div>

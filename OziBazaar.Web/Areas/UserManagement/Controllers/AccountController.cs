@@ -221,10 +221,10 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             }
         }
 
-        // GET: /Account/UpdateUserProfile
+        // GET: /Account/UserProfile
 
         [Authorize]
-        public ActionResult UpdateUserProfile()
+        public ActionResult UserProfile()
         {
             UserProfileViewModel model = _userProfileViewModelConverter.ConvertTo(_accountRepository.GetUser(User.Identity.Name));
             model.CountryList = _countryRepository.GetAll().ToList<Country>();
@@ -232,12 +232,12 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         }
 
         //
-        // POST: /Account/Register
+        // POST: /Account/UserProfile
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateUserProfile(UserProfileViewModel model)
+        public ActionResult UserProfile(UserProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -333,6 +333,32 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             }
 
             return RedirectToAction("Manage", new { Message = message });
+        }
+
+        //
+        // Get: /Account/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(LocalPasswordModel model)
+        {
+            if (ValidateUser(User.Identity.Name, model.OldPassword) == false)
+                ModelState.AddModelError("", "Invalid password, Please try again");
+            if (ModelState.IsValid)
+            {
+                var token = WebSecurity.GeneratePasswordResetToken(User.Identity.Name);
+                var result = WebSecurity.ResetPassword(token, model.NewPassword);
+                ViewBag.Message = "Your password sucessfuly changed";
+                return View("Message");
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         //
@@ -616,6 +642,13 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
+
+        private bool ValidateUser(string userName, string password)
+        {
+            var membership = (SimpleMembershipProvider)Membership.Provider;
+            return membership.ValidateUser(userName, password);
+        }
+
         #endregion
     }
 }
