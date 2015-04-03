@@ -17,8 +17,18 @@ namespace OziBazaar.Web.Binder
 
         public override object BindModel(ControllerContext controllerContext, System.Web.Mvc.ModelBindingContext bindingContext)
         {
+            
             var value = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
-            return DateTime.ParseExact(value.AttemptedValue, _customFormat, CultureInfo.InvariantCulture);
+            DateTime dateTime;
+            
+            var isvaliddate = DateTime.TryParseExact(value.AttemptedValue, _customFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
+            if (!isvaliddate)
+            {
+                bindingContext.ModelState.AddModelError(bindingContext.ModelName, "Invalid date");
+                return null;
+            }
+            return dateTime;
+
         }
 
      

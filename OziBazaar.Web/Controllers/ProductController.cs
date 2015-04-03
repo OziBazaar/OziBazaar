@@ -13,7 +13,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private string[] reservedKeys = new string[7] { "AdvertisementId", "CategoryId", "Title", "StartDate", "FinishDate","Price", "__RequestVerificationToken" };
+        private string[] reservedKeys = new string[7] { "AdvertisementId", "ProductGroupId", "Title", "StartDate", "FinishDate", "Price", "__RequestVerificationToken" };
         private readonly IRenderEngine renderEngine;
         private readonly IProductRepository productRepository;
 
@@ -21,11 +21,6 @@ namespace OziBazaar.Web.Controllers
         {
             this.renderEngine = renderEngine;
             this.productRepository = productRepository;
-        }
-
-        public ActionResult Index()
-        {
-            return View();
         }
 
         public ActionResult ViewProduct(int adId)
@@ -88,7 +83,7 @@ namespace OziBazaar.Web.Controllers
             decimal adPrice = 0;
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;
-            ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+            ad.ProductGroupId = Int32.Parse(Request.Form["ProductGroupId"]);
 
             var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
 
@@ -113,7 +108,7 @@ namespace OziBazaar.Web.Controllers
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
-            ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+            ad.ProductGroupId = Int32.Parse(Request.Form["CategoryId"]);
             decimal adPrice = 0;
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;

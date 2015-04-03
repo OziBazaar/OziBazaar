@@ -14,7 +14,7 @@ namespace OziBazaar.Web.ViewModel
         [Required(ErrorMessage="Title is mandatory field",AllowEmptyStrings=false)]
         public string Title { get; set; }
 
-        public int CategoryId { get; set; }
+        public int ProductGroupId { get; set; }
 
         [DisplayName("Start Date")]
         [Required(ErrorMessage="Start Date is mandatory field")]
@@ -34,14 +34,12 @@ namespace OziBazaar.Web.ViewModel
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            DateTime startDate;
-            DateTime endDate;
-            //if (DateTime.TryParse(this.StartDate, out startDate) && DateTime.TryParse(this.FinishDate, out endDate))
-            //{
             if (this.FinishDate.HasValue &&
                 this.StartDate > this.FinishDate)
                 yield return new ValidationResult("Finish Date should be greater or equal than start date");
-            //}
+            
         }
+
+      
     }
 }

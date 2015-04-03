@@ -2,6 +2,7 @@
 	[ProductID] [int] IDENTITY(1,1) NOT NULL,
 	[Description] [nvarchar](500) NOT NULL,
 	[ProductGroupID] [int] NULL,
+	[CategoryID] int NULL,
 	[Version] [timestamp] NOT NULL,
  CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
 (

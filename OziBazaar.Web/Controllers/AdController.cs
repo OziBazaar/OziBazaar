@@ -47,26 +47,20 @@ namespace OziBazaar.Web.Controllers
         [Authorize]
         public ActionResult AddAd()
         {
-             ViewBag.Categories= new SelectList( productRepository.GetAllCategories(),"Id","Name");
              return View(new AdvertisementViewModel());
         }
 
         [Authorize]
         public ActionResult CreateAd(AdvertisementViewModel advertisemnt)
         {
-            
-
             if (ModelState.IsValid)
             {
-                var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
+                var productAdd = productRepository.AddProduct(advertisemnt.ProductGroupId);
                 ViewBag.ProductInfo = renderEngine.Render(productAdd);
                 return View("AddAdDetail",advertisemnt);
             }
-            else
-            {
-                ViewBag.Categories = new SelectList(productRepository.GetAllCategories(), "Id", "Name");
-                return View("AddAd", advertisemnt);
-            }
+            return View("AddAd", advertisemnt);
+            
         }
 
         [Authorize]

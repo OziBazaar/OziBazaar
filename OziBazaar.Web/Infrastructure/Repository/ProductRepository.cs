@@ -202,7 +202,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 adv.StartDate = ad.StartDate;
                 adv.EndDate = ad.EndDate;
 
-                Product product = new Product() { ProductGroupID=ad.Category,Description=ad.Title};
+                Product product = new Product()
+                {
+                    ProductGroupID=ad.ProductGroupId,
+                    Description=ad.Title,
+                    //CategoryID = 
+                };
                 foreach (ProductFeature productFeature in ad.Features)
                 {
                     product.ProductProperties.Add(new ProductProperty()

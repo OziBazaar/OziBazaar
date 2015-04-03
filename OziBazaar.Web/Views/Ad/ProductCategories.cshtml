@@ -32,8 +32,9 @@
             var div = $('#level' + level);
 
             var actionTemplate = $("#actionTemplate").html();
-            var template = actionTemplate.format(
+            var template = actionTemplate.format(   editorId,
                                                     name,
+                                                    editorId,
                                                     name);
             div.append(template);
            
@@ -87,9 +88,9 @@
 </script>
 <script type="text/template" id="actionTemplate">
     <div>
-        I am <a>looking </a>for <b>{0}</b>
+        I am <a href="/Ad/AddAd?ProductGroupId={0}&action=1">looking </a>for <b>{1}</b>
         <br />
-        I am <a>selling</a> <b>{1}</b>
+        I am <a href="/Ad/AddAd?ProductGroupId={2}&action=2">selling</a> <b>{3}</b>
     </div>
 </script>
 <div id="categories">

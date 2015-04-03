@@ -36,6 +36,7 @@
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="ProductGroupID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductGroup">
@@ -370,6 +371,7 @@ warning 6002: The table/view 'OziBazaar2.dbo.ProductCategoryHierarchy' does not 
           <NavigationProperty Name="ProductGroup" Relationship="OziBazaarModel.FK_Product_ProductGroup" FromRole="Product" ToRole="ProductGroup" />
           <NavigationProperty Name="ProductImages" Relationship="OziBazaarModel.FK_ProductImage_Product" FromRole="Product" ToRole="ProductImage" />
           <NavigationProperty Name="ProductProperties" Relationship="OziBazaarModel.FK_ProductProperty_Product1" FromRole="Product" ToRole="ProductProperty" />
+          <Property Name="CategoryID" Type="Int32" />
         </EntityType>
         <EntityType Name="ProductGroup">
           <Key>
@@ -605,6 +607,7 @@ warning 6002: The table/view 'OziBazaar2.dbo.ProductCategoryHierarchy' does not 
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="OziBazaarModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
