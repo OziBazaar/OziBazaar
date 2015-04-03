@@ -75,6 +75,9 @@
     <Compile Include="Product.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductCategoryHierarchy.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductGroup.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -89,9 +92,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">

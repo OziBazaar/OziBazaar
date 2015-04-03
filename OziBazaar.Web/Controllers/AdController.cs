@@ -1,13 +1,12 @@
-﻿using OziBazaar.DAL;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using OziBazaar.DAL;
 using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Framework.Specification;
+using OziBazaar.Web.Areas.WebAPI.Models;
 using OziBazaar.Web.Infrastructure.Repository;
 using OziBazaar.Web.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using WebMatrix.WebData;
 
 namespace OziBazaar.Web.Controllers
@@ -24,11 +23,7 @@ namespace OziBazaar.Web.Controllers
             this.renderEngine = renderEngine;
 
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
-    
+
         public ActionResult AdList()
         {
             ISpecification<Advertisement> notEnded = new DirectSpecification<Advertisement>(ad => ad.EndDate > DateTime.Now);
@@ -59,6 +54,8 @@ namespace OziBazaar.Web.Controllers
         [Authorize]
         public ActionResult CreateAd(AdvertisementViewModel advertisemnt)
         {
+            
+
             if (ModelState.IsValid)
             {
                 var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
@@ -72,10 +69,17 @@ namespace OziBazaar.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult DeleteAd(int adId, int productId)
         {
-            productRepository.DeleteAd(adId, productId);
+            int userId = WebSecurity.GetUserId(User.Identity.Name);
+            productRepository.DeleteAd(userId, adId, productId);
             return RedirectToAction("MyAdList");
+        }
+
+        public ActionResult ProductCategories()
+        {
+            return View();
         }
 	}
 }

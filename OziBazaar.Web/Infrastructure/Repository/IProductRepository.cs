@@ -40,6 +40,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         bool IsAdOwner(int userId, int adId);
 
-        void DeleteAd(int adId, int productId);
+        void DeleteAd(int userId,int adId, int productId);
+
+        IEnumerable<ProductCategoryHierarchy> GetProductCategoryHierarchies(int level, int parentId);
+
     }
 }

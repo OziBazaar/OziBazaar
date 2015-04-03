@@ -1,0 +1,72 @@
+﻿@using OziBazaar.Web.Areas.WebAPI.Models
+
+@{
+    ViewBag.Title = "Product Categories";
+}
+
+<h2>Choose Category</h2>
+<script src="~/Scripts/jquery-2.1.0.js"></script>
+<script language="javascript" type="text/javascript">
+    $(function() {
+        String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match;
+            });
+        };
+        var loadCategories = function(level, parent) {
+
+
+            var parameter = '?level=' + level + '&parent=' + parent;
+            $.ajax(
+            {
+                url: "/api/ProductCategory" + parameter,
+                type: "GET",
+                contentType: "application/json",
+                data: null,
+                success: function(result) {
+                    for (var i = level; i < 4; i++) {
+                        var nextDiv = $('#level' + i);
+                        if (nextDiv)
+                            nextDiv.empty();
+                    }
+
+                    var div = $('#level' + level);
+
+                    var ul = div.append('<ul></ul>').find('ul');
+                    for (var index = 0; index < result.length; index++) {
+                        var liAttr = 'data-id=' + result[index].Id + ' data-level=' + result[index].Level + ' ';
+                        // ul.append('<li ' + liAttr + '><a href="#" class="clickable" >' + result[index].Name + '</a></li>');
+                        var cardTemplate = $("#cardTemplate").html();
+                        var template = cardTemplate.format(result[index].Id, result[index].Level, result[index].Name);
+                        ul.append(template);
+                    }
+                }
+            });
+        }
+        loadCategories(1, 0);
+        $('#categories').on('click', 'a.clickable', function() {
+            var li = $(this).parent();
+            var id = li.data('id');
+            var level = li.data('level');
+            loadCategories(level + 1, id);
+        });
+    });
+</script>
+<script type="text/template" id="cardTemplate">
+    <li data-id="{0}" data-level="{1}">
+        <a href="#" class="clickable">{2}</a>    
+    </li>
+</script>
+<div id="categories">
+
+    <div id="level1">
+        
+    </div>
+    <div id="level2"></div>
+    <div id="level3"></div>
+    <div id="level4"></div>
+</div>
+

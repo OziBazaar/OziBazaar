@@ -96,23 +96,13 @@
           <Property Name="DependsOn" Type="nvarchar" MaxLength="150" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Activated" Type="bit" />
@@ -127,6 +117,18 @@
           <Property Name="AdvertizementID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OziBazaar2.dbo.ProductCategoryHierarchy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProductCategoryHierarchy">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LevelId" Type="smallint" />
+          <Property Name="ParentId" Type="int" />
         </EntityType>
         <Association Name="FK_Advertizement_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
@@ -161,6 +163,18 @@
             </Principal>
             <Dependent Role="ProductGroupProperty">
               <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupProperty_Property">
+          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="ProductGroupProperty" Type="Self.ProductGroupProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="ProductGroupProperty">
+              <PropertyRef Name="PropertyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -221,9 +235,16 @@
           <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductProperty" EntityType="Self.ProductProperty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategoryHierarchy" EntityType="Self.ProductCategoryHierarchy" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[ProductCategoryHierarchy].[Id] AS [Id], 
+[ProductCategoryHierarchy].[Name] AS [Name], 
+[ProductCategoryHierarchy].[LevelId] AS [LevelId], 
+[ProductCategoryHierarchy].[ParentId] AS [ParentId]
+FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Advertizement_Product" Association="Self.FK_Advertizement_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="Advertisement" EntitySet="Advertisement" />
@@ -234,6 +255,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ProductGroupProperty_ProductGroup" Association="Self.FK_ProductGroupProperty_ProductGroup">
             <End Role="ProductGroup" EntitySet="ProductGroup" />
+            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupProperty_Property" Association="Self.FK_ProductGroupProperty_Property">
+            <End Role="Property" EntitySet="Property" />
             <End Role="ProductGroupProperty" EntitySet="ProductGroupProperty" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductImage_Product" Association="Self.FK_ProductImage_Product">
@@ -266,7 +291,6 @@
           <EntitySet Name="ProductImages" EntityType="OziBazaarModel.ProductImage" />
           <EntitySet Name="ProductProperties" EntityType="OziBazaarModel.ProductProperty" />
           <EntitySet Name="Properties" EntityType="OziBazaarModel.Property" />
-          <EntitySet Name="sysdiagrams" EntityType="OziBazaarModel.sysdiagram" />
           <EntitySet Name="WishLists" EntityType="OziBazaarModel.WishList" />
           <AssociationSet Name="FK_Advertizement_Product" Association="OziBazaarModel.FK_Advertizement_Product">
             <End Role="Product" EntitySet="Products" />
@@ -297,6 +321,11 @@
             <End Role="ProductProperty" EntitySet="ProductProperties" />
           </AssociationSet>
           <EntitySet Name="UserProfiles" EntityType="OziBazaarModel.UserProfile" />
+          <EntitySet Name="ProductCategoryHierarchies" EntityType="OziBazaarModel.ProductCategoryHierarchy" />
+          <AssociationSet Name="FK_ProductGroupProperty_Property" Association="OziBazaarModel.FK_ProductGroupProperty_Property">
+            <End Role="Property" EntitySet="Properties" />
+            <End Role="ProductGroupProperty" EntitySet="ProductGroupProperties" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Advertisement">
           <Key>
@@ -362,6 +391,7 @@
           <NavigationProperty Name="ProductGroup" Relationship="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" FromRole="ProductGroupProperty" ToRole="ProductGroup" />
           <NavigationProperty Name="ProductProperties" Relationship="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" FromRole="ProductGroupProperty" ToRole="ProductProperty" />
           <Property Name="IsMandatory" Type="Boolean" />
+          <NavigationProperty Name="Property" Relationship="OziBazaarModel.FK_ProductGroupProperty_Property" FromRole="ProductGroupProperty" ToRole="Property" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -401,16 +431,7 @@
           <Property Name="LookupType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DependsOn" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ProductGroupProperties" Relationship="OziBazaarModel.FK_ProductGroupProperty_Property" FromRole="Property" ToRole="ProductGroupProperty" />
         </EntityType>
         <EntityType Name="WishList">
           <Key>
@@ -511,14 +532,36 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Activated" Type="Boolean" />
           <Property Name="ActivationDate" Type="DateTime" Precision="0" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="ProductCategoryHierarchy">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LevelId" Type="Int16" />
+          <Property Name="ParentId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_ProductGroupProperty_Property">
+          <End Type="OziBazaarModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="OziBazaarModel.ProductGroupProperty" Role="ProductGroupProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="ProductGroupProperty">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -624,17 +667,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OziBazaarModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WishLists">
             <EntityTypeMapping TypeName="OziBazaarModel.WishList">
               <MappingFragment StoreEntitySet="WishList">
@@ -656,6 +688,16 @@
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategoryHierarchies">
+            <EntityTypeMapping TypeName="OziBazaarModel.ProductCategoryHierarchy">
+              <MappingFragment StoreEntitySet="ProductCategoryHierarchy">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

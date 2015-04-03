@@ -28,7 +28,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         }
         public IEnumerable<Lookup> GetLookups(string lookupType, string parent)
         {
-            int parentId = dbContext.Lookups.Single(l => l.Description == parent).LookupID;
+            int parentId = dbContext.Lookups.Single(l => l.Description == parent && l.Type != lookupType).LookupID;
             var lst = (from lookup in dbContext.Lookups
                        where lookup.Type == lookupType && lookup.ParentID.HasValue && lookup.ParentID.Value == parentId
                        select new Lookup { Id = lookup.LookupID, Name = lookup.Description }).ToList();

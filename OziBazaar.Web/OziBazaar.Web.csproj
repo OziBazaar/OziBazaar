@@ -235,7 +235,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\WebAPI\Models\" />
     <Folder Include="Areas\WebAPI\Views\Shared\" />
     <Folder Include="Temp\" />
   </ItemGroup>
@@ -249,12 +248,15 @@
     <Compile Include="Areas\WebAPI\APIAreaRegistration.cs" />
     <Compile Include="Areas\WebAPI\Controllers\Media.cs" />
     <Compile Include="Areas\WebAPI\Controllers\CategoryData.cs" />
+    <Compile Include="Areas\WebAPI\Controllers\ProductCategoryController.cs" />
+    <Compile Include="Binder\CustomDateBinder.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
+    <Compile Include="Areas\WebAPI\Models\ProductCategory.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Infrastructure\Cryptography\EncryptionEngine.cs" />
@@ -469,6 +471,7 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Ad\AddAdDetail.cshtml" />
+    <Content Include="Views\Ad\ProductCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">

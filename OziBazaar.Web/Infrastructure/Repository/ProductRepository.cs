@@ -493,8 +493,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         }
         
-        public void DeleteAd(int adId, int productId)
+        public void DeleteAd(int adId, int productId, int userId)
         {
+            if(!IsAdOwner(userId,adId))
+                throw new UnauthorizedAccessException("You can not delete this advertisement");
             var images=dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToList();
             foreach (var image in images)
             {
@@ -515,6 +517,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
             if (advertisement != null)
                 dbContext.Advertisements.Remove(advertisement);
             dbContext.SaveChanges();
+        }
+
+
+        public IEnumerable<ProductCategoryHierarchy> GetProductCategoryHierarchies(int level, int parentId)
+        {
+            var q = from item in dbContext.ProductCategoryHierarchies
+                where item.LevelId == level && item.ParentId == parentId
+                select item;
+            return q.ToList();
         }
     }
 }

@@ -33,8 +33,8 @@ namespace OziBazaar.DAL
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductProperty> ProductProperties { get; set; }
         public DbSet<Property> Properties { get; set; }
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<ProductCategoryHierarchy> ProductCategoryHierarchies { get; set; }
     }
 }

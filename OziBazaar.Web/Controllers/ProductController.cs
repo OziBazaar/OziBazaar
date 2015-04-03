@@ -58,8 +58,8 @@ namespace OziBazaar.Web.Controllers
                 AdvertisementId=advertisement.Id
                 ,Title = advertisement.Title
                 ,Price=advertisement.Price
-                ,StartDate = advertisement.StartDate.ToString("dd/MM/yyy")
-                ,FinishDate = advertisement.EndDate.ToString("dd/MM/yyy")
+                ,StartDate = advertisement.StartDate
+                ,FinishDate =advertisement.EndDate
             };
             var productview = productRepository.EditProduct(categoryId,productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
