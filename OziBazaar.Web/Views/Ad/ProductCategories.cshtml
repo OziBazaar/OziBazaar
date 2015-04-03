@@ -5,9 +5,11 @@
 }
 
 <h2>Choose Category</h2>
+<link href="~/Content/CategorySelector.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-2.1.0.js"></script>
 <script language="javascript" type="text/javascript">
-    $(function() {
+    $(function () {
+        var maxLevelCount = 5;
         String.prototype.format = function() {
             var args = arguments;
             return this.replace(/{(\d+)}/g, function(match, number) {
@@ -16,9 +18,27 @@
                     : match;
             });
         };
+
+        var clearNextLevels = function (level) {
+            for (var i = level; i <= maxLevelCount; i++) {
+                var nextDiv = $('#level' + i);
+                if (nextDiv)
+                    nextDiv.empty();
+            }
+        };
+        var showActionStep = function (level,editorId, name) {
+            clearNextLevels(level);
+
+            var div = $('#level' + level);
+
+            var actionTemplate = $("#actionTemplate").html();
+            var template = actionTemplate.format(
+                                                    name,
+                                                    name);
+            div.append(template);
+           
+        };
         var loadCategories = function(level, parent) {
-
-
             var parameter = '?level=' + level + '&parent=' + parent;
             $.ajax(
             {
@@ -27,20 +47,18 @@
                 contentType: "application/json",
                 data: null,
                 success: function(result) {
-                    for (var i = level; i < 4; i++) {
-                        var nextDiv = $('#level' + i);
-                        if (nextDiv)
-                            nextDiv.empty();
-                    }
-
+                    clearNextLevels(level);
                     var div = $('#level' + level);
 
                     var ul = div.append('<ul></ul>').find('ul');
                     for (var index = 0; index < result.length; index++) {
-                        var liAttr = 'data-id=' + result[index].Id + ' data-level=' + result[index].Level + ' ';
-                        // ul.append('<li ' + liAttr + '><a href="#" class="clickable" >' + result[index].Name + '</a></li>');
                         var cardTemplate = $("#cardTemplate").html();
-                        var template = cardTemplate.format(result[index].Id, result[index].Level, result[index].Name);
+                        var template = cardTemplate.format(result[index].Id,
+                            result[index].Level,
+                            result[index].EditorId,
+                            result[index].HasChild,
+                            result[index].Name,
+                            result[index].Name);
                         ul.append(template);
                     }
                 }
@@ -51,22 +69,34 @@
             var li = $(this).parent();
             var id = li.data('id');
             var level = li.data('level');
-            loadCategories(level + 1, id);
+            var hasChild = li.data('haschild');
+            var editorId = li.data('editorid');
+            var name = li.data('name');
+            if(hasChild)
+                loadCategories(level + 1, id);
+            else {
+                showActionStep(level+1, editorId, name);
+            }
         });
     });
 </script>
 <script type="text/template" id="cardTemplate">
-    <li data-id="{0}" data-level="{1}">
-        <a href="#" class="clickable">{2}</a>    
+    <li data-id="{0}" data-level="{1}" data-editorId="{2}" data-hasChild="{3}" data-name="{4}">
+        <a href="#" class="clickable">{5}</a>    
     </li>
 </script>
-<div id="categories">
-
-    <div id="level1">
-        
+<script type="text/template" id="actionTemplate">
+    <div>
+        I am <a>looking </a>for <b>{0}</b>
+        <br />
+        I am <a>selling</a> <b>{1}</b>
     </div>
+</script>
+<div id="categories">
+    <div id="level1"></div>
     <div id="level2"></div>
     <div id="level3"></div>
     <div id="level4"></div>
+    <div id="level5"></div>
 </div>
 

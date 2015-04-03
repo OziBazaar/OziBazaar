@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OziBazaarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OziBazaarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="AdvertisementID" />
@@ -124,11 +124,14 @@ warning 6002: The table/view 'OziBazaar2.dbo.ProductCategoryHierarchy' does not 
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="Name" />
+            <PropertyRef Name="HasChild" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LevelId" Type="smallint" />
           <Property Name="ParentId" Type="int" />
+          <Property Name="HasChild" Type="int" Nullable="false" />
+          <Property Name="EditorId" Type="int" />
         </EntityType>
         <Association Name="FK_Advertizement_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
@@ -239,11 +242,13 @@ warning 6002: The table/view 'OziBazaar2.dbo.ProductCategoryHierarchy' does not 
           <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategoryHierarchy" EntityType="Self.ProductCategoryHierarchy" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[ProductCategoryHierarchy].[Id] AS [Id], 
-[ProductCategoryHierarchy].[Name] AS [Name], 
-[ProductCategoryHierarchy].[LevelId] AS [LevelId], 
-[ProductCategoryHierarchy].[ParentId] AS [ParentId]
-FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQuery>
+    [ProductCategoryHierarchy].[Id] AS [Id], 
+    [ProductCategoryHierarchy].[Name] AS [Name], 
+    [ProductCategoryHierarchy].[LevelId] AS [LevelId], 
+    [ProductCategoryHierarchy].[ParentId] AS [ParentId], 
+    [ProductCategoryHierarchy].[HasChild] AS [HasChild], 
+    [ProductCategoryHierarchy].[EditorId] AS [EditorId]
+    FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Advertizement_Product" Association="Self.FK_Advertizement_Product">
             <End Role="Product" EntitySet="Product" />
@@ -544,11 +549,14 @@ FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQue
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="Name" />
+            <PropertyRef Name="HasChild" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LevelId" Type="Int16" />
           <Property Name="ParentId" Type="Int32" />
+          <Property Name="HasChild" Type="Int32" Nullable="false" />
+          <Property Name="EditorId" Type="Int32" />
         </EntityType>
         <Association Name="FK_ProductGroupProperty_Property">
           <End Type="OziBazaarModel.Property" Role="Property" Multiplicity="1" />
@@ -694,6 +702,8 @@ FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQue
           <EntitySetMapping Name="ProductCategoryHierarchies">
             <EntityTypeMapping TypeName="OziBazaarModel.ProductCategoryHierarchy">
               <MappingFragment StoreEntitySet="ProductCategoryHierarchy">
+                <ScalarProperty Name="EditorId" ColumnName="EditorId" />
+                <ScalarProperty Name="HasChild" ColumnName="HasChild" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="LevelId" ColumnName="LevelId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -718,7 +728,7 @@ FROM [dbo].[ProductCategoryHierarchy] AS [ProductCategoryHierarchy]</DefiningQue
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
-        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

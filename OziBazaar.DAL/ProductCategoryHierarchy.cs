@@ -18,5 +18,7 @@ namespace OziBazaar.DAL
         public string Name { get; set; }
         public Nullable<short> LevelId { get; set; }
         public Nullable<int> ParentId { get; set; }
+        public int HasChild { get; set; }
+        public Nullable<int> EditorId { get; set; }
     }
 }

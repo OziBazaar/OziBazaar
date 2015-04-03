@@ -24,7 +24,9 @@ namespace OziBazaar.Web.Areas.WebAPI.Controllers
                Id = x.Id,
                Level = x.LevelId.Value,
                Name = x.Name,
-               ParentId = x.ParentId
+               ParentId = x.ParentId,
+               EditorId = x.EditorId,
+               HasChild = x.HasChild==1
            }).ToList();
         }
     }

@@ -1,0 +1,32 @@
+﻿#level1
+{
+    width: 20%;
+    float: left;
+}
+#level2
+{
+   width: 20%;
+    float: left;
+}
+#level3
+{ 
+   width: 20%;
+    float:left;
+}
+#level4
+{ 
+    width: 20%;
+    float: left;   
+
+}
+#level5
+{ 
+    width: 20%;
+    float: left;   
+
+}
+
+.clearstyle {
+    clear: both;
+}
+  

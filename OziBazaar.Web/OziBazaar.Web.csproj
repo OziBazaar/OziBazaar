@@ -303,6 +303,7 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\CategorySelector.css" />
     <Content Include="Content\Image\mazda1.jpg" />
     <Content Include="Content\Image\mazda2.jpg" />
     <Content Include="Content\Image\mobile1.jpg" />

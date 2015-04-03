@@ -8,5 +8,9 @@
         public int? ParentId { get; set; }
 
         public string Name { get; set; }
+
+        public bool HasChild { get; set; }
+
+        public int? EditorId { get; set; }
     }
 }
