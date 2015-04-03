@@ -252,7 +252,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
@@ -264,7 +263,6 @@
     <Compile Include="Infrastructure\Email\SmtpEmail.cs" />
     <Compile Include="Infrastructure\Graphic\CaptchaImage.cs" />
     <Compile Include="Infrastructure\Repository\AccountRepository.cs" />
-    <Compile Include="Infrastructure\Repository\AdminRepository.cs" />
     <Compile Include="Infrastructure\Repository\IAccountRepository.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
@@ -274,7 +272,6 @@
     <Compile Include="Infrastructure\Util\DateUtil.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
-    <Compile Include="Models\Admin\ProductCategory.cs" />
     <Compile Include="Models\AdStatistic.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\EmailSetting.cs" />
@@ -472,9 +469,6 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Ad\AddAdDetail.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Create.cshtml" />
-    <Content Include="Views\Admin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OziBazaar.DAL\OziBazaar.DAL.csproj">
