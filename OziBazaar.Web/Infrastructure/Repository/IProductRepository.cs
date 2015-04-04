@@ -15,8 +15,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
         ProductView           GetProduct(int productId);
         AdView           GetAd(int adId, out int productId,out int categoryId);
         ProductAddView        AddProduct(int CategoryId);
-        ProductEditView       EditProduct(int CategoryId,int productId);       
-        IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
+        ProductEditView EditProduct(int productGroupId, int productId);       
+        IEnumerable<Ad>       GetAdvertisementsList(int? categoryId, ISpecification<Advertisement> specification);
 
         IEnumerable<Category> GetAllCategories();
         Ad                  AddAdvertisement(int userId, AdvertisementModel advertisement);

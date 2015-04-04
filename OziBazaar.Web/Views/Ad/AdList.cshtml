@@ -33,9 +33,9 @@ else
             {  
               <td>
                
-                @Html.ActionLink("Edit", "EditProduct", "Product", new {advertisementId=item.Id , productId = item.ProductId,categoryId=item.CategoryId }, null)
+                @Html.ActionLink("Edit", "EditProduct", "Product", new { advertisementId = item.Id, productId = item.ProductId, categoryId = item.CategoryId, productGroupId = item.ProductGroupId }, null)
                 &nbsp;|&nbsp;
-                @Html.ActionLink("Delete", "DeleteAd", "Ad", new { adId = item.Id, productId = item.ProductId, categoryId = item.CategoryId }, null)
+                @Html.ActionLink("Delete", "DeleteAd", "Ad", new { adId = item.Id, productId = item.ProductId, categoryId = item.CategoryId, productGroupId = item.ProductGroupId }, null)
 
                 @if (item.EndDate < DateTime.Now)
                 {

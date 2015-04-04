@@ -24,12 +24,12 @@ namespace OziBazaar.Web.Controllers
 
         }
 
-        public ActionResult AdList()
+        public ActionResult AdList(int ? categoryId)
         {
             ISpecification<Advertisement> notEnded = new DirectSpecification<Advertisement>(ad => ad.EndDate > DateTime.Now);
             ISpecification<Advertisement> started = new DirectSpecification<Advertisement>(ad => ad.StartDate <= DateTime.Now);
             AndSpecification<Advertisement>  dateRange= new AndSpecification<Advertisement>(notEnded,started);
-            var lst = productRepository.GetAdvertisementsList(dateRange);
+            var lst = productRepository.GetAdvertisementsList(categoryId,dateRange);
             ViewBag.OwnerView = false;
             return View(lst);
         }
@@ -39,7 +39,7 @@ namespace OziBazaar.Web.Controllers
         {
             int userId= WebSecurity.GetUserId(User.Identity.Name);
             ISpecification<Advertisement> myAdSpec = new DirectSpecification<Advertisement>(ad => ad.OwnerID == userId );
-            var lst = productRepository.GetAdvertisementsList(myAdSpec);
+            var lst = productRepository.GetAdvertisementsList(null,myAdSpec);
             ViewBag.OwnerView = true;
             return View("AdList",lst);
         }

@@ -26,16 +26,24 @@
                     nextDiv.empty();
             }
         };
-        var showActionStep = function (level,editorId, name) {
+        var showActionStep = function (categoryId,level,editorId, name) {
             clearNextLevels(level);
 
             var div = $('#level' + level);
 
             var actionTemplate = $("#actionTemplate").html();
-            var template = actionTemplate.format(   editorId,
-                                                    name,
+            var template = actionTemplate.format(  //looking for
+                                                    categoryId,
                                                     editorId,
-                                                    name);
+                                                    name,
+                                                    // selling
+                                                    categoryId,
+                                                    editorId,
+                                                    name,
+                                                    //view ad for category
+                                                    categoryId,
+                                                    name
+                                                    );
             div.append(template);
            
         };
@@ -76,7 +84,7 @@
             if(hasChild)
                 loadCategories(level + 1, id);
             else {
-                showActionStep(level+1, editorId, name);
+                showActionStep(id,level+1, editorId, name);
             }
         });
     });
@@ -88,9 +96,11 @@
 </script>
 <script type="text/template" id="actionTemplate">
     <div>
-        I am <a href="/Ad/AddAd?ProductGroupId={0}&action=1">looking </a>for <b>{1}</b>
+        I am <a href="/Ad/AddAd?CategoryId={0}&ProductGroupId={1}&action=1">looking </a>for <b>{2}</b>
         <br />
-        I am <a href="/Ad/AddAd?ProductGroupId={2}&action=2">selling</a> <b>{3}</b>
+        I am <a href="/Ad/AddAd?CategoryId={3}&ProductGroupId={4}&action=2">selling</a> <b>{5}</b>
+        <br />
+        View Ads for <a href="/Ad/AdList?categoryId={6}"><b>{7}</b></a>
     </div>
 </script>
 <div id="categories">

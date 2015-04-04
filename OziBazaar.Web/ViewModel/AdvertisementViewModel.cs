@@ -16,6 +16,8 @@ namespace OziBazaar.Web.ViewModel
 
         public int ProductGroupId { get; set; }
 
+        public int CategoryId { get; set; }
+
         [DisplayName("Start Date")]
         [Required(ErrorMessage="Start Date is mandatory field")]
         [DataType(DataType.Date)]

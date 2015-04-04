@@ -20,7 +20,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public AdView GetAd(int adId,out int productId, out int categoryId)
+        public AdView GetAd(int adId, out int productId, out int productGroupId)
         {
             var adInfo = (from ad in dbContext.Advertisements
                           join p in dbContext.Products on ad.ProductID equals p.ProductID
@@ -28,7 +28,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                           select new {ad.ProductID, p.ProductGroupID, ad.Title }).SingleOrDefault();
 
            productId = adInfo.ProductID;
-           categoryId = adInfo.ProductGroupID.Value;
+           productGroupId = adInfo.ProductGroupID.Value;
 
            int localProdutId=adInfo.ProductID;
 
@@ -206,7 +206,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 {
                     ProductGroupID=ad.ProductGroupId,
                     Description=ad.Title,
-                    //CategoryID = 
+                    CategoryID = ad.CategoryId
                 };
                 foreach (ProductFeature productFeature in ad.Features)
                 {
@@ -229,8 +229,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                     ProductId=adv.ProductID
                                 };
         }
-        
-        public ProductEditView EditProduct(int categoryId, int productId)
+
+        public ProductEditView EditProduct(int productGroupId, int productId)
         {
            var q = from p in dbContext.ProductProperties
                   where p.ProductID==productId
@@ -242,7 +242,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                       join productProperty in q
                                           on productGroupProperty.ProductGroupPropertyID equals productProperty.ProductGroupPropertyID into filledProperties
                                       from setProperty in filledProperties.DefaultIfEmpty()
-                                      where    productGroupProperty.ProductGroupID == categoryId 
+                                      where productGroupProperty.ProductGroupID == productGroupId 
                                             && property.DataType !="Image"
                                       select new
                                       {
@@ -473,14 +473,22 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
         }
         
-        public IEnumerable<Ad> GetAdvertisementsList(ISpecification<Advertisement> specification)
+        public IEnumerable<Ad> GetAdvertisementsList(int? categoryId,ISpecification<Advertisement> specification)
         {
-            List<Ad> ads = (from advertisement in dbContext.Advertisements.Where(specification.SatisfiedBy())
+            var query = from advertisement in dbContext.Advertisements
+                select advertisement;
+
+            if (categoryId.HasValue)
+                query = query.Where(a => a.Product.CategoryID == categoryId);
+
+            List<Ad> ads = (from advertisement in query
+                                .Where(specification.SatisfiedBy())
                              select new Ad
                             {
                                 Id = advertisement.AdvertisementID,
                                 ProductId = advertisement.ProductID,
-                                CategoryId = advertisement.Product.ProductGroupID.Value,
+                                CategoryId = advertisement.Product.CategoryID.Value,
+                                ProductGroupId = advertisement.Product.ProductGroupID.Value,
                                 Title = advertisement.Title,
                                 StartDate = advertisement.StartDate,
                                 EndDate = advertisement.EndDate,

@@ -13,7 +13,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private string[] reservedKeys = new string[7] { "AdvertisementId", "ProductGroupId", "Title", "StartDate", "FinishDate", "Price", "__RequestVerificationToken" };
+        private string[] reservedKeys = new string[8] { "AdvertisementId", "ProductGroupId","CategoryId", "Title", "StartDate", "FinishDate", "Price", "__RequestVerificationToken" };
         private readonly IRenderEngine renderEngine;
         private readonly IProductRepository productRepository;
 
@@ -45,7 +45,7 @@ namespace OziBazaar.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult EditProduct(int advertisementId, int categoryId, int productId)
+        public ActionResult EditProduct(int advertisementId, int categoryId,int productGroupId, int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
             AdvertisementViewModel adViewModel = new AdvertisementViewModel
@@ -56,7 +56,7 @@ namespace OziBazaar.Web.Controllers
                 ,StartDate = advertisement.StartDate
                 ,FinishDate =advertisement.EndDate
             };
-            var productview = productRepository.EditProduct(categoryId,productId);
+            var productview = productRepository.EditProduct(productGroupId, productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
             ViewBag.ProductId = productId;
             ViewBag.AdvertisementId = advertisementId;
@@ -84,6 +84,7 @@ namespace OziBazaar.Web.Controllers
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;
             ad.ProductGroupId = Int32.Parse(Request.Form["ProductGroupId"]);
+            ad.CategoryId = Int32.Parse(Request.Form["CategoryId"]);
 
             var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
 
@@ -108,7 +109,8 @@ namespace OziBazaar.Web.Controllers
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
-            ad.ProductGroupId = Int32.Parse(Request.Form["CategoryId"]);
+            ad.ProductGroupId = Int32.Parse(Request.Form["ProductGroupId"]);
+            ad.CategoryId = Int32.Parse(Request.Form["CategoryId"]);
             decimal adPrice = 0;
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;
