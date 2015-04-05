@@ -49,12 +49,12 @@
                 <tr>
                     <td><strong>From</strong></td>
                     <td>
-                        @Html.EditorFor(model => model.StartDate)
+                        @Html.TextBoxFor(model => model.StartDate)
                         @Html.ValidationMessageFor(model => model.StartDate)
                     </td>
                     <td><strong>To</strong></td>
                     <td>
-                        @Html.EditorFor(model => model.FinishDate)
+                        @Html.TextBoxFor(model => model.FinishDate)
                         @Html.ValidationMessageFor(model => model.FinishDate)
                     </td>
                 </tr>

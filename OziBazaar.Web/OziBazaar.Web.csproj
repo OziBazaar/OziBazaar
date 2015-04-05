@@ -418,10 +418,8 @@
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Properties\PublishProfiles\ozibazaar - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar2 - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar2 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ozibazaar3 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ozibazaar3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\ozibazar.dependentdropdown.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
