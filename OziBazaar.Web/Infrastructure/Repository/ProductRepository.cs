@@ -20,15 +20,16 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public AdView GetAd(int adId, out int productId, out int productGroupId)
+        public AdView GetAd(int adId, out int productId, out int categoryId,out int productGroupId)
         {
             var adInfo = (from ad in dbContext.Advertisements
                           join p in dbContext.Products on ad.ProductID equals p.ProductID
                           where ad.AdvertisementID == adId
-                          select new {ad.ProductID, p.ProductGroupID, ad.Title }).SingleOrDefault();
+                          select new {ad.ProductID, p.ProductGroupID,p.CategoryID, ad.Title }).SingleOrDefault();
 
            productId = adInfo.ProductID;
            productGroupId = adInfo.ProductGroupID.Value;
+           categoryId = adInfo.CategoryID.Value;
 
            int localProdutId=adInfo.ProductID;
 

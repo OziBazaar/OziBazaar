@@ -13,7 +13,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public interface IProductRepository
     {
         ProductView           GetProduct(int productId);
-        AdView           GetAd(int adId, out int productId,out int categoryId);
+        AdView           GetAd(int adId, out int productId,out int categoryId,out int productGroupId);
         ProductAddView        AddProduct(int CategoryId);
         ProductEditView EditProduct(int productGroupId, int productId);       
         IEnumerable<Ad>       GetAdvertisementsList(int? categoryId, ISpecification<Advertisement> specification);
