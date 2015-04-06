@@ -1,13 +1,12 @@
-﻿using OziBazaar.DAL;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using OziBazaar.DAL;
 using OziBazaar.Framework.RenderEngine;
 using OziBazaar.Framework.Specification;
+using OziBazaar.Web.Areas.WebAPI.Models;
 using OziBazaar.Web.Infrastructure.Repository;
 using OziBazaar.Web.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using WebMatrix.WebData;
 
 namespace OziBazaar.Web.Controllers
@@ -24,17 +23,13 @@ namespace OziBazaar.Web.Controllers
             this.renderEngine = renderEngine;
 
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
-    
-        public ActionResult AdList()
+
+        public ActionResult AdList(int ? categoryId)
         {
             ISpecification<Advertisement> notEnded = new DirectSpecification<Advertisement>(ad => ad.EndDate > DateTime.Now);
             ISpecification<Advertisement> started = new DirectSpecification<Advertisement>(ad => ad.StartDate <= DateTime.Now);
             AndSpecification<Advertisement>  dateRange= new AndSpecification<Advertisement>(notEnded,started);
-            var lst = productRepository.GetAdvertisementsList(dateRange);
+            var lst = productRepository.GetAdvertisementsList(categoryId,dateRange);
             ViewBag.OwnerView = false;
             return View(lst);
         }
@@ -44,7 +39,7 @@ namespace OziBazaar.Web.Controllers
         {
             int userId= WebSecurity.GetUserId(User.Identity.Name);
             ISpecification<Advertisement> myAdSpec = new DirectSpecification<Advertisement>(ad => ad.OwnerID == userId );
-            var lst = productRepository.GetAdvertisementsList(myAdSpec);
+            var lst = productRepository.GetAdvertisementsList(null,myAdSpec);
             ViewBag.OwnerView = true;
             return View("AdList",lst);
         }
@@ -52,7 +47,6 @@ namespace OziBazaar.Web.Controllers
         [Authorize]
         public ActionResult AddAd()
         {
-             ViewBag.Categories= new SelectList( productRepository.GetAllCategories(),"Id","Name");
              return View(new AdvertisementViewModel());
         }
 
@@ -61,21 +55,25 @@ namespace OziBazaar.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productAdd = productRepository.AddProduct(advertisemnt.CategoryId);
+                var productAdd = productRepository.AddProduct(advertisemnt.ProductGroupId);
                 ViewBag.ProductInfo = renderEngine.Render(productAdd);
                 return View("AddAdDetail",advertisemnt);
             }
-            else
-            {
-                ViewBag.Categories = new SelectList(productRepository.GetAllCategories(), "Id", "Name");
-                return View("AddAd", advertisemnt);
-            }
+            return View("AddAd", advertisemnt);
+            
         }
 
+        [Authorize]
         public ActionResult DeleteAd(int adId, int productId)
         {
-            productRepository.DeleteAd(adId, productId);
+            int userId = WebSecurity.GetUserId(User.Identity.Name);
+            productRepository.DeleteAd(userId, adId, productId);
             return RedirectToAction("MyAdList");
+        }
+
+        public ActionResult ProductCategories()
+        {
+            return View();
         }
 	}
 }

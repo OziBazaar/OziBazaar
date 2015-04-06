@@ -12,12 +12,13 @@ namespace OziBazaar.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class ProductCategoryHierarchy
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Nullable<short> LevelId { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public int HasChild { get; set; }
+        public Nullable<int> EditorId { get; set; }
     }
 }

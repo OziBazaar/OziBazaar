@@ -13,10 +13,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
     public interface IProductRepository
     {
         ProductView           GetProduct(int productId);
-        AdView           GetAd(int adId, out int productId,out int categoryId);
+        AdView           GetAd(int adId, out int productId,out int categoryId,out int productGroupId);
         ProductAddView        AddProduct(int CategoryId);
-        ProductEditView       EditProduct(int CategoryId,int productId);       
-        IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
+        ProductEditView EditProduct(int productGroupId, int productId);       
+        IEnumerable<Ad>       GetAdvertisementsList(int? categoryId, ISpecification<Advertisement> specification);
 
         IEnumerable<Category> GetAllCategories();
         Ad                  AddAdvertisement(int userId, AdvertisementModel advertisement);
@@ -40,6 +40,9 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         bool IsAdOwner(int userId, int adId);
 
-        void DeleteAd(int adId, int productId);
+        void DeleteAd(int userId,int adId, int productId);
+
+        IEnumerable<ProductCategoryHierarchy> GetProductCategoryHierarchies(int level, int parentId);
+
     }
 }

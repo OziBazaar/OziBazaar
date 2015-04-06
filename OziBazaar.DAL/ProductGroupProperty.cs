@@ -29,5 +29,6 @@ namespace OziBazaar.DAL
     
         public virtual ProductGroup ProductGroup { get; set; }
         public virtual ICollection<ProductProperty> ProductProperties { get; set; }
+        public virtual Property Property { get; set; }
     }
 }

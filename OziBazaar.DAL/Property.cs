@@ -14,6 +14,11 @@ namespace OziBazaar.DAL
     
     public partial class Property
     {
+        public Property()
+        {
+            this.ProductGroupProperties = new HashSet<ProductGroupProperty>();
+        }
+    
         public int PropertyID { get; set; }
         public string KeyName { get; set; }
         public string ControlType { get; set; }
@@ -22,5 +27,7 @@ namespace OziBazaar.DAL
         public string LookupType { get; set; }
         public string DependsOn { get; set; }
         public string Title { get; set; }
+    
+        public virtual ICollection<ProductGroupProperty> ProductGroupProperties { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace OziBazaar.DAL
         public string Description { get; set; }
         public Nullable<int> ProductGroupID { get; set; }
         public byte[] Version { get; set; }
+        public Nullable<int> CategoryID { get; set; }
     
         public virtual ICollection<Advertisement> Advertisements { get; set; }
         public virtual ProductGroup ProductGroup { get; set; }

@@ -20,15 +20,16 @@ namespace OziBazaar.Web.Infrastructure.Repository
             this.lookupRepository = lookupRepository;
         }
 
-        public AdView GetAd(int adId,out int productId, out int categoryId)
+        public AdView GetAd(int adId, out int productId, out int categoryId,out int productGroupId)
         {
             var adInfo = (from ad in dbContext.Advertisements
                           join p in dbContext.Products on ad.ProductID equals p.ProductID
                           where ad.AdvertisementID == adId
-                          select new {ad.ProductID, p.ProductGroupID, ad.Title }).SingleOrDefault();
+                          select new {ad.ProductID, p.ProductGroupID,p.CategoryID, ad.Title }).SingleOrDefault();
 
            productId = adInfo.ProductID;
-           categoryId = adInfo.ProductGroupID.Value;
+           productGroupId = adInfo.ProductGroupID.Value;
+           categoryId = adInfo.CategoryID.Value;
 
            int localProdutId=adInfo.ProductID;
 
@@ -202,7 +203,12 @@ namespace OziBazaar.Web.Infrastructure.Repository
                 adv.StartDate = ad.StartDate;
                 adv.EndDate = ad.EndDate;
 
-                Product product = new Product() { ProductGroupID=ad.Category,Description=ad.Title};
+                Product product = new Product()
+                {
+                    ProductGroupID=ad.ProductGroupId,
+                    Description=ad.Title,
+                    CategoryID = ad.CategoryId
+                };
                 foreach (ProductFeature productFeature in ad.Features)
                 {
                     product.ProductProperties.Add(new ProductProperty()
@@ -224,8 +230,8 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                     ProductId=adv.ProductID
                                 };
         }
-        
-        public ProductEditView EditProduct(int categoryId, int productId)
+
+        public ProductEditView EditProduct(int productGroupId, int productId)
         {
            var q = from p in dbContext.ProductProperties
                   where p.ProductID==productId
@@ -237,7 +243,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
                                       join productProperty in q
                                           on productGroupProperty.ProductGroupPropertyID equals productProperty.ProductGroupPropertyID into filledProperties
                                       from setProperty in filledProperties.DefaultIfEmpty()
-                                      where    productGroupProperty.ProductGroupID == categoryId 
+                                      where productGroupProperty.ProductGroupID == productGroupId 
                                             && property.DataType !="Image"
                                       select new
                                       {
@@ -468,14 +474,22 @@ namespace OziBazaar.Web.Infrastructure.Repository
             }
         }
         
-        public IEnumerable<Ad> GetAdvertisementsList(ISpecification<Advertisement> specification)
+        public IEnumerable<Ad> GetAdvertisementsList(int? categoryId,ISpecification<Advertisement> specification)
         {
-            List<Ad> ads = (from advertisement in dbContext.Advertisements.Where(specification.SatisfiedBy())
+            var query = from advertisement in dbContext.Advertisements
+                select advertisement;
+
+            if (categoryId.HasValue)
+                query = query.Where(a => a.Product.CategoryID == categoryId);
+
+            List<Ad> ads = (from advertisement in query
+                                .Where(specification.SatisfiedBy())
                              select new Ad
                             {
                                 Id = advertisement.AdvertisementID,
                                 ProductId = advertisement.ProductID,
-                                CategoryId = advertisement.Product.ProductGroupID.Value,
+                                CategoryId = advertisement.Product.CategoryID.Value,
+                                ProductGroupId = advertisement.Product.ProductGroupID.Value,
                                 Title = advertisement.Title,
                                 StartDate = advertisement.StartDate,
                                 EndDate = advertisement.EndDate,
@@ -493,8 +507,10 @@ namespace OziBazaar.Web.Infrastructure.Repository
 
         }
         
-        public void DeleteAd(int adId, int productId)
+        public void DeleteAd(int adId, int productId, int userId)
         {
+            if(!IsAdOwner(userId,adId))
+                throw new UnauthorizedAccessException("You can not delete this advertisement");
             var images=dbContext.ProductImages.Where(pi => pi.ProductID == productId).ToList();
             foreach (var image in images)
             {
@@ -515,6 +531,15 @@ namespace OziBazaar.Web.Infrastructure.Repository
             if (advertisement != null)
                 dbContext.Advertisements.Remove(advertisement);
             dbContext.SaveChanges();
+        }
+
+
+        public IEnumerable<ProductCategoryHierarchy> GetProductCategoryHierarchies(int level, int parentId)
+        {
+            var q = from item in dbContext.ProductCategoryHierarchies
+                where item.LevelId == level && item.ParentId == parentId
+                select item;
+            return q.ToList();
         }
     }
 }
