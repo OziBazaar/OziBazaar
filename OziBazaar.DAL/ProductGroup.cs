@@ -24,11 +24,10 @@ namespace OziBazaar.DAL
         public string Description { get; set; }
         public string ViewTemplate { get; set; }
         public string EditTemplate { get; set; }
+        public Nullable<int> CategoryID { get; set; }
         public byte[] Version { get; set; }
-        public Nullable<int> ProductMainGroupID { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<ProductGroupProperty> ProductGroupProperties { get; set; }
-        public virtual ProductMainGroup ProductMainGroup { get; set; }
     }
 }

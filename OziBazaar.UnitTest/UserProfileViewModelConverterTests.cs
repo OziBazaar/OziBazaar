@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OziBazaar.DAL;
+using OziBazaar.DAL.Models;
 using OziBazaar.Web.Areas.UserManagement.Converter;
-using OziBazaar.Web.Areas.UserManagement.Models;
 
 namespace OziBazaar.UnitTest
 {

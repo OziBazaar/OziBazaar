@@ -16,11 +16,11 @@ namespace OziBazaar.DAL
     {
         public int PropertyID { get; set; }
         public string KeyName { get; set; }
+        public string Title { get; set; }
         public string ControlType { get; set; }
         public string DataType { get; set; }
-        public byte[] Version { get; set; }
         public string LookupType { get; set; }
         public string DependsOn { get; set; }
-        public string Title { get; set; }
+        public byte[] Version { get; set; }
     }
 }

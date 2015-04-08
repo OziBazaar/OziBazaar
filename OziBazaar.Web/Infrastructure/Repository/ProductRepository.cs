@@ -182,14 +182,14 @@ namespace OziBazaar.Web.Infrastructure.Repository
           
         //}
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<ProductCategory> GetAllCategories()
         {
-                List<Category> categories = (from productGroup in dbContext.ProductGroups
-                                             select new Category
+                List<ProductCategory> categories = (from productGroup in dbContext.ProductGroups
+                                             select new ProductCategory
                                              {
                                                  Id = productGroup.ProductGroupID,
                                                  Name = productGroup.Description
-                                             }).ToList<Category>();
+                                             }).ToList<ProductCategory>();
                 return categories;
           
         }

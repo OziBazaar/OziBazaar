@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OziBazaar.DAL;
-using OziBazaar.Web.Areas.UserManagement.Models;
+using OziBazaar.DAL.Models;
+
 
 namespace OziBazaar.Web.Areas.UserManagement.Converter
 {

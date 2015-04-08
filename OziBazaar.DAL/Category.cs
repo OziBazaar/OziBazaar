@@ -12,17 +12,11 @@ namespace OziBazaar.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductMainGroup
+    public partial class Category
     {
-        public ProductMainGroup()
-        {
-            this.ProductGroups = new HashSet<ProductGroup>();
-        }
-    
-        public int ProductMainGroupID { get; set; }
-        public string Description { get; set; }
-        public byte[] Version { get; set; }
-    
-        public virtual ICollection<ProductGroup> ProductGroups { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> EditorId { get; set; }
+        public Nullable<int> ParentId { get; set; }
     }
 }

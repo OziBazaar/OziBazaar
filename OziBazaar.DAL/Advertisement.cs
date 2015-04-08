@@ -20,15 +20,15 @@ namespace OziBazaar.DAL
         }
     
         public int AdvertisementID { get; set; }
+        public string AdvertisementCode { get; set; }
         public int ProductID { get; set; }
+        public string Title { get; set; }
         public decimal Price { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int OwnerID { get; set; }
-        public byte[] Version { get; set; }
-        public string Title { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public string AdvertisementCode { get; set; }
+        public byte[] Version { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }

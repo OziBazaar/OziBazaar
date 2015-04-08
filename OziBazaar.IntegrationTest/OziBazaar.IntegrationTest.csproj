@@ -64,6 +64,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AccountRepositoryTests.cs" />
+    <Compile Include="DashboardRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificationTests.cs" />
     <Compile Include="XlstTransformTests.cs" />

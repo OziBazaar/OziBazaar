@@ -21,6 +21,7 @@ namespace OziBazaar.DAL
         public string MimeType { get; set; }
         public string Description { get; set; }
         public Nullable<short> ImageOrder { get; set; }
+        public Nullable<bool> IsThumbnail { get; set; }
         public byte[] Version { get; set; }
     
         public virtual Product Product { get; set; }

@@ -26,7 +26,12 @@ namespace OziBazaar.DAL
         }
     
         public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
+        public DbSet<NotificationAudit> NotificationAudits { get; set; }
+        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
+        public DbSet<NotificationType> NotificationTypes { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<ProductGroupProperty> ProductGroupProperties { get; set; }
@@ -34,15 +39,10 @@ namespace OziBazaar.DAL
         public DbSet<ProductProperty> ProductProperties { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
-        public DbSet<WishList> WishLists { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<ProductMainGroup> ProductMainGroups { get; set; }
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public DbSet<NotificationAudit> NotificationAudits { get; set; }
-        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
-        public DbSet<NotificationType> NotificationTypes { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
     }
 }

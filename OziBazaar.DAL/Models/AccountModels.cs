@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using OziBazaar.DAL;
 
-namespace OziBazaar.Web.Areas.UserManagement.Models
+namespace OziBazaar.DAL.Models
 {
     public class RegisterExternalLoginModel
     {

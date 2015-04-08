@@ -23,9 +23,9 @@ namespace OziBazaar.DAL
         public int ProductGroupID { get; set; }
         public int PropertyID { get; set; }
         public string InitialValue { get; set; }
-        public Nullable<short> TabOrder { get; set; }
-        public byte[] Version { get; set; }
+        public Nullable<int> TabOrder { get; set; }
         public Nullable<bool> IsMandatory { get; set; }
+        public byte[] Version { get; set; }
     
         public virtual ProductGroup ProductGroup { get; set; }
         public virtual ICollection<ProductProperty> ProductProperties { get; set; }

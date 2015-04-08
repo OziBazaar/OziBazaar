@@ -13,8 +13,8 @@ using OziBazaar.Notification.Email;
 using OziBazaar.Common.Transformation;
 using OziBazaar.Common.Serialization;
 using OziBazaar.Notification.Controller;
-using OziBazaar.Web.Areas.UserManagement.Models;
 using OziBazaar.Web.Areas.UserManagement.Converter;
+using OziBazaar.DAL.Models;
 
 namespace OziBazaar.Web
 {

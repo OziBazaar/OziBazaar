@@ -21,11 +21,11 @@ using OziBazaar.Common.Serialization;
 using OziBazaar.Notification.Entities;
 using System.Text;
 using OziBazaar.Common.Helper;
-using OziBazaar.Web.Areas.UserManagement.Models;
 using System.Configuration;
 using OziBazaar.Notification.Controller;
 using OziBazaar.Web.Areas.UserManagement.Converter;
 using OziBazaar.Common.Graphic;
+using OziBazaar.DAL.Models;
 
 namespace OziBazaar.Web.Areas.UserManagement.Controllers
 {

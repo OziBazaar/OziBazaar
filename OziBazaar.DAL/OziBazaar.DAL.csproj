@@ -54,12 +54,18 @@
     <Compile Include="Advertisement.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Country.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Lookup.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DefinedProductsViewModel.cs" />
+    <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="NotificationAudit.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -96,9 +102,6 @@
     <Compile Include="ProductImage.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductMainGroup.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ProductProperty.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -108,8 +111,10 @@
     </Compile>
     <Compile Include="Repository\AccountRepository.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
+    <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\ICacheRepository.cs" />
+    <Compile Include="Repository\IDashboardRepository.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>

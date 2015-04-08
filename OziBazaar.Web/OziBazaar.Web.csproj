@@ -231,6 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\UserManagement\Models\" />
     <Folder Include="Areas\WebAPI\Models\" />
     <Folder Include="Areas\WebAPI\Views\Shared\" />
     <Folder Include="Temp\" />
@@ -245,7 +246,6 @@
     <Compile Include="Areas\UserManagement\Converter\IConverter.cs" />
     <Compile Include="Areas\UserManagement\Converter\UserProfileConverter.cs" />
     <Compile Include="Areas\UserManagement\Converter\UserProfileViewModelConverter.cs" />
-    <Compile Include="Areas\UserManagement\Models\UserProfileViewModel.cs" />
     <Compile Include="Areas\UserManagement\UserManagementAreaRegistration.cs" />
     <Compile Include="Areas\WebAPI\APIAreaRegistration.cs" />
     <Compile Include="Areas\WebAPI\Controllers\Media.cs" />
@@ -265,7 +265,6 @@
     <Compile Include="Infrastructure\Repository\ProductRepository.cs" />
     <Compile Include="Areas\UserManagement\Security\ExtendedSimpleMembershipProvider.cs" />
     <Compile Include="Infrastructure\Util\DateUtil.cs" />
-    <Compile Include="Areas\UserManagement\Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\AdStatistic.cs" />
     <Compile Include="Models\Category.cs" />

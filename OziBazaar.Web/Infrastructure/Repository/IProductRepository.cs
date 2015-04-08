@@ -18,7 +18,7 @@ namespace OziBazaar.Web.Infrastructure.Repository
         ProductEditView       EditProduct(int CategoryId,int productId);       
         IEnumerable<Ad>       GetAdvertisementsList(ISpecification<Advertisement> specification);
 
-        IEnumerable<Category> GetAllCategories();
+        IEnumerable<ProductCategory> GetAllCategories();
         Ad                  AddAdvertisement(int userId, AdvertisementModel advertisement);
         void                  UpdateAdvertisement(AdvertisementModel advertisement);
 
