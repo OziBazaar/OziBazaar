@@ -11,36 +11,40 @@ namespace OziBazaar.DAL.Repository
     {
         private OziBazaarEntities dbContext = new OziBazaarEntities();
 
-        public List<DefinedProductsViewModel> GetUserProducts(int UserID)
+        public List<UserProductViewModel> GetUserProducts(int UserID)
         {
-            List<DefinedProductsViewModel> definedProductsViewModels =
+            List<UserProductViewModel> definedProductsViewModels =
                 (from a in dbContext.Advertisements
                  join p in dbContext.Products on a.ProductID equals p.ProductID
                  join i in dbContext.ProductImages on p.ProductID equals i.ProductID
                  where a.OwnerID == UserID && i.IsThumbnail == true
-                 select new DefinedProductsViewModel
+                 select new UserProductViewModel
                  {
                      Price = a.Price,
                      Description = p.Description,
-                     ImagePath = i.ImagePath
+                     ImagePath = i.ImagePath,
+                     StartDate = a.StartDate,
+                     EndDate = a.EndDate
                  }
                  ).ToList();
             return definedProductsViewModels;
         }
 
-        public List<DefinedProductsViewModel> GetWishListProducts(int UserID)
+        public List<UserProductViewModel> GetWishListProducts(int UserID)
         {
-            List<DefinedProductsViewModel> definedProductsViewModels =
+            List<UserProductViewModel> definedProductsViewModels =
                 (from w in dbContext.WishLists 
                  join a in dbContext.Advertisements on w.AdvertizementID equals a.AdvertisementID
                  join p in dbContext.Products on a.ProductID equals p.ProductID
                  join i in dbContext.ProductImages on p.ProductID equals i.ProductID
                  where a.OwnerID == UserID && i.IsThumbnail == true
-                 select new DefinedProductsViewModel
+                 select new UserProductViewModel
                  {
                      Price = a.Price,
                      Description = p.Description,
-                     ImagePath = i.ImagePath
+                     ImagePath = i.ImagePath,
+                     StartDate = a.StartDate,
+                     EndDate = a.EndDate
                  }
                  ).ToList();
             return definedProductsViewModels;

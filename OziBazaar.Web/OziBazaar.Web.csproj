@@ -373,6 +373,8 @@
     <Content Include="Areas\UserManagement\Views\Account\Message.cshtml" />
     <Content Include="Areas\UserManagement\Views\Account\UserProfile.cshtml" />
     <Content Include="Areas\UserManagement\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\UserManagement\Views\UserDashboard\GetUserAdvertisementList.cshtml" />
+    <Content Include="Areas\UserManagement\Views\UserDashboard\GetWishList.cshtml" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

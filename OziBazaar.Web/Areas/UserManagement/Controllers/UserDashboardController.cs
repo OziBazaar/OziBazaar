@@ -19,5 +19,15 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         {
             return View();
         }
+
+        public ActionResult GetUserAdvertisementList()
+        {
+            return View();
+        }
+
+        public ActionResult GetWishList()
+        {
+            return View();
+        }
 	}
 }

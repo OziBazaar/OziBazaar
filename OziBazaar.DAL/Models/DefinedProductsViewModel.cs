@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace OziBazaar.DAL.Models
 {
-    public class DefinedProductsViewModel
+    public class UserProductViewModel
     {
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string ImagePath { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

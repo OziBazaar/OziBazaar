@@ -9,7 +9,7 @@ namespace OziBazaar.DAL.Repository
 {
     public interface IDashboardRepository
     {
-        List<DefinedProductsViewModel> GetUserProducts(int UserID);
-        List<DefinedProductsViewModel> GetWishListProducts(int UserID);
+        List<UserProductViewModel> GetUserProducts(int UserID);
+        List<UserProductViewModel> GetWishListProducts(int UserID);
     }
 }
