@@ -9,5 +9,6 @@ namespace OziBazaar.DAL.Models
     public class UserProductsViewModel
     {
         public List<UserProductViewModel> UserProductViewModelList { get; set; }
+        public PagingInfo PagingInfo { get; set; } 
     }
 }

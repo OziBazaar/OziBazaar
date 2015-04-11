@@ -8,6 +8,8 @@ namespace OziBazaar.DAL.Models
 {
     public class UserProductViewModel
     {
+        public int AdvertisementID { get; set; }
+        public int ProductID { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string ImagePath { get; set; }

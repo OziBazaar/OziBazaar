@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\DefinedProductsViewModel.cs" />
+    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\UserProductsViewModel.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="NotificationAudit.cs">

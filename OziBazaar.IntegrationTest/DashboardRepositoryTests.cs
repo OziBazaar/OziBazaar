@@ -13,8 +13,9 @@ namespace OziBazaar.IntegrationTest
         {
             // Arrange
             DashboardRepository dashboardRepository = new DashboardRepository();
+            int ownerID = 3;
             // Act
-            var result = dashboardRepository.GetUserProducts(1);
+            var result = dashboardRepository.GetUserProducts(ownerID);
             // Assert
             Assert.IsNotNull(result);
         }
@@ -24,8 +25,9 @@ namespace OziBazaar.IntegrationTest
         {
             // Arrange
             DashboardRepository dashboardRepository = new DashboardRepository();
+            int ownerID = 3;
             // Act
-            var result = dashboardRepository.GetWishListProducts(1);
+            var result = dashboardRepository.GetWishListProducts(ownerID);
             // Assert
             Assert.IsNotNull(result);
         }

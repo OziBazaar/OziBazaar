@@ -259,6 +259,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Areas\UserManagement\Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
+    <Compile Include="Infrastructure\Helper\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
