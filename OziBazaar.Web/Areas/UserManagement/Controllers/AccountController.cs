@@ -26,6 +26,7 @@ using OziBazaar.Notification.Controller;
 using OziBazaar.Web.Areas.UserManagement.Converter;
 using OziBazaar.Common.Graphic;
 using OziBazaar.DAL.Models;
+using OziBazaar.Web.Infrastructure.Wrapper;
 
 namespace OziBazaar.Web.Areas.UserManagement.Controllers
 {
@@ -40,6 +41,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         private readonly IConverter<UserProfile, UserProfileViewModel> _userProfileViewModelConverter;
         private readonly IConverter<UserProfileViewModel, UserProfile> _userProfileConverter;
         private readonly IRandomPasswordGenerator _randomPasswordGenerator;
+        private readonly IWebSecurityWrapper _webSecurityWrapper;
 
         public AccountController(
             IActivationManager activationManager, 
@@ -49,7 +51,8 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             ICacheRepository<Country> countryRepository,
             IConverter<UserProfile, UserProfileViewModel> userProfileViewModelConverter,
             IConverter<UserProfileViewModel, UserProfile> userProfileConverter,
-            IRandomPasswordGenerator randomPasswordGenerator
+            IRandomPasswordGenerator randomPasswordGenerator,
+            IWebSecurityWrapper webSecurityWrapper
             )
         {
             this._activationManager = activationManager;
@@ -60,6 +63,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             this._userProfileViewModelConverter = userProfileViewModelConverter;
             this._userProfileConverter = userProfileConverter;
             this._randomPasswordGenerator = randomPasswordGenerator;
+            this._webSecurityWrapper = webSecurityWrapper;
         }
         
         //
@@ -80,29 +84,22 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            UserProfile userProfile = _accountRepository.GetUser(model.UserName);
-            if (userProfile != null)
+            if (ModelState.IsValid && _webSecurityWrapper.Login(model.UserName, model.Password, model.RememberMe))
             {
-                if (ModelState.IsValid && WebSecurity.Login(userProfile.UserName, model.Password, persistCookie: model.RememberMe))
+                UserProfile userProfile = _accountRepository.GetUser(model.UserName);
+                if (userProfile.Activated == true)
                 {
-                    if (userProfile.Activated == true)
-                    {
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Please activate your account.");
-                    }
+                    return RedirectToLocal(returnUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The password is incorrect.");
+                    ModelState.AddModelError("", "Please activate your account.");
                 }
-            }
-            else
-            {
-                ModelState.AddModelError("", "The user name is incorrect.");
-            }
+           }
+           else
+           {
+                ModelState.AddModelError("", "The username or password is incorrect.");
+           }
             // If we got this far, something failed, redisplay form            
             return View(@"~\Areas\UserManagement\Views\Account\Login.cshtml",model);
         }
@@ -114,8 +111,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
-
+            _webSecurityWrapper.Logout();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
@@ -152,21 +148,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                     }
                     // Attempt to register the user
 
-                    WebSecurity.CreateUserAndAccount(
-                        model.UserName,
-                        model.Password,
-                        new
-                        {
-                            FullName = model.FullName,
-                            EmailAddress = model.EmailAddress,
-                            Phone = model.Phone,
-                            Activated = false,
-                            CountryID = model.CountryID,
-                            Address1 = model.Address1,
-                            Address2 = model.Address2,
-                            PostCode = model.PostCode
-                        },
-                        false);
+                    _webSecurityWrapper.CreateUserAndAccount(model);
                     bool result = _notificationController.SendActivationEmail(
                         new ActivationEmail()
                         {
@@ -279,8 +261,8 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 if (ModelState.IsValid && userProfile.EmailAddress == model.EmailAddress)
                 {
                     string newPassword = _randomPasswordGenerator.CreatePassword(8);
-                    var token = WebSecurity.GeneratePasswordResetToken(model.UserName);
-                    var result = WebSecurity.ResetPassword(token, newPassword);
+                    var token = _webSecurityWrapper.GeneratePasswordResetToken(model.UserName);
+                    var result = _webSecurityWrapper.ResetPassword(token, newPassword);
 
                     bool result1 = _notificationController.SendResetPassword(
                         new ResetPassword()
@@ -322,7 +304,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 // Use a transaction to prevent the user from deleting their last login credential
                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
                 {
-                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(_webSecurityWrapper.GetUserId());
                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)
                     {
                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);
@@ -352,8 +334,8 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 ModelState.AddModelError("", "Invalid password, Please try again");
             if (ModelState.IsValid)
             {
-                var token = WebSecurity.GeneratePasswordResetToken(User.Identity.Name);
-                var result = WebSecurity.ResetPassword(token, model.NewPassword);
+                var token = _webSecurityWrapper.GeneratePasswordResetToken(User.Identity.Name);
+                var result = _webSecurityWrapper.ResetPassword(token, model.NewPassword);
                 ViewBag.Message = "Your password sucessfuly changed";
                 return View("Message");
             }
@@ -371,7 +353,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(_webSecurityWrapper.GetUserId());
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -383,7 +365,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(_webSecurityWrapper.GetUserId());
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
@@ -394,7 +376,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                     bool changePasswordSucceeded;
                     try
                     {
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        changePasswordSucceeded = _webSecurityWrapper.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                     }
                     catch (Exception)
                     {
@@ -425,7 +407,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 {
                     try
                     {
-                        WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
+                        _webSecurityWrapper.CreateAccount(User.Identity.Name, model.NewPassword);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
                     catch (Exception)
@@ -563,7 +545,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
                 });
             }
 
-            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(_webSecurityWrapper.GetUserId());
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 

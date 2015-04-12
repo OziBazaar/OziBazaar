@@ -9,14 +9,14 @@ namespace OziBazaar.DAL.Repository
 {
     public class DashboardRepository : IDashboardRepository
     {
-        private OziBazaarEntities dbContext = new OziBazaarEntities();
+        private readonly OziBazaarEntities _dbContext = new OziBazaarEntities();
 
         public List<UserProductViewModel> GetUserProducts(int UserID, int page = 1, int pageSize = 10)
         {
             List<UserProductViewModel> definedProductsViewModels =
-                (from a in dbContext.Advertisements
-                 join p in dbContext.Products on a.ProductID equals p.ProductID
-                 join i in dbContext.ProductImages on p.ProductID equals i.ProductID
+                (from a in _dbContext.Advertisements
+                 join p in _dbContext.Products on a.ProductID equals p.ProductID
+                 join i in _dbContext.ProductImages on p.ProductID equals i.ProductID
                  where a.OwnerID == UserID && i.IsThumbnail == true && a.IsActive == true
                  select new UserProductViewModel
                  {
@@ -32,16 +32,29 @@ namespace OziBazaar.DAL.Repository
             return definedProductsViewModels;
         }
 
-        public List<UserProductViewModel> GetWishListProducts(int UserID, int page = 1, int pageSize = 10)
+        public int GetUserProductsCount(int UserID)
         {
-            List<UserProductViewModel> definedProductsViewModels =
-                (from w in dbContext.WishLists 
-                 join a in dbContext.Advertisements on w.AdvertizementID equals a.AdvertisementID
-                 join p in dbContext.Products on a.ProductID equals p.ProductID
-                 join i in dbContext.ProductImages on p.ProductID equals i.ProductID
+            int userProductsCount =
+                (from a in _dbContext.Advertisements
+                 join p in _dbContext.Products on a.ProductID equals p.ProductID
+                 join i in _dbContext.ProductImages on p.ProductID equals i.ProductID
+                 where a.OwnerID == UserID && i.IsThumbnail == true && a.IsActive == true
+                 select a)
+                 .Count();
+            return userProductsCount;
+        }
+
+        public List<UserWishListViewModel> GetWishListProducts(int UserID, int page = 1, int pageSize = 10)
+        {
+            List<UserWishListViewModel> UserWishListViewModels =
+                (from w in _dbContext.WishLists
+                 join a in _dbContext.Advertisements on w.AdvertizementID equals a.AdvertisementID
+                 join p in _dbContext.Products on a.ProductID equals p.ProductID
+                 join i in _dbContext.ProductImages on p.ProductID equals i.ProductID
                  where a.OwnerID == UserID && i.IsThumbnail == true
-                 select new UserProductViewModel
+                 select new UserWishListViewModel
                  {
+                     WishListID = w.WishListID,
                      AdvertisementID = a.AdvertisementID,
                      ProductID = a.ProductID,
                      Price = a.Price,
@@ -50,8 +63,21 @@ namespace OziBazaar.DAL.Repository
                      StartDate = a.StartDate,
                      EndDate = a.EndDate
                  }
-                 ).OrderBy(r => r.AdvertisementID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            return definedProductsViewModels;
+                 ).OrderBy(r => r.WishListID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return UserWishListViewModels;
+        }
+
+        public int GetWishListProductsCount(int UserID)
+        {
+            int wishListProductsCount =
+                (from w in _dbContext.WishLists
+                 join a in _dbContext.Advertisements on w.AdvertizementID equals a.AdvertisementID
+                 join p in _dbContext.Products on a.ProductID equals p.ProductID
+                 join i in _dbContext.ProductImages on p.ProductID equals i.ProductID
+                 where a.OwnerID == UserID && i.IsThumbnail == true
+                 select w
+                 ).Count();
+            return wishListProductsCount;
         }    
     }
 }

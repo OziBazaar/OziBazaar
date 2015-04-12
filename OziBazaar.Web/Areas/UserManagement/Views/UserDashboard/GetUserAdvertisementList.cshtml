@@ -5,9 +5,10 @@
     Layout = "~/Areas/UserManagement/Views/Shared/_UserDashboardLayout.cshtml";
 }
 
-<h2>GetUserAdvertisementList</h2>
+<h2>Advertisements defined by user</h2>
 
-<div class="container-fluid">
+@if (Model.UserProductViewModelList != null && Model.UserProductViewModelList.Count != 0) {
+    <div class="container-fluid">
         @foreach (OziBazaar.DAL.Models.UserProductViewModel productViewModel in Model.UserProductViewModelList) {
             <div class="row-fluid">
                 <div class="box">
@@ -29,4 +30,17 @@
                 </div>
            </div>
         }
+        <div>
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("GetUserAdvertisementList", new { page = x }))
+        </div>
+    </div>
+}
+else {
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="hero-unit">
+                <h2>There are not items to be displayed</h2>
+        </div>
+    </div>
 </div>
+}

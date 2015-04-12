@@ -260,12 +260,16 @@
     <Compile Include="Areas\UserManagement\Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Infrastructure\Helper\PagingHelpers.cs" />
+    <Compile Include="Infrastructure\Setting\IViewSetting.cs" />
+    <Compile Include="Infrastructure\Setting\ViewSetting.cs" />
+    <Compile Include="Infrastructure\Wrapper\IWebSecurityWrapper.cs" />
     <Compile Include="Infrastructure\Repository\ILookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\IProductRepository.cs" />
     <Compile Include="Infrastructure\Repository\LookupRepository.cs" />
     <Compile Include="Infrastructure\Repository\ProductRepository.cs" />
     <Compile Include="Areas\UserManagement\Security\ExtendedSimpleMembershipProvider.cs" />
     <Compile Include="Infrastructure\Util\DateUtil.cs" />
+    <Compile Include="Infrastructure\Wrapper\WebSecurityWrapper.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\AdStatistic.cs" />
     <Compile Include="Models\Category.cs" />

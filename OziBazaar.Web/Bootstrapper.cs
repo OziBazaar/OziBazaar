@@ -15,6 +15,10 @@ using OziBazaar.Common.Serialization;
 using OziBazaar.Notification.Controller;
 using OziBazaar.Web.Areas.UserManagement.Converter;
 using OziBazaar.DAL.Models;
+using OziBazaar.Web.Infrastructure.Wrapper;
+using System;
+using System.Configuration;
+using OziBazaar.Web.Infrastructure.Setting;
 
 namespace OziBazaar.Web
 {
@@ -52,6 +56,8 @@ namespace OziBazaar.Web
       container.RegisterType<IActivationManager, ActivationManager>();
       container.RegisterType<IRandomPasswordGenerator, RandomPasswordGenerator>();
       container.RegisterType<IDashboardRepository, DashboardRepository>();
+      container.RegisterType<IWebSecurityWrapper, WebSecurityWrapper>();
+      container.RegisterType<IViewSetting, ViewSetting>();
       RegisterTypes(container);
 
       return container;
