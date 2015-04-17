@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="612bdb7afa6c46769234aaa170d4785a" Name="Diagram1">
+<<<<<<< HEAD
+        <EntityTypeShape EntityType="OziBazaarModel.Advertisement" Width="1.5" PointX="3.9798464327956764" PointY="25.98157134371883" />
+        <EntityTypeShape EntityType="OziBazaarModel.Category" Width="1.5" PointX="3.7142088896195444" PointY="11.20527467653401" />
+        <EntityTypeShape EntityType="OziBazaarModel.Country" Width="1.5" PointX="5.4899554948741365" PointY="17.154226624013031" />
+        <EntityTypeShape EntityType="OziBazaarModel.Lookup" Width="1.5" PointX="0.12785721017413643" PointY="19.042728626654824" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationAudit" Width="1.5" PointX="7.0809292025309656" PointY="24.189761411487012" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationTemplate" Width="1.5" PointX="9.7437858571036653" PointY="13.734549498993228" />
+        <EntityTypeShape EntityType="OziBazaarModel.NotificationType" Width="1.5" PointX="2.0410785330650763" PointY="18.754610472710155" />
+        <EntityTypeShape EntityType="OziBazaarModel.Product" Width="1.5" PointX="6.6625015282363176" PointY="25.6347085356874" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductGroup" Width="1.5" PointX="6.4408348456215272" PointY="11.78530775559382" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductGroupProperty" Width="1.5" PointX="2.2838678184355925" PointY="23.645830850883307" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductImage" Width="1.5" PointX="11.826366780244916" PointY="5.8063180622674144" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductProperty" Width="1.5" PointX="8.06634833107998" PointY="17.415151544574254" />
+        <EntityTypeShape EntityType="OziBazaarModel.Property" Width="1.5" PointX="4.0167671516615746" PointY="29.243510408906037" />
+        <EntityTypeShape EntityType="OziBazaarModel.sysdiagram" Width="1.5" PointX="0.603793524486848" PointY="5.5348808642173566" />
+        <EntityTypeShape EntityType="OziBazaarModel.UserProfile" Width="1.5" PointX="10.619596268338896" PointY="11.586382260353483" />
+        <EntityTypeShape EntityType="OziBazaarModel.webpages_Membership" Width="1.5" PointX="1.3664074956283008" PointY="25.223600011888706" />
+        <EntityTypeShape EntityType="OziBazaarModel.webpages_OAuthMembership" Width="1.5" PointX="4.8985050715964773" PointY="9.6354973808096247" />
+        <EntityTypeShape EntityType="OziBazaarModel.webpages_Roles" Width="1.5" PointX="3.6454015335279522" PointY="0.42260813732752955" />
+        <EntityTypeShape EntityType="OziBazaarModel.WishList" Width="1.5" PointX="2.1907774238804252" PointY="2.611901478195517" />
+        <AssociationConnector Association="OziBazaarModel.FK_Advertizement_Product" />
+        <AssociationConnector Association="OziBazaarModel.FK_WishList_Advertisement" />
+        <AssociationConnector Association="OziBazaarModel.FK_UserProfile_Country" />
+        <AssociationConnector Association="OziBazaarModel.FK_NotificationAudit_EmailConfiguration" />
+        <AssociationConnector Association="OziBazaarModel.FK_NotificationConfiguration_EmailType" />
+        <AssociationConnector Association="OziBazaarModel.FK_Product_ProductGroup" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductImage_Product" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_Product1" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" />
+        <AssociationConnector Association="OziBazaarModel.webpages_UsersInRoles" />
+=======
+        <EntityTypeShape EntityType="OziBazaarModel.Advertisement" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.Lookup" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.Product" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductGroup" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductGroupProperty" Width="1.75" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductImage" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductProperty" Width="2.75" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.Property" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OziBazaarModel.WishList" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="OziBazaarModel.FK_Advertizement_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_WishList_Advertisement" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_Product_ProductGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductImage_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_Product1" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductGroupProperty_ProductGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductProperty_ProductGroupProperty" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OziBazaarModel.UserProfile" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="OziBazaarModel.ProductCategoryHierarchy" Width="1.5" PointX="10.375" PointY="7.75" />
+        <AssociationConnector Association="OziBazaarModel.FK_ProductGroupProperty_Property" />
+>>>>>>> v1_Spec
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

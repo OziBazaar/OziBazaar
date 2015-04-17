@@ -8,7 +8,7 @@ namespace OziBazaar.DAL.Repository
 {
     public class AccountRepository : IAccountRepository
     {
-        private OziBazaarEntities dbContext = new OziBazaarEntities();
+        private Entities dbContext = new Entities();
 
         public UserProfile GetUser(string userToken)
         {

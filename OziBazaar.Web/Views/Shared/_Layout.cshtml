@@ -18,7 +18,9 @@
                         <ul class="nav">
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("Advertisements", "AdList", "Ad")</li>
+                           <li>@Html.ActionLink("Advertisements", "AdList", "Ad")</li>
+                           <li>@Html.ActionLink("Wish List", "Index", "WishList")</li>
+                           <li>@Html.ActionLink("Product Categories", "ProductCategories", "Ad")</li>
                             @if (User.Identity.IsAuthenticated)
                             { 
                                 <li>@Html.ActionLink("My Ozi Bazaar", "Index", "UserDashboard", new { area = "UserManagement" }, new{})</li>

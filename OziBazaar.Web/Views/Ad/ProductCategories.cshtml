@@ -1,0 +1,117 @@
+﻿@using OziBazaar.Web.Areas.WebAPI.Models
+
+@{
+    ViewBag.Title = "Product Categories";
+}
+
+<h2>Choose Category</h2>
+<link href="~/Content/CategorySelector.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-2.1.0.js"></script>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        var maxLevelCount = 5;
+        String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match;
+            });
+        };
+
+        var clearNextLevels = function (level) {
+            for (var i = level; i <= maxLevelCount; i++) {
+                var nextDiv = $('#level' + i);
+                if (nextDiv)
+                    nextDiv.empty();
+            }
+        };
+        var showActionStep = function (categoryId,level,editorId, name) {
+            clearNextLevels(level);
+
+            var div = $('#level' + level);
+
+            var actionTemplate = $("#actionTemplate").html();
+            var template = actionTemplate.format(  //looking for
+                                                    categoryId,
+                                                    editorId,
+                                                    name,
+                                                    // selling
+                                                    categoryId,
+                                                    editorId,
+                                                    name,
+                                                    //view ad for category
+                                                    categoryId,
+                                                    name
+                                                    );
+            div.append(template);
+           
+        };
+        var loadCategories = function(level, parent) {
+            var parameter = '?level=' + level + '&parent=' + parent;
+            $.ajax(
+            {
+                url: "/api/ProductCategory" + parameter,
+                type: "GET",
+                contentType: "application/json",
+                data: null,
+                success: function(result) {
+                    clearNextLevels(level);
+                    var div = $('#level' + level);
+
+                    var ul = div.append('<ul></ul>').find('ul');
+                    for (var index = 0; index < result.length; index++) {
+                        var cardTemplate = $("#cardTemplate").html();
+                        var template = cardTemplate.format(result[index].Id,
+                            result[index].Level,
+                            result[index].EditorId,
+                            result[index].HasChild,
+                            result[index].Name,
+                            result[index].Name);
+                        ul.append(template);
+                    }
+                }
+            });
+        }
+        loadCategories(1, 0);
+        $('#categories').on('click', 'a.clickable', function() {
+            var li = $(this).parent();
+            var id = li.data('id');
+            var level = li.data('level');
+            var hasChild = li.data('haschild');
+            var editorId = li.data('editorid');
+            var name = li.data('name');
+            if(hasChild)
+                loadCategories(level + 1, id);
+            else {
+                showActionStep(id,level+1, editorId, name);
+            }
+        });
+    });
+</script>
+<script type="text/template" id="cardTemplate">
+    <li data-id="{0}" data-level="{1}" data-editorId="{2}" data-hasChild="{3}" data-name="{4}">
+        <a href="#" class="clickable">{5}</a>    
+    </li>
+</script>
+<script type="text/template" id="actionTemplate">
+    <div>
+        <div>
+            I am <a href="/Ad/AddAd?CategoryId={0}&ProductGroupId={1}&action=1">looking </a>for <b>{2}
+        </div>
+        <div>
+            I am <a href="/Ad/AddAd?CategoryId={3}&ProductGroupId={4}&action=2">selling</a> <b>{5}</b>
+        </div>
+        <div>
+            View Ads for <a href="/Ad/AdList?categoryId={6}"><b>{7}</b></a>
+        </div>
+    </div>
+</script>
+<div id="categories">
+    <div id="level1"></div>
+    <div id="level2"></div>
+    <div id="level3"></div>
+    <div id="level4"></div>
+    <div id="level5"></div>
+</div>
+

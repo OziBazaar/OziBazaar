@@ -13,7 +13,7 @@ namespace OziBazaar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private string[] reservedKeys = new string[7] { "AdvertisementId", "CategoryId", "Title", "StartDate", "FinishDate","Price", "__RequestVerificationToken" };
+        private string[] reservedKeys = new string[8] { "AdvertisementId", "ProductGroupId","CategoryId", "Title", "StartDate", "FinishDate", "Price", "__RequestVerificationToken" };
         private readonly IRenderEngine renderEngine;
         private readonly IProductRepository productRepository;
 
@@ -23,15 +23,10 @@ namespace OziBazaar.Web.Controllers
             this.productRepository = productRepository;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult ViewProduct(int adId)
         {
-            int productId,categoryId;
-            var productview = productRepository.GetAd(adId,out productId,out categoryId);
+            int productId,categoryId,productGroupId;
+            var productview = productRepository.GetAd(adId,out productId,out categoryId,out  productGroupId);
             
             if (!User.Identity.IsAuthenticated)
                 ViewBag.IsAdOwner = false;
@@ -45,12 +40,13 @@ namespace OziBazaar.Web.Controllers
             ViewBag.AdvertisementId = adId;
             ViewBag.ProductId = productId;
             ViewBag.CategoryId = categoryId;
+            ViewBag.ProductGroupId = productGroupId;
             ViewBag.ProductInfo = renderEngine.Render(productview.Product);
             return View(productview);
         }
 
         [Authorize]
-        public ActionResult EditProduct(int advertisementId, int categoryId, int productId)
+        public ActionResult EditProduct(int advertisementId, int categoryId,int productGroupId, int productId)
         {
             var advertisement = productRepository.GetAdvertisementById(advertisementId);
             AdvertisementViewModel adViewModel = new AdvertisementViewModel
@@ -58,10 +54,10 @@ namespace OziBazaar.Web.Controllers
                 AdvertisementId=advertisement.Id
                 ,Title = advertisement.Title
                 ,Price=advertisement.Price
-                ,StartDate = advertisement.StartDate.ToString("dd/MM/yyy")
-                ,FinishDate = advertisement.EndDate.ToString("dd/MM/yyy")
+                ,StartDate = advertisement.StartDate
+                ,FinishDate =advertisement.EndDate
             };
-            var productview = productRepository.EditProduct(categoryId,productId);
+            var productview = productRepository.EditProduct(productGroupId, productId);
             ViewBag.ProductInfo = renderEngine.Render(productview);
             ViewBag.ProductId = productId;
             ViewBag.AdvertisementId = advertisementId;
@@ -88,7 +84,8 @@ namespace OziBazaar.Web.Controllers
             decimal adPrice = 0;
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;
-            ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+            ad.ProductGroupId = Int32.Parse(Request.Form["ProductGroupId"]);
+            ad.CategoryId = Int32.Parse(Request.Form["CategoryId"]);
 
             var newAd =   productRepository.AddAdvertisement(WebSecurity.GetUserId(User.Identity.Name), ad);
 
@@ -113,7 +110,8 @@ namespace OziBazaar.Web.Controllers
             ad.EndDate = endDate;
             ad.Title = Request.Form["Title"];
             ad.Id =Int32.Parse( Request.Form["AdvertisementId"]);
-            ad.Category = Int32.Parse(Request.Form["CategoryId"]);
+            ad.ProductGroupId = Int32.Parse(Request.Form["ProductGroupId"]);
+            ad.CategoryId = Int32.Parse(Request.Form["CategoryId"]);
             decimal adPrice = 0;
             decimal.TryParse(Request.Form["Price"], out adPrice);
             ad.Price = adPrice;

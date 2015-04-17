@@ -97,6 +97,9 @@
     <Compile Include="Product.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductCategoryHierarchy.cs">
+      <DependentUpon>OziBazaarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductGroup.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>
@@ -119,9 +122,6 @@
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\ICacheRepository.cs" />
     <Compile Include="Repository\IDashboardRepository.cs" />
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>OziBazaarModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="UserProfile.cs">
       <DependentUpon>OziBazaarModel.tt</DependentUpon>
     </Compile>

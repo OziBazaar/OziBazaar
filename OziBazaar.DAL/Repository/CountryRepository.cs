@@ -9,7 +9,7 @@ namespace OziBazaar.DAL.Repository
 {
     public class CountryRepository : ICacheRepository<Country>
     {
-        private OziBazaarEntities dbContext = new OziBazaarEntities();
+        private Entities dbContext = new Entities();
 
         public ICacheProvider Cache { get; set; }
 

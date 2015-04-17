@@ -484,7 +484,7 @@ namespace OziBazaar.Web.Areas.UserManagement.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (OziBazaarEntities db = new OziBazaarEntities())
+                using (Entities db = new Entities())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists

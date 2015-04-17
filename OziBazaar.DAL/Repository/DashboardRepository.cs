@@ -9,7 +9,7 @@ namespace OziBazaar.DAL.Repository
 {
     public class DashboardRepository : IDashboardRepository
     {
-        private readonly OziBazaarEntities _dbContext = new OziBazaarEntities();
+        private readonly Entities _dbContext = new Entities();
 
         public List<UserProductViewModel> GetUserProducts(int UserID, int page = 1, int pageSize = 10)
         {

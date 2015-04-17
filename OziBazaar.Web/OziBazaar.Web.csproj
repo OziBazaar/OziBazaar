@@ -232,7 +232,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\UserManagement\Models\" />
-    <Folder Include="Areas\WebAPI\Models\" />
     <Folder Include="Areas\WebAPI\Views\Shared\" />
     <Folder Include="Temp\" />
   </ItemGroup>
@@ -250,12 +249,15 @@
     <Compile Include="Areas\WebAPI\APIAreaRegistration.cs" />
     <Compile Include="Areas\WebAPI\Controllers\Media.cs" />
     <Compile Include="Areas\WebAPI\Controllers\CategoryData.cs" />
+    <Compile Include="Areas\WebAPI\Controllers\ProductCategoryController.cs" />
+    <Compile Include="Binder\CustomDateBinder.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Areas\UserManagement\Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
+    <Compile Include="Areas\WebAPI\Models\ProductCategory.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Areas\UserManagement\Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
@@ -300,6 +302,7 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\CategorySelector.css" />
     <Content Include="Content\Image\mazda1.jpg" />
     <Content Include="Content\Image\mazda2.jpg" />
     <Content Include="Content\Image\mobile1.jpg" />
@@ -424,10 +427,8 @@
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Properties\PublishProfiles\ozibazaar - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar2 - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ozibazaar2 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ozibazaar3 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ozibazaar3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\ozibazar.dependentdropdown.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
