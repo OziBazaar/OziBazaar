@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - OziBazaar online Sale</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/bootstrap/css")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="span8">
+                    @Html.ActionLink("Ozi Bazaar", "Index", "Home", new { area = "" }, new { @class = "brand" })
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    My Account<b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("User Profile", "UserProfile", new { area = "UserManagement", controller = "Account" })</li>
+                                    <li>@Html.ActionLink("Change Password", "ChangePassword", new { area = "UserManagement", controller = "Account" })</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    My Advertisements<b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Wish list", "GetWishList", "UserDashboard")</li>
+                                    <li>@Html.ActionLink("Advertisements", "GetUserAdvertisementList", "UserDashboard")</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span4">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" id="body-content">
+        @RenderBody()
+    </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Ozi Bazaar framework</p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
