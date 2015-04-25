@@ -1,5 +1,6 @@
 ﻿namespace OziBazaar.Web.Areas.WebAPI.Models
 {
+    // this class is used for product category hirerachy
     public class ProductCategory
     {
         public short Level { get; set; }
