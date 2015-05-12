@@ -1,13 +1,27 @@
 ﻿@model OziBazaar.Web.ViewModel.AdView
+<style type="text/css">
+      ul {         
+          padding:0 0 0 0;
+          margin:0 0 0 0;
+      }
+      ul li {     
+          list-style:none;
+          margin-bottom:25px;           
+      }
+      ul li img {
+          cursor: pointer;
+      }
+</style>
 
 <script src="~/Scripts/jquery-2.1.0.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 <h2> 
-  <font color="blue">  @Model.AdTitle </font>
+   @Model.AdTitle 
 </h2> 
+
 <div>
-    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
     @if (ViewBag.IsAdOwner)
-    {   
+    {
         @Html.ActionLink("Edit", "EditProduct", new { controller = "Product", advertisementId = ViewBag.AdvertisementId, productGroupId = ViewBag.ProductGroupId, categoryId = ViewBag.CategoryId, productId = ViewBag.ProductId }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Back To My Ads", "MyAdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
@@ -15,12 +29,47 @@
 
     }
     else
-    {        
+    {
         @Html.ActionLink("Back To List", "AdList", new { controller = "Ad" }, new { @class = "btn btn-primary" })
         @Html.ActionLink("Add to wish list", "AddToWishList", new { controller = "WishList", adId = ViewBag.AdvertisementId }, new { @class = "btn btn-primary" })
     }
+    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProductInfo))
+  
     <br />    
 </div>
+
+<div class="container" id="imagesDiv">
+    <h2> Some photos</h2>
+    <ul class="row">
+        @foreach (var item in ViewBag.Images)
+        {
+            <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img src="@item.FeatureValue" /></li>
+        }        
+    </ul>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+ $(document).ready(function(){
+     $('#imagesDiv li img').on('click', function () {
+                var src = $(this).attr('src');
+                var img = '<img src="' + src + '" class="img-responsive" />';
+                $('#myModal').modal();
+                $('#myModal').on('shown.bs.modal', function(){
+                    $('#myModal .modal-body').html(img);
+                });
+                $('#myModal').on('hidden.bs.modal', function(){
+                    $('#myModal .modal-body').html('');
+                });
+           });
+ })
+ </script>
 @*<div id="my-dialog"></div>*@
 
 @*<script type="text/javascript">

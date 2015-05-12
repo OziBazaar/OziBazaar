@@ -42,6 +42,7 @@ namespace OziBazaar.Web.Controllers
             ViewBag.CategoryId = categoryId;
             ViewBag.ProductGroupId = productGroupId;
             ViewBag.ProductInfo = renderEngine.Render(productview.Product);
+            ViewBag.Images = productview.Product.Features.Where(x => x.FeatureName == "Image").ToList();
             return View(productview);
         }
 
